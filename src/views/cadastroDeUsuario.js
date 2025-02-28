@@ -42,7 +42,7 @@ class CadastroDeUsuario extends React.Component {
                     <div className="col-md-6" style={{ marginTop: '-90px' }}>
                         <div className="bs-docs-section">
 
-                            <Card title="Cadastro de Usuário">
+                            <Card title="Cadastro de Usuário" >
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="bs-component">
