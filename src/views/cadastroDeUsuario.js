@@ -39,7 +39,7 @@ class CadastroDeUsuario extends React.Component {
 
             <div className="container" style={{minHeight: '0vh', display: 'flex', alignItems: 'center'}}>
                 <div className="row justify-content-center w-100">
-                    <div className="col-md-6" style={{ marginTop: '-90px' }}>
+                    <div className="col-md-6" style={{ marginTop: '-120px' }}>
                         <div className="bs-docs-section">
 
                             <Card title="Cadastro de Usuário" >
@@ -50,7 +50,7 @@ class CadastroDeUsuario extends React.Component {
                                             <FormGroup label="Nome Completo: *" htmlFor="inputNomeCompleto">
                                                 <input type="text"
                                                        id="inputNomeCompleto"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="nomeCompleto"
 
                                                        onChange={e => this.setState({nomeCompleto: e.target.value})}
@@ -59,11 +59,11 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
-                                            <br/>
+
                                             <FormGroup label="Nome Usuário: *" htmlFor="inputNomeUsuario">
                                                 <input type="text"
                                                        id="inputNomeUsuario"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="nomeUsuario"
 
                                                        onChange={e => this.setState({nomeUsuario: e.target.value})}
@@ -72,11 +72,11 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
-                                            <br/>
+
                                             <FormGroup label="Cadastro Pessoa Física: *" htmlFor="inputCpf">
                                                 <input type="text"
                                                        id="inputCpf"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="cpf"
 
                                                        onChange={e => this.setState({cpf: e.target.value})}
@@ -85,11 +85,11 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
-                                            <br/>
+
                                             <FormGroup label="Email: *" htmlFor="inputEmail">
                                                 <input type="email"
                                                        id="inputEmail"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="email"
 
                                                        onChange={e => this.setState({email: e.target.value})}
@@ -102,7 +102,7 @@ class CadastroDeUsuario extends React.Component {
                                             <FormGroup label="Confirmar email: *" htmlFor="inputConfirmarEmail">
                                                 <input type="text"
                                                        id="inputConfirmarEmail"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="confirmarEmail"
 
                                                        onChange={e => this.setState({confirmarEmail: e.target.value})}
@@ -111,11 +111,11 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
-                                            <br/>
+
                                             <FormGroup label="Senha: *" htmlFor="inputSenha">
                                                 <input type="password"
                                                        id="inputSenha"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder"
                                                        name="senha"
 
                                                        onChange={e => this.setState({senha: e.target.value})}
@@ -124,10 +124,11 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
+
                                             <FormGroup label="Confirme a senha: *" htmlFor="inputConfirmaSenha">
                                                 <input type="password"
                                                        id="inputConfirmarSenha"
-                                                       className="form-control"
+                                                       className="form-control inputPlaceholder mb-2"
                                                        name="confirmarSenha"
 
                                                        onChange={e => this.setState({confirmarSenha: e.target.value})}
@@ -136,7 +137,7 @@ class CadastroDeUsuario extends React.Component {
                                                        required
                                                 />
                                             </FormGroup>
-                                            <br/>
+
                                             <button onClick={this.cadastrarUsuario} type="button" className="btn btn-success">
                                                 <i className="pi pi-save"></i>Salvar
                                             </button>
