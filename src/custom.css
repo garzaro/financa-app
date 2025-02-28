@@ -14,17 +14,27 @@ pre{
     margin-right: 5px;
 }
 
+/*MINHAS ADIÇÕES*/
 
-/*inputPlaceholder*/
-/*#inputSenha::placeholder {
-    color: #3780e1;
-}*/
-
-/* Altera a cor do placeholder para todos os inputs */
-input::placeholder,
-textarea::placeholder {
-    color: #ccc; /* Cinza clarinho */
-    opacity: 1; /* Garante que a cor seja aplicada corretamente */
+#inputNome::placeholder {
+    color: #ccc;
 }
 
+/* PARA TODOS OS PLACEHOLDERS*/
+.inputPlaceholder::placeholder {
+    color: #ccc;
+}
 
+/*APROXIMAR CAMPOS DO FORMULARIO*/
+
+/* Aproxima os campos do formulário
+.form-group-close {
+    margin-bottom: -15px; /* Ajuste o valor conforme necessário
+}*/
+
+/* Remove ou reduz a margem inferior do FormGroup, caso tenha margem padrao sobreponha*/
+.form-group {
+    margin-bottom: -16px; /* Ajuste o valor conforme necessário */
+}
+
+/*FIM APROXIMACAO CAMPOS DO FORMULARIO*/
