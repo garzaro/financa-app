@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import styled from "styled-components";
 {/*addBreak = true* opcional = <br>*/}
@@ -18,4 +19,21 @@ FormGroup.propTypes = {
     className: PropTypes.string,
     addBreak: PropTypes.bool,
 };*/
+=======
+import React from 'react';
+
+function FormGroup({htmlFor, label, children}) {
+    return (
+        <>
+            <div className="form-group" >
+                <label htmlFor={htmlFor} className="text-success" style={{ marginTop: '-15px' }}>
+                    <br/>
+                    {label}
+                </label>
+                {children}
+            </div>
+        </>
+    );
+}
+>>>>>>> d492dfb (continuação)
 export default FormGroup;
