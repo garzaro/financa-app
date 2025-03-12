@@ -52,7 +52,7 @@ function Login({onLogin}) {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
-                                        <fieldset>
+
                                             <form onSubmit={handleSubmit}>
                                                 <FormGroup label={
                                                     <span>
@@ -65,7 +65,7 @@ function Login({onLogin}) {
                                                         type="email"
                                                         value={email}
                                                         onChange={handleEmailChange}
-                                                        className="form-control inputPlaceholder"
+                                                        className="form-control form-control-sm inputPlaceholder"
                                                         id="email"
                                                         placeholder="Digite o email"
                                                     />
@@ -80,18 +80,18 @@ function Login({onLogin}) {
                                                     <input type="text"
                                                            value={senha}
                                                            onChange={handleSenhaChange}
-                                                           className="form-control inputPlaceholder"
+                                                           className="form-control form-control-sm inputPlaceholder"
                                                            id="senha"
                                                            placeholder="Digite a senha"
                                                     />
                                                 </FormGroup>
                                             </form>
                                             <button type="submit" className="btn btn-success mt-3">Entrar</button>
-
+                                            &nbsp;&nbsp;
                                             {/*type="button para evitar submissão do formulario"*/}
                                             <button type="button" className="btn btn-danger mt-3" onClick={handleCadastrar}>Cadastrar</button>
 
-                                        </fieldset>
+
                                     </div>
                                 </div>
                             </div>
