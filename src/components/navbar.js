@@ -12,19 +12,20 @@ const Navbar = () => {
                 {/*Em telas menores, a navbar geralmente se "contrai"
                  para um botão de menu (o "toggler", menu de hamburger)
                  */}
-                <button className="navbar-toggler" type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarResponsive"
-                        aria-controls="navbarResponsive"
+                <button className="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
 
                     <span className="navbar-toggler-icon"></span>
                 </button> {/*aria-control = navbarSupportedContent*/}
 
-                <div className="collapse navbar-collapse" id="navbarResponsive">
+                <div className="collapse navbar-collapse" id="navbarNav">
 
-                    <ul className="navbar-nav mx-5"> {/*me-auto mb-2 mb-lg-0*/}
+                    <ul className="navbar-nav mx-5 me-auto mb-2 mb-lg-0 "> {/*me-auto mb-2 mb-lg-0*/}
 
                         <li className="nav-item">
                             <Link className="nav-link" to="/home">Home</Link>
