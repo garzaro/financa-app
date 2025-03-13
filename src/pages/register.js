@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../components/card';
 import FormGroup from "../components/form-group";
+import Astered from "../components/astered";
 import {useNavigate} from "react-router-dom";
 
 import styled from "styled-components";
@@ -13,9 +14,9 @@ function Register () {
         navigate('/Login');
     }
 
-    const AsteriscoVermelho = styled.span`
+   /* const AsteriscoVermelho = styled.span`
         color: red;
-    `;
+    `;*/
     return (
         <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', alignItems: 'center'">
             <div className="row justify-content-center w-100">
@@ -28,7 +29,7 @@ function Register () {
                                         <fieldset className="fieldset-sm">
                                             <FormGroup label={
                                                 <span>
-                                                Nome Completo: <AsteriscoVermelho>*</AsteriscoVermelho>
+                                                Nome Completo: <Astered>*</Astered>
                                                 </span>
                                             } name="nome-completo">
                                                 <input type="text"
@@ -40,7 +41,7 @@ function Register () {
 
                                             <FormGroup label={
                                                 <span>
-                                                Cadastro Pessoa Física: <AsteriscoVermelho>*</AsteriscoVermelho>
+                                                Cadastro Pessoa Física: <Astered>*</Astered>
                                             </span>
                                             } name="cpf">
                                                 <input type="text"
@@ -52,7 +53,7 @@ function Register () {
 
                                             <FormGroup label={
                                                 <span>
-                                                Nome de Usuário: <AsteriscoVermelho>*</AsteriscoVermelho>
+                                                Nome de Usuário: <Astered>*</Astered>
                                             </span>
                                             } name="nome-usuario">
                                                 <input type="text"
@@ -64,7 +65,7 @@ function Register () {
 
                                             <FormGroup label={
                                                 <span>
-                                                Email: <AsteriscoVermelho>*</AsteriscoVermelho>
+                                                Email: <Astered>*</Astered>
                                             </span>
                                             } name="email">
                                                 <input type="email"
@@ -77,7 +78,7 @@ function Register () {
                                             {/*repetir*/}
                                             <FormGroup label={
                                                 <span>
-                                                Confirmar Email: <AsteriscoVermelho>*</AsteriscoVermelho>
+                                                Confirmar Email: <Astered>*</Astered>
                                             </span>
                                             } name="confirmar-email">
                                                 <input type="email"
