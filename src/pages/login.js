@@ -2,42 +2,67 @@ import React, {useState} from 'react';
 import Card from '../components/card';
 import FormGroup from "../components/form-group";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
-/*mostra o fomulario de login dentro do Card.js*/
-function Login({onLogin}) {
+/*mostra o fomulario de login dentro do Card.js
+* {onLogin}*/
+const Login = () => {
+    /*estados para armazenamento e status de carregamento, e erro*/
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [errors, setErros] = useState({});
-    const navigate = useNavigate(); /*para navegacão*/
+    const [loading, setLoading] = useState(false);
 
-    function handleEmailChange (e) {
+    /*fazer login -
+    * metodo .then - para resposta quando der certo, sucesso
+    * catch para resposta com erro*/
+    const fazerLogin = ()=>{
+        /*passar url e objeto*/
+        axios.post('http://localhost:8080/api/usuarios/autenticar', {
+            email: email,
+            senha: senha
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            /*esse res é do exios*/
+            console.log(err.response);
+        })
+    }
+
+    /*faz a requisicao post
+    const fazerLogin = () =>{
+        try {
+            const res = axios.post('http://localhost:8080/api/usuarios/autenticar', {
+                email: email,
+                senha: senha,
+            });
+            console.log("Resposta do servidor", res.data);
+
+           // alert("Sucesso!");
+        }catch(err){
+            console.log("Erro na requisição ", err.response);
+            setLoading("Erro ao fazer login. Verifique suas credenciais.");
+        }
+    }*/
+
+    const handleEmailChange = (e) => {
         setEmail(e.target.value);
     }
-    function handleSenhaChange (e) {
+    const handleSenhaChange = (e) => {
         setSenha(e.target.value);
     }
-    /*para validar os campos do login*/
-    const validarFormularioLogin = () => {
-        email = email.toUpperCase();
-        const newErrors = {};
-        if (!email) newErrors.email = 'Email Inválido';
-        if (!senha) newErrors.senha = 'Digite sua senha';
 
-        if (Object.keys(newErrors).length > 0){
-            setErros(newErrors);
-            return;
-        }
-        //return Object.keys(newErrors).length === 0; /*verdadeiro se nao houver erros - ler sobre o metodo key*/
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault(); /*evita que a pagina seja recarregada*/
-        if (validarFormularioLogin()) { /*posso pegar tambem tudo dessa função e colocar em handleSubmit - unica*/
-            onLogin(email, senha); /*aqui esta chamando a função de login() passada como prop*/
-        }
-    };
+    /*para navegacão, entre componentes*/
+    const navigate = useNavigate();
+
+    /*redireciona para o cadastro de usuarios*/
     function handleCadastrar() {
         navigate('/Register');
     }
+
+
+
+
     /*manda la pro cadastro
     prepareCadastro = () =>{
         history.push('/register');
@@ -46,14 +71,14 @@ function Login({onLogin}) {
     return (
         <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', alignItems: 'center'}">
             <div className="row justify-content-center w-100">
-                <div className="col-md-6" style={{ marginTop: ' 1px' }}>
+                <div className="col-md-6" >
                     <div className="bs-docs-section">
                         <Card title="Login">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
 
-                                            <form onSubmit={handleSubmit}>
+                                            <form onSubmit={(e)=>{e.preventDefault(); fazerLogin();}}>{/*onSubmit={fazerLogin}*/}
                                                 <FormGroup label={
                                                     <span>
                                                         Email:<span className="asterisco-vermelho">*</span>
@@ -77,7 +102,7 @@ function Login({onLogin}) {
                                                 } name="senha"
                                                            error={errors.senha}
                                                 >
-                                                    <input type="text"
+                                                    <input type="password"
                                                            value={senha}
                                                            onChange={handleSenhaChange}
                                                            className="form-control form-control-sm inputPlaceholder"
@@ -86,7 +111,7 @@ function Login({onLogin}) {
                                                     />
                                                 </FormGroup>
                                             </form>
-                                            <button type="submit" className="btn btn-success mt-3">Entrar</button>
+                                            <button type="submit" onClick={fazerLogin} className="btn btn-success mt-3">Entrar</button>
                                             &nbsp;&nbsp;
                                             {/*type="button para evitar submissão do formulario"*/}
                                             <button type="button" className="btn btn-danger mt-3" onClick={handleCadastrar}>Cadastrar</button>
