@@ -3,6 +3,7 @@ import Card from '../components/card';
 import FormGroup from "../components/form-group";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import ErrosLoginFront from "../components/errosLoginFront";
 
 /*mostra o fomulario de login dentro do Card.js
 * {onLogin}*/
@@ -10,40 +11,39 @@ const Login = () => {
     /*estados para armazenamento e status de carregamento, e erro*/
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [errors, setErros] = useState({});
-    const [loading, setLoading] = useState(false);
+    /*tratamento de setMensagensDeAlerta - mensagens de setMensagensDeAlerta do login*/
+    const [mensagensDeAlerta, setMensagensDeAlerta] = useState('');
+    //const [loading, setLoading] = useState(false); /*ver sobre*/
 
-    /*fazer login -
-    * metodo .then - para resposta quando der certo, sucesso
-    * catch para resposta com erro*/
-    const fazerLogin = ()=>{
-        /*passar url e objeto*/
-        axios.post('http://localhost:8080/api/usuarios/autenticar', {
-            email: email,
-            senha: senha
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            /*esse res é do exios*/
-            console.log(err.response);
-        })
-    }
+    /*para navegacão, entre componentes*/
+    const navigate = useNavigate();
 
-    /*faz a requisicao post
     const fazerLogin = () =>{
-        try {
-            const res = axios.post('http://localhost:8080/api/usuarios/autenticar', {
-                email: email,
-                senha: senha,
-            });
-            console.log("Resposta do servidor", res.data);
+        axios.post('http://localhost:8080/api/usuarios/autenticar', {
+            email,
+            senha
+        }).then(response => {
+            /*vai exibir uma mensagem de login sucesso*/
+            setMensagensDeAlerta({loginBemSucedido: 'Verificando suas credenciais...'});
 
-           // alert("Sucesso!");
-        }catch(err){
-            console.log("Erro na requisição ", err.response);
-            setLoading("Erro ao fazer login. Verifique suas credenciais.");
-        }
-    }*/
+            /*...redireciona para a rota home apos 2 segundos*/
+            setTimeout(() => {
+                navigate('/home');
+            },2000)
+
+        }).catch(err => {
+            if(err.response){
+                /* a reposta de erro tem a propriedade data que pega a mensagem de erro*/
+                setMensagensDeAlerta(err.response.data);
+            }else if(err.request){
+                /*req foi feito mas o servidor nao vai responder*/
+                setMensagensDeAlerta('Erro de conexão com o servidor.');
+            }else{
+                /*erro em configuração da requisição*/
+                setMensagensDeAlerta('Ocorreu um erro inesperado.');
+            }
+        });
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -51,40 +51,46 @@ const Login = () => {
     const handleSenhaChange = (e) => {
         setSenha(e.target.value);
     }
-
-    /*para navegacão, entre componentes*/
-    const navigate = useNavigate();
+    /*para evitar que a pagina recarregue*/
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
 
     /*redireciona para o cadastro de usuarios*/
     function handleCadastrar() {
         navigate('/Register');
     }
 
-
-
-
-    /*manda la pro cadastro
-    prepareCadastro = () =>{
-        history.push('/register');
-    }*/
+    /*redireciona para tela home*/
+    function handleHome() {
+        navigate('/Home');
+    }
 
     return (
         <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', alignItems: 'center'}">
             <div className="row justify-content-center w-100">
                 <div className="col-md-6" >
                     <div className="bs-docs-section">
+
+                        {/*tratamento de erro
+                        <ErrosLoginFront setMensagensDeAlerta={mensagensDeAlerta}></ErrosLoginFront>
+                        */}
+                        <span>{mensagensDeAlerta}</span>
+
+
                         <Card title="Login">
+
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
 
-                                            <form onSubmit={(e)=>{e.preventDefault(); fazerLogin();}}>{/*onSubmit={fazerLogin}*/}
+                                            <form onSubmit={handleSubmit}>{/*onSubmit={fazerLogin}*/}
                                                 <FormGroup label={
                                                     <span>
                                                         Email:<span className="asterisco-vermelho">*</span>
                                                     </span>
                                                 } name="email"
-                                                           error={errors.email}
+                                                           mensagemDeErro={setMensagensDeAlerta.email}
                                                 >
                                                     <input
                                                         type="email"
@@ -100,7 +106,7 @@ const Login = () => {
                                                         Senha:<span className="asterisco-vermelho">*</span>
                                                     </span>
                                                 } name="senha"
-                                                           error={errors.senha}
+                                                           mensagemDeErro={setMensagensDeAlerta.senha}
                                                 >
                                                     <input type="password"
                                                            value={senha}
