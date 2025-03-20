@@ -75,8 +75,8 @@ const Login = () => {
                         {/*tratamento de erro
                         <ErrosLoginFront setMensagensDeAlerta={mensagensDeAlerta}></ErrosLoginFront>
                         */}
-                        <span>{mensagensDeAlerta}</span>
 
+                        <span>{mensagensDeAlerta}</span>
 
                         <Card title="Login">
 
