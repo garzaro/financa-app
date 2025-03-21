@@ -11,7 +11,7 @@ const Login = () => {
     /*estados para armazenamento e status de carregamento, e erro*/
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    /*tratamento de setMensagensDeAlerta - mensagens de setMensagensDeAlerta do login*/
+    /*tratamento de erros - mensagens do login*/
     const [mensagensDeAlerta, setMensagensDeAlerta] = useState('');
     //const [loading, setLoading] = useState(false); /*ver sobre*/
 
@@ -23,25 +23,11 @@ const Login = () => {
             email,
             senha
         }).then(response => {
-            /*vai exibir uma mensagem de login sucesso*/
-            setMensagensDeAlerta({loginBemSucedido: 'Verificando suas credenciais...'});
-
-            /*...redireciona para a rota home apos 2 segundos*/
             setTimeout(() => {
                 navigate('/home');
             },2000)
-
         }).catch(err => {
-            if(err.response){
-                /* a reposta de erro tem a propriedade data que pega a mensagem de erro*/
-                setMensagensDeAlerta(err.response.data);
-            }else if(err.request){
-                /*req foi feito mas o servidor nao vai responder*/
-                setMensagensDeAlerta('Erro de conexão com o servidor.');
-            }else{
-                /*erro em configuração da requisição*/
-                setMensagensDeAlerta('Ocorreu um erro inesperado.');
-            }
+            setMensagensDeAlerta(err.response.data);
         });
     };
 
