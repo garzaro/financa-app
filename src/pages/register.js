@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '../components/card';
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
@@ -8,6 +8,13 @@ import styled from "styled-components";
 
 /*pagina de cadastro de usuarios*/
 function Register () {
+    /*estados para armazenamento e status de carregamento, e erro*/
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    /*tratamento de erros - mensagens do login*/
+    const [mensagensDeAlerta, setMensagensDeAlerta] = useState('');
+    //const [loading, setLoading] = useState(false); /*ver sobre*/
+
     const navigate = useNavigate();
 
     function handleCancelar() {

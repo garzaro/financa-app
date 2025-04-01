@@ -1,8 +1,23 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
 /*pagina inicial*/
 function Home () {
-    const [saldo, setSaldo] = useState('10');
+    const [saldo, setSaldo] = useState('');
+
+    /*ciclo de vida*/
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/usuarios/4/saldo')
+            /*res*/
+            .then(retornoSaldo => {
+                setSaldo(retornoSaldo.data);
+            }).catch(error =>{
+
+        });
+        return () => {
+            console.log("componente sera desmontado");
+        }
+    },[]);
 
     return (
         <div className="container ">
