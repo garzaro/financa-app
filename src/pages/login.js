@@ -50,7 +50,7 @@ const LoginForm = () => {
                     <div className="bs-docs-section">
 
                         {/* Erros do Backend */}
-                        {backendError && <div className=" alert-danger">{backendError}</div>}
+                        {backendError && <div className=" alert alert-danger">{backendError}</div>}
 
                         <Card title="Login">
                             <div className="row">
