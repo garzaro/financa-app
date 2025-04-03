@@ -110,7 +110,7 @@ const LoginForm = () => {
                                 </div>
                             </div>
                         </Card>
-
+                        {/*cadastro*/}
                         <Card title="Seja bem vindo!">
                             <div className="row">
                                 <div className="col-lg-12">
