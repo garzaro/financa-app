@@ -1,137 +1,142 @@
-import React, {useState} from 'react';
-import Card from '../components/card';
-import FormGroup from "../components/form-group";
-import {useNavigate} from "react-router-dom";
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import ErrosLoginFront from "../components/errosLoginFront";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Card from "../components/card";
+import FormGroup from "../components/form-group";
 
-/*mostra o fomulario de login dentro do Card.js
-* {onLogin}*/
-const Login = () => {
-    /*estados para armazenamento e status de carregamento, e erro*/
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    /*tratamento de erros - mensagens do login*/
-    const [mensagensDeAlerta, setMensagensDeAlerta] = useState('');
-    //const [loading, setLoading] = useState(false); /*ver sobre*/
-
-    /*para navegacão, entre componentes*/
+const LoginForm = () => {
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+    const [backendError, setBackendError] = useState(null);
+    const [isServerOffline, setIsServerOffline] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const fazerLogin = () =>{
-        axios.post('http://localhost:8080/api/usuarios/autenticar', {
-            email,
-            senha,
-        }).then(response => {
-            setTimeout(() => {
-                navigate('/home');
-            },2000)
-        }).catch(err => {
-            if (err.response && err.response.data) {
-                setMensagensDeAlerta(err.response.data);
-            }else{
-                setMensagensDeAlerta({geral: "ocorreu um erro inesperado"});
+    const fazerLogin = async (data) => {
+        setIsLoading(true);
+        setBackendError(null);
+        setIsServerOffline(false);
+
+        try {
+            await axios.post("http://localhost:8080/api/usuarios/autenticar", {
+                email: data.email,
+                senha: data.senha,
+            });
+            setTimeout(() => navigate("/home"), 2000);
+        } catch (err) {
+            if (err.response) {
+                /*Erro do backend (e-mail/senha incorretos)*/
+                setBackendError(err.response.data.message || err.response.data);
+            } else {
+                /*Servidor offline*/
+                setIsServerOffline(true);
+                navigate("/erro-conexao");
             }
-        });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-        /*limpar o erro ao digitar*/
-        setMensagensDeAlerta('')
-    }
-    const handleSenhaChange = (e) => {
-        setSenha(e.target.value);
-        /*limpar o erro ao digitar*/
-        setMensagensDeAlerta('')
-    }
-    /*para evitar que a pagina recarregue*/
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    /*redireciona para o cadastro de usuarios*/
-    function handleCadastrar() {
-        navigate('/Register');
-    }
-
-    /*redireciona para tela home*/
-    function handleHome() {
-        navigate('/Home');
-    }
-
     return (
-        <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', alignItems: 'center'}">
-            <div className="row justify-content-center w-100">
-                <div className="col-md-6" >
+        <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
+            <div className="row justify-content-center w-100" >
+                <div className="col-md-6">
                     <div className="bs-docs-section">
 
-                        {/*tratamento de erro
-                        <ErrosLoginFront setMensagensDeAlerta={mensagensDeAlerta}></ErrosLoginFront>
-                        */}
-
-                        {/* USAR ESSE AQUI NO REGISTER <span>{mensagensDeAlerta}</span>*/}
+                        {/* Erros do Backend */}
+                        {backendError && <div className=" alert-danger">{backendError}</div>}
 
                         <Card title="Login">
-
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
+                                        <form onSubmit={handleSubmit(fazerLogin)}>
 
-                                            <form onSubmit={handleSubmit}>{/*onSubmit={fazerLogin}*/}
-                                                <FormGroup label={
-                                                    <span>
-                                                        Email:<span className="asterisco-vermelho">*</span>
-                                                    </span>
-                                                } name="email"
-                                                           mensagemDeErro={setMensagensDeAlerta}
-                                                >
-                                                    <input
-                                                        type="email"
-                                                        value={email}
-                                                        onChange={handleEmailChange}
-                                                        className={`form-control form-control-sm inputPlaceholder ${mensagensDeAlerta && 'is-invalid'}`}
-                                                        id="email"
-                                                        placeholder="Digite o email"
-                                                        required
-                                                    />
-                                                    {mensagensDeAlerta && <div className="invalid-feedback">{mensagensDeAlerta}</div>}
-                                                </FormGroup>
+                                            <FormGroup label={
+                                                <span>
+                                                    Email:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"email"}
+                                            >
+                                                {/* Campo E-mail */}
+                                                <input
+                                                    type="email"
+                                                    {...register("email", {required: "E-mail é obrigatório"})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Digite seu email"
+                                                    id="email"
+                                                />
+                                                {errors.email && <span className="error">{errors.email.message}</span>}
+                                            </FormGroup>
 
-                                                <FormGroup label={
-                                                    <span>
-                                                        Senha:<span className="asterisco-vermelho">*</span>
-                                                    </span>
-                                                } name="senha"
-                                                           mensagemDeErro={setMensagensDeAlerta}
-                                                >
-                                                    <input type="password"
-                                                           value={senha}
-                                                           onChange={handleSenhaChange}
-                                                           className={`form-control form-control-sm inputPlaceholder ${mensagensDeAlerta && 'is-invalid'}`}
-                                                           id="senha"
-                                                           placeholder="Digite a senha"
-                                                           required
-                                                    />
-                                                    {mensagensDeAlerta && <div className="invalid-feedback">{mensagensDeAlerta}</div>}
-                                                </FormGroup>
-                                            </form>
-                                            <button type="submit" onClick={fazerLogin} className="btn btn-success mt-3">Entrar</button>
-                                            &nbsp;&nbsp;
-                                            {/*type="button para evitar submissão do formulario"*/}
-                                            <button type="button" className="btn btn-danger mt-3" onClick={handleCadastrar}>Cadastrar</button>
+                                            <FormGroup label={
+                                                <span>
+                                                    Senha:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"senha"}
+                                            >
+                                                {/* Campo Senha */}
+                                                <input
+                                                    type="password"
+                                                    {...register("senha", {required: "Senha é obrigatória"})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Digite sua senha"
+                                                />
+                                                {errors.senha && <span className="error">{errors.senha.message}</span>}
+                                            </FormGroup>
+
+                                            {/*esqueceu a senha*/}
+                                            <div className="nav-signin-tooltip-footer ">Esqueceu a senha?
+                                                <a href="/register"
+                                                   className="nav-a"
+                                                   aria-label="Esqueceu a senha? Clique aqui para criar uma nova.">&nbsp;
+                                                    Clique aqui.</a>
+                                            </div>
+
+                                            {/* Botão de Login */}
+                                            <button type="submit" disabled={isLoading}
+                                                    className="btn btn-success btn-sm mt-3 ">
+                                                {isLoading ? "Carregando..." : "Entrar"}
+                                            </button>
+
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </Card>
+
+                        <Card title="Seja bem vindo!">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="bs-component">
+                                        <div className="card-body">
+                                            <div className="m-sm-4">
+                                                <h2 className="text-center">Primeiro acesso?</h2>
+                                                <p className="text-center mb-3">
+                                                    Se ainda não possui acesso forneça seus dados, clique no
+                                                    botão abaixo e crie sua conta e obtenha acesso ao Financas Pessoais.</p>
+                                                <div className="text-center">
+                                                    <a href="/register" className="btn btn-sm btn-warning"
+                                                       title="Não tem uma conta? Crie sua conta!">Criar conta</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-export default Login;
 
-
-
-
+export default LoginForm;
