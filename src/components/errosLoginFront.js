@@ -21,6 +21,8 @@ const ErrosLoginFront = ({ mensagensDeAlerta }) => {
                 .map - itera sobre o array retornado por values. Para cada valor (mensagem de erro)
                 no array, ele retorna um elemento <li> com a mensagem de erro
                 .entries - para certificarse que apenas strings sera renderizada
+
+                {/*className={`form-control form-control-sm inputPlaceholder ${mensagensDeAlerta && 'is-invalid'}`}
             */}
             {Object.keys(mensagensDeAlerta).length > 0 && !mensagensDeAlerta.loginBemSucedido && (
                 <div className="alert alert-danger card-custom">

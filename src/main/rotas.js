@@ -6,7 +6,11 @@ import Login from '../pages/login';
 import Register from '../pages/register';
 //import 'bootswatch/dist/flatly/bootstrap.min.css';
 import '../App.css'
+import '../custom.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+
+
 
 
 

@@ -3,19 +3,25 @@ import Card from '../components/card';
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import {useNavigate} from "react-router-dom";
-
 import styled from "styled-components";
 
 /*pagina de cadastro de usuarios*/
 function Register () {
     /*estados para armazenamento e status de carregamento, e erro*/
+    const [nomeCompleto, setNomeCompleto] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [nomeUsuario, setNomeUsuario] = useState('');
     const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    /*tratamento de erros - mensagens do login*/
-    const [mensagensDeAlerta, setMensagensDeAlerta] = useState('');
-    //const [loading, setLoading] = useState(false); /*ver sobre*/
-
+    const [loading, setLoading] = useState(false); /*ver sobre*/
     const navigate = useNavigate();
+
+
+
+
+
+
+
+
 
     function handleCancelar() {
         navigate('/Login');
@@ -29,6 +35,7 @@ function Register () {
             <div className="row justify-content-center w-100">
                 <div className="col-md-6" style={{ marginTop: '-30px' }}> {/*style={{ marginTop: '-120px' }}*/}
                     <div className="bs-docs-section">
+
                         <Card title="Cadastro de Usuário">
                             <div className="row justify-content-center align-items-center">
                                 <div className="col-md-10">
@@ -94,6 +101,7 @@ function Register () {
                                                        placeholder="Confirme o email"
                                                 />
                                             </FormGroup>
+
                                             <button type="submit" className="btn btn-success mt-3">Confirmar</button>
                                             &nbsp;&nbsp;
                                             <button type="button" className="btn btn-danger mt-3" onClick={handleCancelar}>Cancelar</button>
