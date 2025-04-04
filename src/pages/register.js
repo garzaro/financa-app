@@ -13,7 +13,7 @@ function Register () {
     const [nomeUsuario, setNomeUsuario] = useState('');
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
-    const navigate = useNavigate();
+
 
 
 
