@@ -12,13 +12,8 @@ function Register () {
     const [cpf, setCpf] = useState('');
     const [nomeUsuario, setNomeUsuario] = useState('');
     const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false); /*ver sobre*/
     const navigate = useNavigate();
-
-
-
-
-
+    const navigate = useNavigate();
 
 
 
