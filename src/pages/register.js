@@ -14,6 +14,16 @@ function Register () {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const onSubmit = (data) => {
+
+    };
+
 
 
 
