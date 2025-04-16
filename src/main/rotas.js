@@ -9,11 +9,6 @@ import '../App.css'
 import '../custom.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
-
-
-
-
 const Rotas = () => {
     return (
         <Router>
@@ -22,6 +17,7 @@ const Rotas = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
             </Routes>
         </Router>
     );
