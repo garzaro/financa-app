@@ -8,31 +8,23 @@ import FormGroup from "../components/form-group";
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+
     const {
-        /*registra os inputs*/
         register,
-        /*lida comenvio de formuilario*/
         handleSubmit,
-        /*erro de validação paa cada campo*/
         formState: { errors }
-        /*chamado par obter as funcoes acima*/
     } = useForm();
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
 
-    function fazerLogin = () {
-        setIsLoading(true);
-        setError("");
-        axios.post("http://localhost:8080/api/usuarios/autenticar", data);{
-
+    const fazerLogin = () => {
+        axios.post("http://localhost:8080/api/usuarios/autenticar", {
             email,
             senha,
-        }).then(response => {
-            console.log("Resposta: ", response.data);
+        }).then(res => {
             setTimeout(() => navigate("/home"), 2000);
-        }).catch(erro => {
-            setError(erro.response.data);
+        }).catch(err => {
+            setError(err.response.data);
         });
     };
 
