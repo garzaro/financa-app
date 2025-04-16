@@ -9,38 +9,31 @@ const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const {
+        /*registra os inputs*/
         register,
+        /*lida comenvio de formuilario*/
         handleSubmit,
+        /*erro de validação paa cada campo*/
         formState: { errors }
+        /*chamado par obter as funcoes acima*/
     } = useForm();
-    const [backendError, setBackendError] = useState(null);
-    const [isServerOffline, setIsServerOffline] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const fazerLogin = async (data) => {
+    function fazerLogin = () {
         setIsLoading(true);
-        setBackendError(null);
-        setIsServerOffline(false);
+        setError("");
+        axios.post("http://localhost:8080/api/usuarios/autenticar", data);{
 
-        try {
-            await axios.post("http://localhost:8080/api/usuarios/autenticar", {
-                email: data.email,
-                senha: data.senha,
-            });
+            email,
+            senha,
+        }).then(response => {
+            console.log("Resposta: ", response.data);
             setTimeout(() => navigate("/home"), 2000);
-        } catch (err) {
-            if (err.response) {
-                /*Erro do backend (e-mail/senha incorretos)*/
-                setBackendError(err.response.data.message || err.response.data);
-            } else {
-                /*Servidor offline*/
-                setIsServerOffline(true);
-                navigate("/erro-conexao");
-            }
-        } finally {
-            setIsLoading(false);
-        }
+        }).catch(erro => {
+            setError(erro.response.data);
+        });
     };
 
     return (
@@ -50,7 +43,9 @@ const LoginForm = () => {
                     <div className="bs-docs-section">
 
                         {/* Erros do Backend */}
-                        {backendError && <div className=" alert alert-danger">{backendError}</div>}
+                        <div className="row">
+                            <span>{error}</span>
+                        </div>
 
                         <Card title="Login">
                             <div className="row">
@@ -100,9 +95,8 @@ const LoginForm = () => {
                                             </div>
 
                                             {/* Botão de Login */}
-                                            <button type="submit" disabled={isLoading}
-                                                    className="btn btn-success btn-sm mt-3 ">
-                                                {isLoading ? "Carregando..." : "Entrar"}
+                                            <button type="submit"
+                                                    className="btn btn-success btn-sm mt-3 ">Entrar
                                             </button>
 
                                         </form>
