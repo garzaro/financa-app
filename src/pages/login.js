@@ -105,8 +105,8 @@ const LoginForm = () => {
                                             <div className="m-sm-4">
                                                 <h2 className="text-center">Primeiro acesso?</h2>
                                                 <p className="text-center mb-3">
-                                                    Se ainda não possui acesso forneça seus dados, clique no
-                                                    botão abaixo e crie sua conta e obtenha acesso ao Financas Pessoais.</p>
+                                                    Se ainda não possui acesso, clique no
+                                                    botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.</p>
                                                 <div className="text-center">
                                                     <a href="/register" className="btn btn-sm btn-warning"
                                                        title="Não tem uma conta? Crie sua conta!">Criar conta</a>
