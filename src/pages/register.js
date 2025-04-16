@@ -1,126 +1,169 @@
-import React, {useState} from 'react';
-import Card from '../components/card';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import Astered from "../components/astered";
-import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
 
-/*pagina de cadastro de usuarios*/
-function Register () {
-    /*estados para armazenamento e status de carregamento, e erro*/
-    const [nomeCompleto, setNomeCompleto] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [nomeUsuario, setNomeUsuario] = useState('');
-    const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(false); /*ver sobre*/
+const Register = () => {
+    const [nomeCompleto, setNomeCompleto] = useState("");
+    const [cadastroPessoaFisica, setCadastroPessoaFisica ] = useState("");
+    const [nomeUsuario, setNomeUsuario] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    /*lib react-hook-form*/
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const [backendError, setBackendError] = useState(null);
+    const [isServerOffline, setIsServerOffline] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const cadastrarUsuario = async (data) => {
+        setIsLoading(true);
+        setBackendError(null);
+        setIsServerOffline(false);
 
+        try {
+            await axios.post("http://localhost:8080/api/usuarios", {
+                nomeCompleto: data.nomeCompleto,
+                cadastroPessoaFisica: data.cadastroPessoaFisica,
+                nomeUsuario: data.nomeUsuario,
+                email: data.email,
+                senha: data.senha,
+            });
+            setTimeout(() => navigate("/senha"), 2000);
+        } catch (err) {
+            if (err.response) {
+                /*Erro do backend (cadastro de usuario)*/
+                setBackendError(err.response.data.message || err.response.data);
+            } else {
+                /*Servidor offline*/
+                setIsServerOffline(true);
+                navigate("/erro-conexao");
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-
-
-
-
-
-
-    function handleCancelar() {
-        navigate('/Login');
-    }
-
-   /* const AsteriscoVermelho = styled.span`
-        color: red;
-    `;*/
     return (
-        <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', alignItems: 'center'">
-            <div className="row justify-content-center w-100">
-                <div className="col-md-6" style={{ marginTop: '-30px' }}> {/*style={{ marginTop: '-120px' }}*/}
+        <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
+            <div className="row justify-content-center w-100" >
+                <div className="col-md-6">
                     <div className="bs-docs-section">
 
-                        <Card title="Cadastro de Usuário">
-                            <div className="row justify-content-center align-items-center">
-                                <div className="col-md-10">
+                        {/* Erros do Backend */}
+                        {backendError && <div className=" alert alert-danger">{backendError}</div>}
+
+                        <Card title="Cadastro de Usuários">
+                            <div className="row">
+                                <div className="col-lg-12">
                                     <div className="bs-component">
-                                        <fieldset className="fieldset-sm">
+                                        <form onSubmit={handleSubmit(cadastrarUsuario)}>
+
                                             <FormGroup label={
                                                 <span>
-                                                Nome Completo: <Astered>*</Astered>
+                                                    Nome Completo:<span className="asterisco-vermelho">*</span>
                                                 </span>
-                                            } name="nome-completo">
-                                                <input type="text"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="nome-completo"
-                                                       placeholder="Digite seu nome"
+                                            } name={"nomeCompleto"}
+                                            >
+                                                {/* Campo Nome completo */}
+                                                <input
+                                                    type="text"
+                                                    {...register("nomeCompleto", {required: "Nome completo é obrigatório"})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Nome completo"
+                                                    id="nomeCompleto"
                                                 />
+                                                {errors.nomeCompleto && <span className="error">{errors.nomeCompleto.message}</span>}
                                             </FormGroup>
 
                                             <FormGroup label={
                                                 <span>
-                                                Cadastro Pessoa Física: <Astered>*</Astered>
-                                            </span>
-                                            } name="cpf">
-                                                <input type="text"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="cpf"
-                                                       placeholder="Digite seu nome cpf"
+                                                    Cadastro Pessoa Física:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"cpf"}
+                                            >
+                                                {/* Campo CPF */}
+                                                <input
+                                                    type="text"
+                                                    {...register("cadastroPessoaFisica", {required: "O CPF é obrigatório."})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="CPF"
                                                 />
+                                                {errors.cadastroPessoaFisica && <span className="error">{errors.cadastroPessoaFisica.message}</span>}
                                             </FormGroup>
 
                                             <FormGroup label={
                                                 <span>
-                                                Nome de Usuário: <Astered>*</Astered>
-                                            </span>
-                                            } name="nome-usuario">
-                                                <input type="text"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="nome-usuario"
-                                                       placeholder="Nome de usuário"
+                                                    Nome Usuário:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"nome-usuario"}
+                                            >
+                                                {/* Campo nome de usuario */}
+                                                <input
+                                                    type="text"
+                                                    {...register("nomeUsuario", {required: "O nome de usuário é obrigatório."})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Usuário"
                                                 />
+                                                {errors.nomeUsuario && <span className="error">{errors.nomeUsuario.message}</span>}
                                             </FormGroup>
 
                                             <FormGroup label={
                                                 <span>
-                                                Email: <Astered>*</Astered>
-                                            </span>
-                                            } name="email">
-                                                <input type="email"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="email"
-                                                       placeholder="Digite o email"
+                                                    Email:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"email"}
+                                            >
+                                                {/* Campo email */}
+                                                <input
+                                                    type="email"
+                                                    {...register("email", {required: "O email é obrigatório."})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="E-mail"
                                                 />
+                                                {errors.email && <span className="error">{errors.email.message}</span>}
                                             </FormGroup>
 
-                                            {/*repetir*/}
                                             <FormGroup label={
                                                 <span>
-                                                Confirmar Email: <Astered>*</Astered>
-                                            </span>
-                                            } name="confirmar-email">
-                                                <input type="email"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="repetir-email"
-                                                       placeholder="Confirme o email"
+                                                    Repetir email:<span className="asterisco-vermelho">*</span>
+                                                </span>
+                                            } name={"repetir"}
+                                            >
+                                                {/* Campo Repetir email */}
+                                                <input
+                                                    type="email"
+                                                    {...register("repetir", {required: "Repetir o email."})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="repetir"
                                                 />
+                                                {errors.repetir && <span className="error">{errors.repetir.message}</span>}
                                             </FormGroup>
 
-                                            <button type="submit" className="btn btn-success mt-3">Confirmar</button>
-                                            &nbsp;&nbsp;
-                                            <button type="button" className="btn btn-danger mt-3" onClick={handleCancelar}>Cancelar</button>
-                                        </fieldset>
+                                            {/* Botão para salvar cadastro*/}
+                                            <button type="submit" disabled={isLoading}
+                                                    className="btn btn-success btn-sm mt-3 ">
+                                                {isLoading ? "Carregando..." : "Salvar "}
+                                            </button>
+
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </Card>
+
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+
 export default Register;
-
-
-
-
-
-
-
