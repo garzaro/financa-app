@@ -17,10 +17,10 @@ const LoginForm = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const fazerLogin = () => {
+    const fazerLogin = (data) => {
         axios.post("http://localhost:8080/api/usuarios/autenticar", {
-            email,
-            senha,
+            email:data.email,
+            senha:data.senha,
         }).then(res => {
             setTimeout(() => navigate("/home"), 2000);
         }).catch(err => {
