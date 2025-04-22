@@ -3,30 +3,21 @@ import axios from "axios";
 
 /*pagina inicial*/
 function Home () {
-    const [saldo, setSaldo] = useState(0);
-    const [erros, setErros] = useState('');
+    const [saldo, setSaldo] = useState('');
 
-    /*useEffect(() => {
-        const retonarSaldo = async () => {
-            try {
-                /*usar crase no endpoint
-                const response = await axios
-                    .get(`http://localhost:3000/api/usuarios/${usuarioLogadoObjeto.id}/saldo`)
-                /*
-                .then((res) => {
-                setSaldo(res.data);
-                })
-            }
-            /*recurando o usuario logado
-            const usuarioLogadoString = localStorage.getItem('_usuario_logado');
-            /*transformando string em objeto
-            const usuarioLogadoObjeto = JSON.parse(usuarioLogadoString);
-            console.log(usuarioLogadoObjeto);
+    /*ciclo de vida*/
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/usuarios/4/saldo')
+            /*res*/
+            .then(retornoSaldo => {
+                setSaldo(retornoSaldo.data);
+            }).catch(error =>{
 
-       }*/
-
-
-
+        });
+        return () => {
+            console.log("componente sera desmontado");
+        }
+    },[]);
 
     return (
         <div className="container ">

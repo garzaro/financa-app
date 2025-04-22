@@ -1,7 +1,7 @@
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
 
@@ -18,16 +18,10 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
     const fazerLogin = (data) => {
-        /*if (!data.email || !data.senha) {
-            setError("Email is required");
-            return;
-        }*/
         axios.post("http://localhost:8080/api/usuarios/autenticar", {
             email:data.email,
             senha:data.senha,
         }).then(res => {
-            /*recuperar o usuario logado - stringfy tranforma obj em string*/
-            localStorage.setItem("_usuario_logado", JSON.stringify(res.data));
             setTimeout(() => navigate("/home"), 2000);
         }).catch(err => {
             setError(err.response.data);
