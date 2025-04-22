@@ -6,9 +6,7 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 /*ver esse questao dos campos controlados  e react hook form - nao pode usar os dois juntos -
 * ver essa expçicacao https://chatgpt.com/c/67f695c9-c94c-8013-851b-33a2dbdcd8ff */
-
 const LoginForm = () => {
-
     const {
         register,
         handleSubmit,
@@ -102,10 +100,14 @@ const LoginForm = () => {
                                             </div>
 
                                             {/* Botão de Login */}
+                                            <button type="submit" className="btn btn-success btn-sm mt-3">
+                                                Entrar
+                                            </button>
+                                            {/*
                                             <button type="submit" disabled={isLoading}
                                                     className="btn btn-success btn-sm mt-3 ">
                                                 {isLoading ? "Carregando..." : "Entrar"}
-                                            </button>
+                                            </button>*/}
 
                                         </form>
                                     </div>
