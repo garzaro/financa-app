@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Navbar from '../components/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
-import Register from '../pages/register';
+import CadastroUsuario from '../pages/register';
 //import 'bootswatch/dist/flatly/bootstrap.min.css';
 import '../App.css'
 import '../custom.css'
@@ -16,7 +16,7 @@ const Rotas = () => {
             <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
 
             </Routes>
         </Router>

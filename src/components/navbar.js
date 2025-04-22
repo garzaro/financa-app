@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 /*barra de navegação com os links*/
 const Navbar = () => {
@@ -35,7 +35,7 @@ const Navbar = () => {
                             <Link className="nav-link" to="/login">Login</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/register">Cadastro</Link>
+                            <Link className="nav-link" to="/cadastroUsuario">Cadastro</Link>
 
                         </li>
                     </ul>

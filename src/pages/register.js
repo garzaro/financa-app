@@ -1,35 +1,35 @@
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
 
-const Register = () => {
+const CadastroUsuario = () => {
     const [nomeCompleto, setNomeCompleto] = useState("");
     const [cadastroPessoaFisica, setCadastroPessoaFisica ] = useState("");
     const [nomeUsuario, setNomeUsuario] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [repetirSenha, setRepetirSenha] = useState("");
     /*lib react-hook-form*/
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-
-    const [backendError, setBackendError] = useState(null);
+    const [erros, setErros] = useState("");
     const [isServerOffline, setIsServerOffline] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const cadastrarUsuario = async (data) => {
         setIsLoading(true);
-        setBackendError(null);
+        setErros("");
         setIsServerOffline(false);
 
         try {
-            await axios.post("http://localhost:8080/api/usuarios", {
+            await axios.post("http://localhost:8080/api/usuarios/salvar", {
                 nomeCompleto: data.nomeCompleto,
                 cadastroPessoaFisica: data.cadastroPessoaFisica,
                 nomeUsuario: data.nomeUsuario,
@@ -40,7 +40,7 @@ const Register = () => {
         } catch (err) {
             if (err.response) {
                 /*Erro do backend (cadastro de usuario)*/
-                setBackendError(err.response.data.message || err.response.data);
+                setErros(err.response.data.message || err.response.data);
             } else {
                 /*Servidor offline*/
                 setIsServerOffline(true);
@@ -58,7 +58,7 @@ const Register = () => {
                     <div className="bs-docs-section">
 
                         {/* Erros do Backend */}
-                        {backendError && <div className=" alert alert-danger">{backendError}</div>}
+                        {erros && <div className=" alert alert-danger">{erros}</div>}
 
                         <Card title="Cadastro de Usuários">
                             <div className="row">
@@ -166,4 +166,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default CadastroUsuario;
