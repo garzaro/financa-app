@@ -3,28 +3,34 @@ import axios from "axios";
 
 /*pagina inicial*/
 function Home () {
-    const [saldo, setSaldo] = useState('');
+    const [saldo, setSaldo] = useState('0,00');
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState(null);
 
     /*ciclo de vida*/
     useEffect(() => {
-        axios.get('http://localhost:8080/api/usuarios/4/saldo')
-            /*res*/
-            .then(retornoSaldo => {
-                setSaldo(retornoSaldo.data);
-            }).catch(error =>{
-
-        });
-        return () => {
-            console.log("componente sera desmontado");
-        }
+        const buscarSaldo = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/usuarios/1/saldo`);
+                setSaldo(response.data);
+            } catch (err) {
+                /*tentar trazer a mesangem de erro de rede do backend*/
+                setErro(err.response?.data.message || err.response?.data);
+            } finally {
+                setLoading(false);
+            }
+        };
+    buscarSaldo();
     },[]);
+    if (loading) return <p>Carregando saldo...</p>
+    if (erro) return <p>{erro}</p>;
 
     return (
         <div className="container ">
             <div className="jumbotron ">
                 <h1 className="display-5">Bem-vindo à Página Inicial!!!</h1>
                 <p className="lead">Este é o seu sistema de finanças pessoais.</p>
-                <p className="lead">Seu saldo para o mes atual é de R$ {saldo}.</p>
+                <p className="lead">Saldo atual {saldo !== null ? `R$ ${saldo}`: `indisponivel`}.</p>
                 <hr className="my-4"/>
                 <p>Essa é a sua área administrativa.</p>
                 <p className="lead">
