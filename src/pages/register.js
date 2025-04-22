@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import Card from '../components/card';
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
@@ -7,32 +9,41 @@ import styled from "styled-components";
 
 /*pagina de cadastro de usuarios*/
 function Register () {
-    /*estados para armazenamento e status de carregamento, e erro*/
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [cpf, setCpf] = useState('');
     const [nomeUsuario, setNomeUsuario] = useState('');
     const [email, setEmail] = useState('');
+    const [erro, setErro] = useState('');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => {
+    /*ciclo de vida*/
+    useEffect(() => {
+        const salvarUsuario = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/usuarios`);
+            } catch (err) {
+                /*tentar trazer a mesangem de erro de rede do backend*/
+                setErro(err.response?.data.message || err.response?.data);
+            } finally {
+                setLoading(false);
+            }
+        };
+        salvarUsuario();
+    },[]);
 
-    };
-
-
-
-
-
+    const handleAvancar = () =>{
+        navigate("/senha")
+    }
 
     function handleCancelar() {
         navigate('/Login');
-    }
-
+    };
    /* const AsteriscoVermelho = styled.span`
         color: red;
     `;*/
@@ -49,14 +60,19 @@ function Register () {
                                         <fieldset className="fieldset-sm">
                                             <FormGroup label={
                                                 <span>
-                                                Nome Completo: <Astered>*</Astered>
+                                                    Nome Completo:<span className="asterisco-vermelho">*</span>
                                                 </span>
-                                            } name="nome-completo">
-                                                <input type="text"
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       id="nome-completo"
-                                                       placeholder="Digite seu nome"
+                                            } name={"nome-completo"}
+                                            >
+                                                {/* Campo nome completo */}
+                                                <input
+                                                    type="text"
+                                                    {...register("nome-completo", {required: "O nome completo é obrigatório"})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Digite seu nome completo"
+                                                    id="nome-completo"
                                                 />
+                                                {errors.nomeCompleto && <span className="error">{errors.nomeCompleto.message}</span>}
                                             </FormGroup>
 
                                             <FormGroup label={
@@ -108,9 +124,9 @@ function Register () {
                                                 />
                                             </FormGroup>
 
-                                            <button type="submit" className="btn btn-success mt-3">Confirmar</button>
+                                            <button type="submit" className="btn btn-success btn-sm mt-3">Avançar</button>
                                             &nbsp;&nbsp;
-                                            <button type="button" className="btn btn-danger mt-3" onClick={handleCancelar}>Cancelar</button>
+                                            <button type="button" className="btn btn-danger btn-sm mt-3" onClick={handleCancelar}>Cancelar</button>
                                         </fieldset>
                                     </div>
                                 </div>
