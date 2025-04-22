@@ -1,30 +1,46 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-
 /*pagina inicial*/
 function Home () {
-    const [saldo, setSaldo] = useState('');
-
+    const [saldo, setSaldo] = useState('0,00');
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState(null);
     /*ciclo de vida*/
     useEffect(() => {
-        axios.get('http://localhost:8080/api/usuarios/4/saldo')
-            /*res*/
-            .then(retornoSaldo => {
-                setSaldo(retornoSaldo.data);
-            }).catch(error =>{
-
-        });
-        return () => {
-            console.log("componente sera desmontado");
-        }
+        const buscarSaldo = async () => {
+            try {
+                /*recuperando o usuario logado - transformado de obj para string no login*/
+                const stringUsuarioLogado = localStorage.getItem('_usuario_logado');
+                console.log(" Recuperando usuario string ", stringUsuarioLogado);
+                /*tranformando a string em objeto*/
+                const objetoUsuarioLogado = JSON.parse(stringUsuarioLogado);
+                console.log(objetoUsuarioLogado);
+                /*usar crase no endpoint*/
+                const response = await axios.get(`http://localhost:8080/api/usuarios/1/saldo`)
+                setSaldo(response.data);
+            } catch (err) {
+                /*tentar trazer mensagem do backend*/
+                setErro(err.response?.data.message || err.response?.data);
+            } finally {
+                setLoading(false);
+            }
+        };
+        buscarSaldo();
     },[]);
+    if (loading) return <p>Carregando saldo...</p>
+    if (erro) return <p>{erro}</p>;
 
     return (
         <div className="container ">
             <div className="jumbotron ">
                 <h1 className="display-5">Bem-vindo à Página Inicial!!!</h1>
                 <p className="lead">Este é o seu sistema de finanças pessoais.</p>
-                <p className="lead">Seu saldo para o mes atual é de R$ {saldo}.</p>
+
+                {/*retorno do saldo*/}
+                <p className="lead">
+                    Seu saldo para o mês atual é de {saldo !== null ? `R$ ${saldo}`: `indisponivel`}.
+                </p>
+
                 <hr className="my-4"/>
                 <p>Essa é a sua área administrativa.</p>
                 <p className="lead">
@@ -39,5 +55,3 @@ function Home () {
     );
 };
 export default Home;
-
-
