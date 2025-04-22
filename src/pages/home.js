@@ -24,27 +24,7 @@ function Home () {
             console.log(usuarioLogadoObjeto);
 
        }*/
-        useEffect(() => {
-            const fetchSaldo = async () => {
-                try {
-                    /*recuperando o usuario logado - transformado de obj para string no login*/
-                    const stringUsuarioLogado = localStorage.getItem('_usuario_logado');
-                    console.log('Recuperando o usuario string', stringUsuarioLogado);
-                    /*tranformando a string em objeto*/
-                    const objetoUsuarioLogado = JSON.parse(stringUsuarioLogado);
-                    console.log(objetoUsuarioLogado);
-                    /*usar crase no endpoint*/
-                    const response = await axios.get(
-                        `http://localhost:3000/api/usuarios/${objetoUsuarioLogado.id}/saldo`
-                    );
-                    setSaldo(response.data);
-                }catch(err) {
-                    console.log(err);
-                    setErros(err);
-                }
-            };
-            fetchSaldo();
-        }, []); /*vai executar uma vez só - ciclo de vida*/
+
 
 
 
