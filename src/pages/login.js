@@ -6,6 +6,7 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 /*ver esse questao dos campos controlados  e react hook form - nao pode usar os dois juntos -
 * ver essa expçicacao https://chatgpt.com/c/67f695c9-c94c-8013-851b-33a2dbdcd8ff */
+
 const LoginForm = () => {
 
     const {
@@ -13,6 +14,7 @@ const LoginForm = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
+
     const [backendError, setBackendError] = useState(null);
     const [isServerOffline, setIsServerOffline] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +22,7 @@ const LoginForm = () => {
 
     const fazerLogin = async (data) => {
         setIsLoading(true);
-        setBackendError(null);
+        setBackendError('');
         setIsServerOffline(false);
 
         try {
@@ -29,10 +31,10 @@ const LoginForm = () => {
                 senha: data.senha,
             });
             setTimeout(() => navigate("/home"), 2000);
-        } catch (err) {
-            if (err.response) {
+        } catch (erro) {
+            if (erro.response) {
                 /*Erro do backend (e-mail/senha incorretos)*/
-                setBackendError(err.response.data.message || err.response.data);
+                setBackendError(erro.response.data.message || erro.response.data);
             } else {
                 /*Servidor offline*/
                 setIsServerOffline(true);
