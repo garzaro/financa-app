@@ -3,21 +3,50 @@ import axios from "axios";
 
 /*pagina inicial*/
 function Home () {
-    const [saldo, setSaldo] = useState('');
+    const [saldo, setSaldo] = useState(0);
+    const [erros, setErros] = useState('');
 
-    /*ciclo de vida*/
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/usuarios/4/saldo')
-            /*res*/
-            .then(retornoSaldo => {
-                setSaldo(retornoSaldo.data);
-            }).catch(error =>{
+    /*useEffect(() => {
+        const retonarSaldo = async () => {
+            try {
+                /*usar crase no endpoint
+                const response = await axios
+                    .get(`http://localhost:3000/api/usuarios/${usuarioLogadoObjeto.id}/saldo`)
+                /*
+                .then((res) => {
+                setSaldo(res.data);
+                })
+            }
+            /*recurando o usuario logado
+            const usuarioLogadoString = localStorage.getItem('_usuario_logado');
+            /*transformando string em objeto
+            const usuarioLogadoObjeto = JSON.parse(usuarioLogadoString);
+            console.log(usuarioLogadoObjeto);
 
-        });
-        return () => {
-            console.log("componente sera desmontado");
-        }
-    },[]);
+       }*/
+        useEffect(() => {
+            const fetchSaldo = async () => {
+                try {
+                    /*recuperando o usuario logado - transformado de obj para string no login*/
+                    const stringUsuarioLogado = localStorage.getItem('_usuario_logado');
+                    console.log('Recuperando o usuario string', stringUsuarioLogado);
+                    /*tranformando a string em objeto*/
+                    const objetoUsuarioLogado = JSON.parse(stringUsuarioLogado);
+                    console.log(objetoUsuarioLogado);
+                    /*usar crase no endpoint*/
+                    const response = await axios.get(
+                        `http://localhost:3000/api/usuarios/${objetoUsuarioLogado.id}/saldo`
+                    );
+                    setSaldo(response.data);
+                }catch(err) {
+                    console.log(err);
+                    setErros(err);
+                }
+            };
+            fetchSaldo();
+        }, []); /*vai executar uma vez só - ciclo de vida*/
+
+
 
     return (
         <div className="container ">
