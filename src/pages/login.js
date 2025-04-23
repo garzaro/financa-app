@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
+import {mensagemDeErro} from '../components/toastr'
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -14,7 +15,6 @@ const LoginForm = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const fazerLogin = (data) => {
@@ -26,7 +26,7 @@ const LoginForm = () => {
             localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
             setTimeout(() => navigate("/home"), 2000);
         }).catch(err => {
-            setError(err.response.data);
+            mensagemDeErro(err.response.data);
         });
     };
 
@@ -36,10 +36,10 @@ const LoginForm = () => {
                 <div className="col-md-6">
                     <div className="bs-docs-section">
 
-                        {/* Erros do Backend */}
+                        {/* Erros do Backend
                         <div className="row">
                             <span>{error}</span>
-                        </div>
+                        </div>*/}
 
                         <Card title="Login">
                             <div className="row">

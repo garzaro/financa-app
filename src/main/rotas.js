@@ -4,10 +4,14 @@ import Navbar from '../components/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
+
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'toastr/build/toastr.min.js'
+
 import 'bootswatch/dist/flatly/bootstrap.min.css';
 import '../App.css'
 import '../custom.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'toastr/build/toastr.css'
 
 const Rotas = () => {
     return (
