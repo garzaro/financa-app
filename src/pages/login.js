@@ -21,7 +21,9 @@ const LoginForm = () => {
         axios.post("http://localhost:8080/api/usuarios/autenticar", {
             email:data.email,
             senha:data.senha,
-        }).then(res => {
+        }).then(response => {
+            /*recuperar o usuario da resposta - response*/
+            localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
             setTimeout(() => navigate("/home"), 2000);
         }).catch(err => {
             setError(err.response.data);

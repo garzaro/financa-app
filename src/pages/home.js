@@ -14,9 +14,10 @@ function Home () {
                 console.log(" Recuperando usuario string ", stringUsuarioLogado);
                 /*tranformando a string em objeto*/
                 const objetoUsuarioLogado = JSON.parse(stringUsuarioLogado);
-                console.log(objetoUsuarioLogado);
-                /*usar crase no endpoint*/
-                const response = await axios.get(`http://localhost:8080/api/usuarios/1/saldo`)
+                const userId = objetoUsuarioLogado;
+                console.log(" Recuperando usuario objeto ",objetoUsuarioLogado);
+                /*usar crase no endpoint - se torna um template string - recurso do ecma*/
+                const response = await axios.get(`http://localhost:8080/api/usuarios/${userId.id}/saldo`)
                 setSaldo(response.data);
             } catch (err) {
                 /*tentar trazer mensagem do backend*/
