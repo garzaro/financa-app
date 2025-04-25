@@ -13,6 +13,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.55.0",
+    "react-password-checklist": "^1.8.1",
     "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
