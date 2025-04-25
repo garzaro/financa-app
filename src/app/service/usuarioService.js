@@ -1,7 +1,7 @@
-//import Apiservice from "../apiservice";
-//import {useNavigate} from "react-router-dom";
+import Apiservice from "../apiservice";
+import {useNavigate} from "react-router-dom";
 
-/*tratando da api de serviços do usuario - sobrescrevendo para utilização dos meos da apiService
+/*tratando da api de serviços do usuario - sobrescrevendo para utilização dos meos da apiService*/
 function UsuarioService (){
     usuarioApiUrl = '/api/usuarios';
     autenticar();
