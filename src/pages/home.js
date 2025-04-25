@@ -3,7 +3,9 @@ import axios from "axios";
 import {useSaldo} from "../app/service/useSaldo";
 /*pagina inicial*/
 function Home () {
+    /*aqui é feito a composicao - em componente de classe seria feito um extends - heranca - destructure*/
     const { saldo, loading, erro } = useSaldo();
+
     return (
         <div className="container ">
             <div className="jumbotron ">

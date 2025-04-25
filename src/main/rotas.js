@@ -4,7 +4,7 @@ import Navbar from '../components/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
-import FormularioSenha from "../pages/signupFormPassword";
+//import FormularioSenha from "../pages/signupFormPassword";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'toastr/build/toastr.min.js'
@@ -22,7 +22,7 @@ const Rotas = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/signupFormPassword" element={<FormularioSenha/>} />
+                {/*<Route path="/signupFormPassword" element={<FormularioSenha/>} />*/}
             </Routes>
         </Router>
     );
