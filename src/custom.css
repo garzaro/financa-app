@@ -391,3 +391,41 @@ pre{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/*validacao do fomrulario de senha*/
+.password-checklist ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.password-checklist li {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.password-checklist li::before {
+    content: "";
+    display: inline-block;
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+}
+
+.password-checklist li.valid {
+    color: green;
+}
+
+.password-checklist li.valid::before {
+    content: "✔"; /* Ícone de válido */
+    color: green;
+}
+
+.password-checklist li.invalid {
+    color: red;
+}
+
+.password-checklist li.invalid::before {
+    content: "✘"; /* Ícone de inválido */
+    color: red;
+}
