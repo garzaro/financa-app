@@ -10,7 +10,6 @@ import {mensagemDeErro} from "../components/toastr";
 function FormularioSenha() {
     const [senha, setSenha] = useState('');
     const [senhaNovamente, setSenhaNovamente] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const {register, handleSubmit, formState: { errors, isValid }} = useForm({mode: "onChange"}); /* {mode: "onChange"}quando o  usuario digitar ja vai validando - tipo tempo real*/
 
     const navigate = useNavigate();
