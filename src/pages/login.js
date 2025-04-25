@@ -30,6 +30,7 @@ const LoginForm = () => {
         });
     };
 
+
     return (
         <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
             <div className="row justify-content-center w-100" >
