@@ -7,7 +7,7 @@ const usuarioApi = Apiservice('/api/usuarios/');
 const ServiceUsuario = () =>{
     return{
         autenticar: (credenciais) => {
-        return usuarioApi.post('/autenticar', credenciais);
+        return usuarioApi.post('autenticar', credenciais);
     }
 };
     // outros métodos futuros:

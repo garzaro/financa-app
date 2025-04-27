@@ -20,7 +20,7 @@ usuarioService.autenticar({
     email:data.email,
     senha:data.senha,
 }).then(response => {
-/*recuperar o usuario da resposta - response*/
+/*recuperar id do suuario - response*/
     localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
