@@ -7,8 +7,11 @@ const usuarioApi = Apiservice('/api/usuarios/');
 const ServiceUsuario = () =>{
     return{
         autenticar: (credenciais) => {
-        return usuarioApi.post('autenticar', credenciais);
-    }
+            return usuarioApi.post('autenticar', credenciais);
+    },
+        buscarSaldoPorUsuario: (id) => {
+            return usuarioApi.get(`${id}/saldo`);
+        }
 };
     // outros métodos futuros:
     // cadastrar: (dados) => usuarioApi.post('/cadastrar', dados),

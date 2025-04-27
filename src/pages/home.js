@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import {useSaldo} from "../app/service/useSaldo";
 /*pagina inicial*/
 function Home () {

@@ -14,6 +14,18 @@ const ApiService = (apiurl) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.post(requestUrl, objeto);
         },
+        put: (url, objeto) => {
+            const requestUrl = `${apiurl}${url}`;
+            return httpClient.put(requestUrl, objeto);
+        },
+        delete: (url, objeto) => {
+            const requestUrl = `${apiurl}${url}`;
+            return httpClient.delete(requestUrl, objeto);
+        },
+        get: (url, objeto) => {
+            const requestUrl = `${apiurl}${url}`;
+            return httpClient.get(requestUrl, objeto);
+        }
     }
 }
 export default ApiService;
