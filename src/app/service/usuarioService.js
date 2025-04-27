@@ -10,7 +10,7 @@ const ServiceUsuario = () =>{
             return usuarioApi.post('autenticar', credenciais);
     },
         buscarSaldoPorUsuario: (id) => {
-            return usuarioApi.get(`${id}/saldo`);
+        return usuarioApi.get(`${id}/saldo`);
         }
 };
     // outros métodos futuros:
