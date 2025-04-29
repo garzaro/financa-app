@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSaldo} from "../app/service/useSaldo";
+import {LocalStorageService} from "../app/service/localStorageService";
 /*pagina inicial*/
 function Home () {
     /*aqui é feito a composicao - em componente de classe seria feito um extends - heranca - destructure*/

@@ -6,6 +6,7 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import {mensagemDeErro} from '../components/toastr'
 import UsuarioService from "../app/service/usuarioService";
+import {LocalStorageService} from "../app/service/localStorageService";
 
 function LoginForm () {
 const [email, setEmail] = useState('');
@@ -14,14 +15,17 @@ const { register, handleSubmit, formState: { errors }} = useForm();
 const navigate = useNavigate();
 /*chamando o servico de usuario*/
 const usuarioService = UsuarioService();
+const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
 /*logar*/
 const fazerLogin = (data) => {
-usuarioService.autenticar({
+    localStorage.removeItem('_usuario_logado');
+    usuarioService.autenticar({
     email:data.email,
     senha:data.senha,
 }).then(response => {
-/*recuperar id do suuario - response*/
-    localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
+    console.log(response.data);
+/*recuperar id do usuario - response*/
+    setUsuarioLogado(response.data);
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
     //mensagemDeErro(err.response.data);
