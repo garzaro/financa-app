@@ -24,7 +24,7 @@ usuarioService.autenticar({
     localStorage.setItem('_usuario_logado', JSON.stringify(response.data))
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
-    mensagemDeErro(err.response.data);
+    //mensagemDeErro(err.response.data);
 });
 };
 return (
