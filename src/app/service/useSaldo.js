@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import UsuarioService from "../service/usuarioService";
+import {LocalStorageService} from "./localStorageService";
 /*componente costumizado*/
 export function useSaldo() {
     const [saldo, setSaldo] = useState(0);
@@ -8,26 +9,27 @@ export function useSaldo() {
     const [erro, setErro] = useState(null);
     /*instanciar servico de usuario*/
     const serviceSaldoPorUsuario = UsuarioService();
+    const [usuarioLogado] = LocalStorageService('_usuario_logado', null);
     /*ciclo de vida*/
     useEffect(() => {
         /*flag para verificar se este componente esta montado*/
         let isMounted = true;
         const buscarSaldo = () => {
-            /*recuperando o usuario logado - transformado de obj para string no login*/
-            const stringUsuarioLogado = localStorage.getItem('_usuario_logado');
-            /*tranformando a string em objeto*/
-            const objetoUsuarioLogado = JSON.parse(stringUsuarioLogado);
-            const userId = objetoUsuarioLogado;
-            /*usar crase no endpoint - se torna um template string - recurso do ecma*/
-            serviceSaldoPorUsuario.buscarSaldoPorUsuario(userId.id)
-                .then(response => {
-                    setSaldo(response.data);
-                    setLoading(false);
-                }).catch(err => {
-                /*tentar trazer mensagem do backend*/
-                setErro(err.response?.data.message || err.response?.data)
-                setLoading(false);
-            });
+            if (usuarioLogado && usuarioLogado.id) {
+                serviceSaldoPorUsuario.buscarSaldoPorUsuario(usuarioLogado.id)
+                    .then(response => {
+                        if (isMounted) {
+                            setSaldo(response.data);
+                            setLoading(false);
+                        }
+                    }).catch(err => {
+                    /*tentar trazer mensagem do backend*/
+                    if (isMounted) {
+                        setErro(err.response?.data.message || err.response?.data)
+                        setLoading(false);
+                    }
+                });
+            }
         };
         buscarSaldo();
         return () => {
@@ -35,6 +37,6 @@ export function useSaldo() {
             isMounted = false;
         }
         /*qualquer alteracao no custom este componente sera recarregado - [deps]*/
-    }, [serviceSaldoPorUsuario]);
+    }, [serviceSaldoPorUsuario, usuarioLogado]);
     return{saldo, loading, erro};
 }
