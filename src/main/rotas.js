@@ -27,5 +27,4 @@ const Rotas = () => {
         </Router>
     );
 };
-
 export default Rotas;

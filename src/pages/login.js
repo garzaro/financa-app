@@ -18,17 +18,17 @@ const usuarioService = UsuarioService();
 const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
 /*logar*/
 const fazerLogin = (data) => {
+    /*limpe dados antigos*/
     localStorage.removeItem('_usuario_logado');
     usuarioService.autenticar({
     email:data.email,
     senha:data.senha,
 }).then(response => {
-    console.log(response.data);
 /*recuperar id do usuario - response*/
     setUsuarioLogado(response.data);
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
-    //mensagemDeErro(err.response.data);
+    mensagemDeErro(err.response.data);
 });
 };
 return (
