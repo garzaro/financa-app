@@ -31,23 +31,22 @@ const fazerLogin = (data) => {
     mensagemDeErro(err.response.data);
 });
 };
+function handleCancelar() {
+    navigate('/Login');
+}
+function handleAvancar() {
+    navigate('/');
+}
 return (
     <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
         <div className="row justify-content-center w-100" >
             <div className="col-md-6">
                 <div className="bs-docs-section">
-
-                    {/* Erros do Backend
-                    <div className="row">
-                        <span>{error}</span>
-                    </div>*/}
-
                     <Card title="Login">
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="bs-component">
                                     <form onSubmit={handleSubmit(fazerLogin)}>
-
                                         <FormGroup label={
                                             <span>
                                                 Email:<span className="asterisco-vermelho">*</span>
@@ -90,10 +89,10 @@ return (
                                         </div>
 
                                         {/* Botão de Login */}
-                                        <button type="submit"
-                                                className="btn btn-success btn-sm mt-3 ">Entrar
+                                        <button
+                                            type="submit" className="btn btn-success btn-sm mt-3"
+                                            onClick={handleCancelar}>Entrar
                                         </button>
-
                                     </form>
                                 </div>
                             </div>
@@ -112,7 +111,7 @@ return (
                                                 botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.</p>
                                             <div className="text-center">
                                                 <a href="/register" className="btn btn-sm btn-warning"
-                                                   title="Não tem uma conta? Crie sua conta!">Criar conta</a>
+                                                   title="Não tem uma conta? Clique aqui!">Criar conta</a>
                                             </div>
                                         </div>
                                     </div>

@@ -10,8 +10,11 @@ const ServiceUsuario = () =>{
             return usuarioApi.post('autenticar', credenciais);
     },
         buscarSaldoPorUsuario: (id) => {
-        return usuarioApi.get(`${id}/saldo`);
-        }
+            return usuarioApi.get(`${id}/saldo`);
+    },
+        salvarUsuario: (usuarios) => {
+            return usuarioApi.post(`/`, usuarios);
+    }
 };
     // outros métodos futuros:
     // cadastrar: (dados) => usuarioApi.post('/cadastrar', dados),
