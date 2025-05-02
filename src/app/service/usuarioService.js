@@ -13,7 +13,7 @@ const ServiceUsuario = () =>{
             return usuarioApi.get(`${id}/saldo`);
     },
         salvarUsuario: (usuarios) => {
-            return usuarioApi.post(`/`, usuarios);
+            return usuarioApi.post('persistirUsuarioNabaseDeDados', usuarios);
     }
 };
     // outros métodos futuros:

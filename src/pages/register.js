@@ -17,7 +17,10 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [emailNovamente, setEmailNovamente] = useState('');
     const navigate = useNavigate();
-    const {register, handleSubmit, watch, formState:{errors},} = useForm({});
+    const {register, handleSubmit, formState:{errors},} = useForm({});
+
+    const onSubmit = data => console.log("Verificação do metodo onValid", data);
+
     /*contexto do cadastro*/
     /*const {salvarDadosUsuario} = useCadastroUsuario();
     /*preencher o form e redirecionar para senha
@@ -70,7 +73,7 @@ const Register = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
-                                        <form onSubmit={handleSubmit()}>
+                                        <form onSubmit={handleSubmit(onSubmit)}>
                                             {/*campo nome completo*/}
                                             <FormGroup label={
                                                 <span>
@@ -121,7 +124,7 @@ const Register = () => {
                                                        placeholder="Digite seu email"/>
                                                 {errors.email && <span className="error">{errors.email.message}</span>}
                                             </FormGroup>
-                                            {/*campo repetir email*/}
+                                            {/*campo repetir email
                                             <FormGroup label={
                                                 <span>
                                                     Repetir email:<Astered>*</Astered>
@@ -132,7 +135,7 @@ const Register = () => {
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu email novamente"/>
                                                 {errors.emailNovamente && <span className="error">{errors.emailNovamente.message}</span>}
-                                            </FormGroup>
+                                            </FormGroup>*/}
                                             {/* Botão de cadastro*/}
                                             <button className="btn btn-success btn-sm mt-2" onClick={handleAvancar}>
                                                 Avançar
