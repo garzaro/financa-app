@@ -22,10 +22,7 @@ const ApiService = (apiurl) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.delete(requestUrl, objeto);
         },
-        get: (url, objeto) => {
-            const requestUrl = `${apiurl}${url}`;
-            return httpClient.get(requestUrl, objeto);
-        }
+
     }
 }
 export default ApiService;
