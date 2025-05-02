@@ -21,8 +21,7 @@ const ApiService = (apiurl) => {
         delete: (url, objeto) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.delete(requestUrl, objeto);
-        },
-
+        }
     }
 }
 export default ApiService;
