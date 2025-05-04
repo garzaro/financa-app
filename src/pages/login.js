@@ -28,6 +28,7 @@ const fazerLogin = (data) => {
     setUsuarioLogado(response.data);
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
+    console.log("VERIFICANDO ERRO DE RETORNO DO OBJETO ", err);
     mensagemDeErro(err.response.data);
 });
 };
