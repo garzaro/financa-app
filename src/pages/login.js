@@ -9,28 +9,27 @@ import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 
 function LoginForm () {
-const [email, setEmail] = useState('');
-const [senha, setSenha] = useState('');
-const { register, handleSubmit, formState: { errors }} = useForm();
-const navigate = useNavigate();
-/*chamando o servico de usuario*/
-const usuarioService = UsuarioService();
-const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
-/*logar*/
-const fazerLogin = (data) => {
-    /*limpe dados antigos*/
-    localStorage.removeItem('_usuario_logado');
-    usuarioService.autenticar({
-    email:data.email,
-    senha:data.senha,
-}).then(response => {
-/*recuperar id do usuario - response*/
-    setUsuarioLogado(response.data);
-    setTimeout(() => navigate("/home"), 2000);
-}).catch(err => {
-    console.log("VERIFICANDO ERRO DE RETORNO DO OBJETO ", err);
-    mensagemDeErro(err.response.data);
-});
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const { register, handleSubmit, formState: { errors }} = useForm();
+    const navigate = useNavigate();
+    /*chamando o servico de usuario*/
+    const usuarioService = UsuarioService();
+    const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
+    /*logar*/
+    const fazerLogin = (data) => {
+        /*limpe dados antigos*/
+        localStorage.removeItem('_usuario_logado');
+        usuarioService.autenticar({
+        email:data.email,
+        senha:data.senha,
+    }).then(response => {
+    /*recuperar id do usuario - response*/
+        setUsuarioLogado(response.data);
+        setTimeout(() => navigate("/home"), 2000);
+    }).catch(err => {
+        mensagemDeErro(err.response.data);
+    });
 };
 function handleCancelar() {
     navigate('/Login');

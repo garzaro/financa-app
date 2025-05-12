@@ -18,16 +18,16 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
-export function mostrarMensagemDeErro(titulo, mensagem, tipo) {
+export function mostrarMensagem(titulo, mensagem, tipo) {
     toastr[tipo](mensagem, titulo);
 }
 export function mensagemDeErro(mensagem) {
-    mostrarMensagemDeErro('Erro ao fazer login! ', mensagem, 'error');
+    mostrarMensagem('Erro ao fazer login! ', mensagem, 'error');
 }
 export function mensagemDeSucesso(mensagem) {
-    mostrarMensagemDeErro('Sucesso', mensagem, 'success');
+    mostrarMensagem('Sucesso', mensagem, 'success');
 }
 export function mensagemDeAlert(mensagem) {
-    mostrarMensagemDeErro('Alerta', mensagem, 'warning');
+    mostrarMensagem('Alerta', mensagem, 'warning');
 }
 
