@@ -18,9 +18,13 @@ const ApiService = (apiurl) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.put(requestUrl, objeto);
         },
+        get: (url, objeto) => {
+            const requestUrl = `${apiurl}${url}`;
+            return httpClient.get(requestUrl);
+        },
         delete: (url, objeto) => {
             const requestUrl = `${apiurl}${url}`;
-            return httpClient.delete(requestUrl, objeto);
+            return httpClient.delete(requestUrl);
         }
     }
 }
