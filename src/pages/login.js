@@ -15,6 +15,7 @@ const { register, handleSubmit, formState: { errors }} = useForm();
 const navigate = useNavigate();
 /*chamando o servico de usuario*/
 const usuarioService = UsuarioService();
+/*recuperar id do usuario - response*/
 const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
 /*logar*/
 const fazerLogin = (data) => {
@@ -24,19 +25,18 @@ const fazerLogin = (data) => {
     email:data.email,
     senha:data.senha,
 }).then(response => {
-/*recuperar id do usuario - response*/
     setUsuarioLogado(response.data);
+    console.log("VERIFICANDO RETONRO DE OBJETO ", response.data);
     setTimeout(() => navigate("/home"), 2000);
 }).catch(err => {
-    console.log("VERIFICANDO ERRO DE RETORNO DO OBJETO ", err);
     mensagemDeErro(err.response.data);
 });
 };
 function handleCancelar() {
-    navigate('/Login');
+    navigate('/login');
 }
 function handleAvancar() {
-    navigate('/');
+    navigate('/Definirsenha');
 }
 return (
     <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
@@ -78,7 +78,7 @@ return (
                                                 className="form-control form-control-sm inputPlaceholder"
                                                 placeholder="Digite sua senha"
                                             />
-                                            {errors.senha && <span className="error">{errors.senha.message}</span>}
+                                            {errors.senha && <span className="error-backend">{errors.senha.message}</span>}
                                         </FormGroup>
 
                                         {/*esqueceu a senha*/}

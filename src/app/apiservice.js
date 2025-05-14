@@ -2,7 +2,7 @@ import axios from "axios";
 
 /*passando configurações para o exios*/
 export const httpClient = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:8080/',
     withCredentials: true
 })
 /*responsável por fazer requisições para toda a api*/
@@ -18,9 +18,13 @@ const ApiService = (apiurl) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.put(requestUrl, objeto);
         },
-        delete: (url, objeto) => {
+        delete: (url) => {
             const requestUrl = `${apiurl}${url}`;
-            return httpClient.delete(requestUrl, objeto);
+            return httpClient.delete(requestUrl);
+        },
+        get: (url) => {
+            const requestUrl = `${apiurl}${url}`;
+            return httpClient.get(requestUrl);
         }
     }
 }

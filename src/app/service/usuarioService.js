@@ -4,16 +4,16 @@ import Apiservice from "../apiservice";
 
 const usuarioApi = Apiservice('/api/usuarios/');
 
-const ServiceUsuario = () =>{
+const ServiceUsuario = (credentials) =>{
     return{
-        autenticar: (credenciais) => {
-            return usuarioApi.post('autenticar', credenciais);
+        autenticar: (credentials) => {
+            return usuarioApi.post('autenticar', credentials);
     },
         buscarSaldoPorUsuario: (id) => {
-            return usuarioApi.get(`${id}/saldo`);
+            return usuarioApi.get('${id}/saldo');
     },
         salvarUsuario: (usuarios) => {
-            return usuarioApi.post(`/`, usuarios);
+            return usuarioApi.post('/', usuarios);
     }
 };
     // outros métodos futuros:

@@ -7,14 +7,6 @@ import Register from '../pages/register';
 import FormularioSenha from "../pages/signupFormPassword";
 import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
 
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'toastr/build/toastr.min.js'
-
-import 'bootswatch/dist/flatly/bootstrap.min.css';
-import '../App.css'
-import '../custom.css'
-import 'toastr/build/toastr.css'
-
 const Rotas = () => {
     return (
         <ProvedorCadastroUsuario>
