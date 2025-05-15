@@ -4,16 +4,16 @@ import Apiservice from "../apiservice";
 
 const usuarioApi = Apiservice('/api/usuarios/');
 
-const ServiceUsuario = () =>{
+const ServiceUsuario = (credentials) =>{
     return{
-        autenticar: (credenciais) => {
-            return usuarioApi.post('autenticar', credenciais);
+        autenticar: (credentials) => {
+            return usuarioApi.post('autenticar', credentials);
     },
         buscarSaldoPorUsuario: (id) => {
-            return usuarioApi.get(`${id}/saldo`);
+            return usuarioApi.get('${id}/saldo');
     },
-        salvarUsuario: (usuario) => {
-            return usuarioApi.post(`/`, usuario);
+        salvarUsuario: (usuarios) => {
+            return usuarioApi.post('/', usuarios);
     }
 };
     // outros métodos futuros:
@@ -22,13 +22,3 @@ const ServiceUsuario = () =>{
 };
 
 export default ServiceUsuario;
-
-/*
-* const buscarSaldoPorUsuario = async () => {
-    try {
-        const response = await usuarioApi.get('/saldo'); // Chama o metodo get
-        console.log(response.data); // Lida com a resposta
-    } catch (error) {
-        console.error('Erro ao buscar saldo:', error);
-    }
-};*/
