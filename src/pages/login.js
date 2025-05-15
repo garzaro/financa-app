@@ -65,8 +65,7 @@ return (
                                             <span>
                                                 Email:<span className="asterisco-vermelho">*</span>
                                             </span>
-                                        } name={"email"}
-                                        >
+                                        }>
                                             {/* Campo E-mail */}
                                             <input
                                                 type="email"
@@ -82,8 +81,7 @@ return (
                                             <span>
                                                 Senha:<span className="asterisco-vermelho">*</span>
                                             </span>
-                                        } name={"senha"}
-                                        >
+                                        }>
                                             {/* Campo Senha */}
                                             <input
                                                 type="password"
