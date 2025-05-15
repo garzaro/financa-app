@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+/*lembrando que o name é criado automaticamente pelo react-hook-form */
 import {useForm} from "react-hook-form";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
@@ -42,8 +43,7 @@ const Register = () => {
                                                 <span>
                                                     Nome completo:<Astered>*</Astered>
                                                 </span>
-                                            } name={dadosDoUsuario.nome}
-                                            >
+                                            }>
                                                 <input type="text"
                                                        {...register("nome", {required: "Nome completo é obrigatório"})}
                                                        className="form-control form-control-sm inputPlaceholder"
@@ -56,7 +56,7 @@ const Register = () => {
                                                 <span>
                                                     Cadastro Pessoa Física:<Astered>*</Astered>
                                                 </span>
-                                            } name={dadosDoUsuario.cpf}>
+                                            }>
                                                 <input type="text"
                                                        {...register("cpf", {required: "O cpf é obrigatório"})}
                                                        className="form-control form-control-sm inputPlaceholder"
@@ -68,7 +68,7 @@ const Register = () => {
                                                 <span>
                                                     Nome de Usuário:<Astered>*</Astered>
                                                 </span>
-                                            } name={dadosDoUsuario.usuario}>
+                                            }>
                                                 <input type="text"
                                                        {...register("usuario", {required: "Nome de usuário é obrigatório"})}
                                                        className="form-control form-control-sm inputPlaceholder"
@@ -80,7 +80,7 @@ const Register = () => {
                                                 <span>
                                                     Email:<Astered>*</Astered>
                                                 </span>
-                                            } name={dadosDoUsuario.email}>
+                                            }>
                                                 <input type="email"
                                                        {...register("email", {required: "Email é obrigatório"})}
                                                        className="form-control form-control-sm inputPlaceholder"
@@ -92,7 +92,7 @@ const Register = () => {
                                                 <span>
                                                     Repetir email:<Astered>*</Astered>
                                                 </span>
-                                            } name={dadosDoUsuario.emailNovamente}>
+                                            }>
                                                 <input type="email"
                                                        {...register("emailNovamente", {required: "Digite o email novamente"})}
                                                        className="form-control form-control-sm inputPlaceholder"
