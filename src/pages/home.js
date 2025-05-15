@@ -14,7 +14,7 @@ function Home () {
 
                 {/*retorno do saldo*/}
                 <p className="lead">
-                    Seu saldo para o mês atual é de {saldo !== null ? `R$ ${saldo}` : `indisponivel`}.
+                    Seu saldo para o mês atual é de R$ ${saldo}.
                 </p>
 
                 <hr className="my-4"/>

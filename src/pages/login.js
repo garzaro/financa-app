@@ -7,6 +7,7 @@ import FormGroup from "../components/form-group";
 import {mensagemDeErro} from '../components/toastr'
 import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
+import Swal from "sweetalert2";
 
 function LoginForm () {
 const [email, setEmail] = useState('');
@@ -26,8 +27,20 @@ const fazerLogin = (data) => {
     senha:data.senha,
 }).then(response => {
     setUsuarioLogado(response.data);
-    console.log("VERIFICANDO RETONRO DE OBJETO ", response.data);
-    setTimeout(() => navigate("/home"), 2000);
+    Swal.fire({
+        title: 'Login efetuado com sucesso!',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
+            //barraDeProgresso.style.backgroundColor = '#3498db'
+        }
+    })
+        setTimeout(() => navigate("/home"), 2000);
+
 }).catch(err => {
     mensagemDeErro(err.response.data);
 });
