@@ -5,11 +5,11 @@ import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
 import FormularioSenha from "../pages/signupFormPassword";
-import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
+//import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
 
 const Rotas = () => {
     return (
-        <ProvedorCadastroUsuario>
+
             <Router>
                 <Navbar />
                 <Routes>
@@ -19,7 +19,6 @@ const Rotas = () => {
                     *<Route path="/signupFormPassword" element={<FormularioSenha/>} />
                 </Routes>
             </Router>
-        </ProvedorCadastroUsuario>
-    );
+           );
 };
 export default Rotas;
