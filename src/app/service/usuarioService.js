@@ -12,7 +12,7 @@ const ServiceUsuario = (credentials) =>{
         buscarSaldoPorUsuario: (id) => {
             return usuarioApi.get('/${id}/saldo');
     },
-        salvarUsuario: (usuarios) => {
+        salvar: (usuarios) => {
             return usuarioApi.post('', usuarios);
     }
 };

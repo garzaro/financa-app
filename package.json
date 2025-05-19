@@ -5,6 +5,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@popperjs/core": "^2.11.8",
+    "@react-input/mask": "^2.0.4",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",
