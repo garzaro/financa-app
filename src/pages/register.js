@@ -6,19 +6,53 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
+import Swal from "sweetalert2";
 
 const Register = () => {
-    const [dadosDoUsuario, setDadosDoUsuario] = useState({
-        nome: '', cpf:'', usuario:'', email: "", emailNovamente:'',
+    const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
+        defaultValues: {
+            nome: '', cpf: '', usuario: '',
+            email: '', emailNovamente: '',
+            senha: '', senhaNovamente: '',
+        }
     });
     const navigate = useNavigate();
-    const {register, handleSubmit, formState:{errors},} = useForm({});
     const usuarioService = ServiceUsuario();
     /*contexto do cadastro*/
-    const cadastrar = () => {
-        usuarioService.salvarUsuario({
-            ...dadosDoUsuario
-        })
+    const cadastrarUsuario = (data) => {
+        const dadosDoUsuario = {
+            nome: data.nome, cpf: data.cpf,
+            usuario: data.usuario, email: data.email,
+        }
+        usuarioService.salvarUsuario(dadosDoUsuario)
+        .then(response => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Cadastro efetuado com sucesso!',
+                text: 'Você será redirecionado para a página de login.',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
+                    const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
+                    barraDeProgresso.style.backgroundColor = '#3498db'
+                }
+            })
+            navigate('/login');
+        }).catch(err => {
+            console.log(err.response.data);
+            const msg = err.response.data?.message || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
+        });
+        /*limpar campos - FAZER UM TEST SEM REDIRECIONAMENTO PARA LOGIN A FIM DE VER SE OS CAMPOS SAO LIMPOS
+        setValue('nome', '');
+        setValue('cpf', '');
+        setValue('usuario', '');
+        setValue('email', '');
+        setValue('emailNovamente', '');
+        setValue('senha', '');
+        setValue('senhaNovamente', '');*/
     }
     /*redirecionar para cadastro de senha*/
     const handleAvancar = () =>{
