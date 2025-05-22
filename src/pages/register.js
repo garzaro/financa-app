@@ -7,6 +7,7 @@ import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
+import {mensagemDeAlert} from "../components/toastr";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -21,11 +22,11 @@ const Register = () => {
     /*contexto do cadastro*/
     const cadastrarUsuario = (data) => {
         const dadosDoUsuario = {
-            nome: data.nome, cpf: data.cpf,
-            usuario: data.usuario, email: data.email,
+            nome: data.nome, cpf: data.cpf, usuario: data.usuario,
+            email: data.email, senha: data.senha,
         }
-        usuarioService.salvarUsuario(dadosDoUsuario)
-        .then(response => {
+        usuarioService.salvar(dadosDoUsuario)
+        .then(function (response){
             Swal.fire({
                 icon: 'success',
                 title: 'Cadastro efetuado com sucesso!',
@@ -37,22 +38,18 @@ const Register = () => {
                     Swal.showLoading()
                     Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
                     const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
-                    barraDeProgresso.style.backgroundColor = '#3498db'
+                    if (barraDeProgresso) {
+                        barraDeProgresso.style.backgroundColor = '#3498db'
+                    }
                 }
             })
             navigate('/login');
         }).catch(err => {
-            console.log(err.response.data);
-            const msg = err.response.data?.message || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
+            //console.log(err.response.data);
+            //const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
+            const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
+            mensagemDeAlert(msg)
         });
-        /*limpar campos - FAZER UM TEST SEM REDIRECIONAMENTO PARA LOGIN A FIM DE VER SE OS CAMPOS SAO LIMPOS
-        setValue('nome', '');
-        setValue('cpf', '');
-        setValue('usuario', '');
-        setValue('email', '');
-        setValue('emailNovamente', '');
-        setValue('senha', '');
-        setValue('senhaNovamente', '');*/
     }
     /*redirecionar para cadastro de senha*/
     const handleAvancar = () =>{
@@ -133,8 +130,32 @@ const Register = () => {
                                                        placeholder="Digite seu email novamente"/>
                                                 {errors.emailNovamente && <span className="error">{errors.emailNovamente.message}</span>}
                                             </FormGroup>
+                                            {/*campo senha*/}
+                                            <FormGroup label={
+                                                <span>
+                                                    Senha:<Astered>*</Astered>
+                                                </span>
+                                            }>
+                                                <input type="password"
+                                                       {...register("senha", {required: "A senha é obrigatória"})}
+                                                       className="form-control form-control-sm inputPlaceholder"
+                                                       placeholder="Digite sua senha"/>
+                                                {errors.senha && <span className="error">{errors.senha.message}</span>}
+                                            </FormGroup>
+                                            {/*campo confirmar senha*/}
+                                            <FormGroup label={
+                                                <span>
+                                                    Confirmar senha:<Astered>*</Astered>
+                                                </span>
+                                            }>
+                                                <input type="password"
+                                                       {...register("repertirsenha", {required: "Confirmar senha é obrigatório"})}
+                                                       className="form-control form-control-sm inputPlaceholder"
+                                                       placeholder="Confirme a senha"/>
+                                                {errors.repetirsenha && <span className="error">{errors.repetirsenha.message}</span>}
+                                            </FormGroup>
                                             {/* Botão de cadastro*/}
-                                            <button className="btn btn-success btn-sm mt-2" onClick={handleAvancar}>
+                                            <button className="btn btn-success btn-sm mt-2" onClick={cadastrarUsuario}>
                                                 Avançar
                                             </button>
                                             <button className="btn btn-danger btn-sm mt-2" onClick={handleCancelar}>
