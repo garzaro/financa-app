@@ -1,5 +1,6 @@
 body{
-    padding-top:0px
+    padding-top:0px;
+    background: rgba(76, 76, 89, 0.89);
 }
 pre{
     background:#f7f7f9
