@@ -68,7 +68,7 @@ const Register = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
-                                        <form onSubmit={handleSubmit()}>
+                                        <form onSubmit={handleSubmit(cadastrarUsuario)}>
                                             {/*campo nome completo*/}
                                             <FormGroup label={
                                                 <span>
@@ -156,7 +156,7 @@ const Register = () => {
                                             </FormGroup>
                                             {/* Botão de cadastro*/}
                                             <button className="btn btn-success btn-sm mt-2" onClick={cadastrarUsuario}>
-                                                Avançar
+                                                Salvar
                                             </button>
                                             <button className="btn btn-danger btn-sm mt-2" onClick={handleCancelar}>
                                                 Cancelar
