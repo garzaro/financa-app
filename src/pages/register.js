@@ -7,14 +7,13 @@ import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
-import {mensagemDeAlert} from "../components/toastr";
+import {mensagemDeAlerta} from "../utils/toastr";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
         defaultValues: {
-            nome: '', cpf: '', usuario: '',
-            email: '', emailNovamente: '',
-            senha: '', senhaNovamente: '',
+            nome: '', cpf: '', usuario: '', email: '',senha: '',
+            confirmarEmail: '', confimrarSenha: '',
         }
     });
     const navigate = useNavigate();
@@ -32,7 +31,7 @@ const Register = () => {
                 title: 'Cadastro efetuado com sucesso!',
                 text: 'Você será redirecionado para a página de login.',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 3000,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
@@ -45,16 +44,15 @@ const Register = () => {
             })
             navigate('/login');
         }).catch(err => {
-            //console.log(err.response.data);
-            //const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
+            console.log("Verificando erros no retorno da api ", err.response.data);
             const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
-            mensagemDeAlert(msg)
+            mensagemDeAlerta(msg)
         });
     }
-    /*redirecionar para cadastro de senha*/
+    /*redirecionar para cadastro de senha
     const handleAvancar = () =>{
         setTimeout(() => navigate("/FormularioSenha"), 2000 );
-    }
+    }*/
     /*cancelar cadastro de usuario*/
     function handleCancelar() {
         navigate('/Login');
@@ -68,7 +66,7 @@ const Register = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="bs-component">
-                                        <form onSubmit={handleSubmit()}>
+                                        <form onSubmit={handleSubmit(cadastrarUsuario)}>
                                             {/*campo nome completo*/}
                                             <FormGroup label={
                                                 <span>
@@ -125,10 +123,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("emailNovamente", {required: "Digite o email novamente"})}
+                                                       {...register("confirmarEmail", {required: "Digite o email novamente"})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu email novamente"/>
-                                                {errors.emailNovamente && <span className="error">{errors.emailNovamente.message}</span>}
+                                                {errors.confirmarEmail && <span className="error">{errors.confirmarEmail.message}</span>}
                                             </FormGroup>
                                             {/*campo senha*/}
                                             <FormGroup label={
@@ -149,10 +147,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="password"
-                                                       {...register("repertirsenha", {required: "Confirmar senha é obrigatório"})}
+                                                       {...register("confirmarSenha", {required: "Confirmar senha é obrigatório"})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Confirme a senha"/>
-                                                {errors.repetirsenha && <span className="error">{errors.repetirsenha.message}</span>}
+                                                {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
                                             </FormGroup>
                                             {/* Botão de cadastro*/}
                                             <button className="btn btn-success btn-sm mt-2" onClick={cadastrarUsuario}>
