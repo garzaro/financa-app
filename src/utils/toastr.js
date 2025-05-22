@@ -25,7 +25,7 @@ export function mensagemDeErro(mensagem) {
     mensagens('Erro ao fazer login! ', mensagem, 'error');
 }
 export function mensagemDeErroCadastro(mensagem) {
-    mensagens('Erro de cadastro', mensagem, 'error');
+    mensagens('Erro de cadastro', mensagem, 'warning');
 }
 export function mensagemDeSucesso(mensagem) {
     mensagens('Sucesso', mensagem, 'success');

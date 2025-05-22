@@ -1,33 +1,37 @@
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-/*lembrando que o name é criado automaticamente pelo react-hook-form */
+import {useState} from "react";
 import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import ServiceUsuario from "../app/service/usuarioService";
+import {mensagemDeErroCadastro} from "../utils/toastr";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
-import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
-import {mensagemDeErroCadastro} from "../utils/toastr";
 import {handleCpfChange} from "../utils/utils";
 
 const Register = () => {
-    const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
-        defaultValues: {
-            nome: '', cpf: '', usuario: '',
-            email: '', emailNovamente: '',
-            senha: '', senhaNovamente: '',
-        }
-    });
+    const {register, handleSubmit, setValue, watch, formState:{errors}} = useForm();
+    const [nome, setNome] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [usuario, setUsuario] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confirmarEmail, setConfirmarEmail] = useState("");
+    const [confirmarSenha, setConfirmarSenha] = useState("");
+
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
     /*contexto do cadastro*/
     const cadastrarUsuario = (data) => {
         const usuario = {
-            nome: data.nome, cpf: data.cpf, usuario: data.usuario,
-            email: data.email, senha: data.senha,
+            nome: data.nome,
+            cpf: data.cpf,
+            usuario: data.usuario,
+            email: data.email,
+            senha: data.senha,
         }
         usuarioService.salvar(usuario)
-        .then(response => {
+        .then(function (response) {
             Swal.fire({
                 icon: 'success',
                 title: 'Cadastro efetuado com sucesso!',
@@ -39,14 +43,13 @@ const Register = () => {
                     Swal.showLoading()
                     Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
                     const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
-                    //barraDeProgresso.style.backgroundColor = '#3498db'
+                    barraDeProgresso.style.backgroundColor = '#3498db'
                 }
             })
             navigate('/login');
-        }).catch(err => {
-            console.log(err.response?.data);
-            const msg = err.response.data?.message || err.response.data || "Erro inesperado ao cadastrar usuário. Tente novamente mais tarde";
-            mensagemDeErroCadastro(msg)
+        }).catch((err) => {
+            //const msg = err.response.data?.message || err.response.data || "Erro inesperado ao cadastrar usuário. Tente novamente mais tarde";
+            mensagemDeErroCadastro(err.response?.data)
         });
         /*limpar campos - FAZER UM TEST SEM REDIRECIONAMENTO PARA LOGIN A FIM DE VER SE OS CAMPOS SAO LIMPOS
         setValue('nome', '');
@@ -132,7 +135,11 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("email", {required: "Email é obrigatório"})}
+                                                       {...register("email", {required: "Email é obrigatório",
+                                                           minLength: {
+                                                               value: 6,
+                                                               message: "Senha deve ter pelo menos 8 caracteres"
+                                                       }})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu email"/>
                                                 {errors.email && <span className="error">{errors.email.message}</span>}
