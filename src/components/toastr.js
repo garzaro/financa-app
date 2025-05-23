@@ -6,7 +6,7 @@ toastr.options = {
     "newestOnTop": false,
     "progressBar": true,
     "positionClass": "toast-top-center",
-    "preventDuplicates": false,
+    "preventDuplicates": true,
     "onclick": null,
     "showDuration": "300",
     "hideDuration": "1000",
@@ -24,10 +24,13 @@ export function mostrarMensagem(titulo, mensagem, tipo) {
 export function mensagemDeErro(mensagem) {
     mostrarMensagem('Erro ao fazer login! ', mensagem, 'error');
 }
+export function mensagemDeErroCadastro(mensagem) {
+    mostrarMensagem('Erro ao cadastrar usuario! ', mensagem, 'error');
+}
 export function mensagemDeSucesso(mensagem) {
     mostrarMensagem('Sucesso', mensagem, 'success');
 }
-export function mensagemDeAlert(mensagem) {
+export function mensagemDeAlerta(mensagem) {
     mostrarMensagem('Alerta', mensagem, 'warning');
 }
 
