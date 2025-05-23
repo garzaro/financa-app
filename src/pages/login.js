@@ -52,7 +52,7 @@ function handleAvancar() {
     navigate('/Definirsenha');
 }
 return (
-    <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}" >
+    <div className="container-fluid mt-5" style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>
         <div className="row justify-content-center w-100" >
             <div className="col-md-6">
                 <div className="bs-docs-section">
@@ -62,7 +62,7 @@ return (
                                 <div className="bs-component">
                                     <form onSubmit={handleSubmit(fazerLogin)}>
                                         <FormGroup label={
-                                            <span>
+                                            <span className="text-white">
                                                 Email:<span className="asterisco-vermelho">*</span>
                                             </span>
                                         }>
@@ -78,7 +78,7 @@ return (
                                         </FormGroup>
 
                                         <FormGroup label={
-                                            <span>
+                                            <span className="text-white">
                                                 Senha:<span className="asterisco-vermelho">*</span>
                                             </span>
                                         }>
