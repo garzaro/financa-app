@@ -1,0 +1,1 @@
+/*continuar com a ideia de um feedback visual com um cahorrinho mordendo o fio quando o servidor estive off*/

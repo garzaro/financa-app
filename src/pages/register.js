@@ -6,8 +6,9 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
+import {handleCpfChange, validateSenhaTrim} from "../utils/utils";
 import Swal from "sweetalert2";
-import {mensagemDeAlerta} from "../utils/toastr";
+import {mensagemDeAlerta, mensagemDeErroCadastro} from "../utils/toastr";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -42,21 +43,26 @@ const Register = () => {
                     }
                 }
             })
-            navigate('/login');
+
         }).catch(err => {
-            console.log("Verificando erros no retorno da api ", err.response.data);
             const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
-            mensagemDeAlerta(msg)
+            mensagemDeErroCadastro(msg)
         });
     }
-    /*redirecionar para cadastro de senha
-    const handleAvancar = () =>{
-        setTimeout(() => navigate("/FormularioSenha"), 2000 );
-    }*/
-    /*cancelar cadastro de usuario*/
+    /*cancelar cadastro de usuario e retornar para login*/
     function handleCancelar() {
         navigate('/Login');
     };
+
+    /*comparacao de senha*/
+    const confirmarSenha = watch('senha');
+    /*comparacao de email*/
+    const confirmarEmail = watch('email');
+    const handleCpfMask = (e) => {
+        const mascaraCpf = handleCpfChange(e.target.value);
+        setValue('cpf', mascaraCpf);
+    }
+
     return (
         <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}">
             <div className="row justify-content-center w-100">
@@ -74,7 +80,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="text"
-                                                       {...register("nome", {required: "Nome completo é obrigatório"})}
+                                                       {...register("nome", {required: "Nome completo é obrigatório",
+                                                           setValueAs: (value) => value.trim().toUpperCase()})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu nome completo"
                                                        id="nome"/>
@@ -87,8 +94,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="text"
-                                                       {...register("cpf", {required: "O cpf é obrigatório"})}
-                                                       className="form-control form-control-sm inputPlaceholder"
+                                                       {...register("cpf", {required: "O CPF é obrigatório",
+                                                       onChange:(e)=> {handleCpfMask(e)},})}
+                                                       className={`form-control form-control-sm inputPlaceholder
+                                                       ${errors.cpf ? 'is-invalid' : ''}`}
                                                        placeholder="Digite seu CPF"/>
                                                 {errors.cpf && <span className="error">{errors.cpf.message}</span>}
                                             </FormGroup>
@@ -99,7 +108,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="text"
-                                                       {...register("usuario", {required: "Nome de usuário é obrigatório"})}
+                                                       {...register("usuario", {required: "Nome de usuário é obrigatório",
+                                                           setValueAs: (value) => value.trim().toUpperCase()})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite o nome de usuário"/>
                                                 {errors.usuario && <span className="error">{errors.usuario.message}</span>}
@@ -111,7 +121,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("email", {required: "Email é obrigatório"})}
+                                                       {...register("email", {required: "Email é obrigatório",
+                                                           setValueAs: (value) => value.trim()})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu email"/>
                                                 {errors.email && <span className="error">{errors.email.message}</span>}
@@ -123,9 +134,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("confirmarEmail", {required: "Digite o email novamente"})}
+                                                       {...register("confirmarEmail",
+                                                           {validate:(value) => value === confirmarEmail || "Os emails não conferem",})}
                                                        className="form-control form-control-sm inputPlaceholder"
-                                                       placeholder="Digite seu email novamente"/>
+                                                       placeholder="Confirme o email"/>
                                                 {errors.confirmarEmail && <span className="error">{errors.confirmarEmail.message}</span>}
                                             </FormGroup>
                                             {/*campo senha*/}
@@ -135,7 +147,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="password"
-                                                       {...register("senha", {required: "A senha é obrigatória"})}
+                                                       {...register("senha", {required: "A senha é obrigatório",
+                                                       minLength:{value: 6, message: "A senha deve ter no mínimo 6 caracteres"},
+                                                       setValueAs: (value) => value.trim(),
+                                                       validate: validateSenhaTrim})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite sua senha"/>
                                                 {errors.senha && <span className="error">{errors.senha.message}</span>}
@@ -147,7 +162,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="password"
-                                                       {...register("confirmarSenha", {required: "Confirmar senha é obrigatório"})}
+                                                       {...register("confirmarSenha",
+                                                           {validate: (value) => value === confirmarSenha || "As senhas não conferem",})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Confirme a senha"/>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
