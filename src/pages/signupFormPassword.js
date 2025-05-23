@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {mensagemDeErro} from "../components/toastr";
+import {mensagemDeErro} from "../utils/toastr";
 
 function FormularioSenha() {
     const [senha, setSenha] = useState('');

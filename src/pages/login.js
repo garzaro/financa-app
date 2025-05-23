@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import {mensagemDeErro} from '../components/toastr'
+import {mensagemDeErro} from '../utils/toastr'
 import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 import Swal from "sweetalert2";
