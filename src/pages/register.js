@@ -49,10 +49,10 @@ const Register = () => {
             mensagemDeAlerta(msg)
         });
     }
-    /*redirecionar para cadastro de senha
+    /*redirecionar para cadastro de senha*/
     const handleAvancar = () =>{
         setTimeout(() => navigate("/FormularioSenha"), 2000 );
-    }*/
+    }
     /*cancelar cadastro de usuario*/
     function handleCancelar() {
         navigate('/Login');
