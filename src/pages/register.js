@@ -6,7 +6,7 @@ import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
-import {mensagemDeErroCadastro, mensagemDeSucesso} from "../components/toastr";
+import {mensagemDeErroCadastro, mensagemDeSucesso} from "../utils/toastr";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
