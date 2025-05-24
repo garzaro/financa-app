@@ -140,7 +140,7 @@ const Register = () => {
                                             }>
                                                 <input type="password"
                                                        {...register("confirmarSenha",
-                                                           {validate:(value) => value === confirmarSenha || "As senhas não sao iguais"})}
+                                                           {validate:(value) => value === confirmarSenha || "As senhas não são iguais"})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Confirme a senha"/>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
