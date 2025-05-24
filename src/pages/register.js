@@ -30,7 +30,10 @@ const Register = () => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
             setTimeout(navigate('/login'), 2000);
         }).catch(err => {
-            mensagemDeAlerta(err.response.data?.message || err.response.data || "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
+            mensagemDeAlerta(
+                err.response.data?.message ||
+                err.response.data ||
+                "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
         });
     }
     /*macara cpf*/
