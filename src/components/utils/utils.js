@@ -12,5 +12,4 @@ export const handleCpfChange = (valor) => {
     valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     /*define o valor no useForm*/
     return valor;
-    /*console.log('mudou', valor)*/
 };
