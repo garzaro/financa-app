@@ -12,4 +12,18 @@ export const handleCpfChange = (valor) => {
     valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     /*define o valor no useForm*/
     return valor;
+    /*console.log('mudou', valor)*/
 };
+/*trim nos inputs de cadastro*/
+export const validateSenhaTrim = (value) =>{
+    if (value.includes(' ')) {
+        return "A senha não pode conter espaços";
+    }
+    return true;
+}
+export const validarTrim = (value) =>{
+    if (value.includes(' ')) {
+        return "O campo não pode pode conter espaços";
+    }
+    return true;
+}

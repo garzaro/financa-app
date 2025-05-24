@@ -2,13 +2,13 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 /*lembrando que o name é criado automaticamente pelo react-hook-form */
 import {useForm} from "react-hook-form";
-import Card from "../components/card";
-import FormGroup from "../components/form-group";
-import Astered from "../components/astered";
+import Card from "../components/card/card";
+import FormGroup from "../components/form/form-group";
+import Astered from "../components/utils/astered";
 import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
-import {mensagemDeAlerta, mensagemDeSucesso} from "../utils/toastr";
-import {handleCpfChange} from "../components/utils/utils";
+import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
+import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -30,7 +30,7 @@ const Register = () => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
             setTimeout(navigate('/login'), 2000);
         }).catch(err => {
-            mensagemDeAlerta(err.response.data || "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
+            mensagemDeAlerta(err.response.data?.message || err.response.data || "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
         });
     }
     /*macara cpf*/
@@ -127,7 +127,13 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="password"
-                                                       {...register("senha", {required: "A senha é obrigatória"})}
+                                                       {...register("senha", {required: "A senha é obrigatória",
+                                                           minLength: {
+                                                               value: 6,
+                                                               message: "A senha deve ter no mínimo 6 caracteres",
+                                                           },
+                                                           validate: validateSenhaTrim,
+                                                       })}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite sua senha"/>
                                                 {errors.senha && <span className="error">{errors.senha.message}</span>}
