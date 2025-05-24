@@ -7,7 +7,8 @@ import FormGroup from "../components/form-group";
 import Astered from "../components/astered";
 import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
-import {mensagemDeAlerta} from "../utils/toastr";
+import {mensagemDeAlerta, mensagemDeSucesso} from "../utils/toastr";
+import {handleCpfChange} from "../components/utils/utils";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -25,41 +26,30 @@ const Register = () => {
             email: data.email, senha: data.senha,
         }
         usuarioService.salvar(dadosDoUsuario)
-        .then(function (response){
-            Swal.fire({
-                icon: 'success',
-                title: 'Cadastro efetuado com sucesso!',
-                text: 'Você será redirecionado para a página de login.',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                    Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
-                    const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
-                    if (barraDeProgresso) {
-                        barraDeProgresso.style.backgroundColor = '#3498db'
-                    }
-                }
-            })
-            navigate('/login');
+        .then(response => {
+            mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
+            setTimeout(navigate('/login'), 2000);
         }).catch(err => {
-            console.log("Verificando erros no retorno da api ", err.response.data);
-            const msg = err.response.data?.message || err.response.data || "Erro inesperdao ao cadastrar o usuario. Tente novamente mais tarde.";
-            mensagemDeAlerta(msg)
+            mensagemDeAlerta(err.response.data || "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
         });
     }
-    /*redirecionar para cadastro de senha*/
-    const handleAvancar = () =>{
-        setTimeout(() => navigate("/FormularioSenha"), 2000 );
+    /*macara cpf*/
+    const handleCpfMask = (e) => {
+        const mascaraCpf = handleCpfChange(e.target.value);
+        setValue('cpf', mascaraCpf);
     }
+    /*verificacao de senhas*/
+    const confirmarSenha = watch('senha');
+    /*verificação de email*/
+    const confirmarEmail = watch('email');
+
     /*cancelar cadastro de usuario*/
     function handleCancelar() {
         navigate('/Login');
     };
     return (
-        <div className="container-fluid mt-5 style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>}}">
-            <div className="row justify-content-center w-100">
+        <div className="container-fluid mt-5"> {/*style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>">*/}
+            <div className="row justify-content-center w-10">
                 <div className="col-md-6">
                     <div className="bs-docs-section">
                         <Card title="Cadastro de Usuário">
@@ -87,7 +77,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="text"
-                                                       {...register("cpf", {required: "O cpf é obrigatório"})}
+                                                       {...register("cpf", {required: "O cpf é obrigatório",
+                                                       onChange: handleCpfMask})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu CPF"/>
                                                 {errors.cpf && <span className="error">{errors.cpf.message}</span>}
@@ -123,9 +114,10 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("confirmarEmail", {required: "Digite o email novamente"})}
+                                                       {...register("confirmarEmail",
+                                                           {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
                                                        className="form-control form-control-sm inputPlaceholder"
-                                                       placeholder="Digite seu email novamente"/>
+                                                       placeholder="Confirme o email"/>
                                                 {errors.confirmarEmail && <span className="error">{errors.confirmarEmail.message}</span>}
                                             </FormGroup>
                                             {/*campo senha*/}
@@ -147,7 +139,8 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="password"
-                                                       {...register("confirmarSenha", {required: "Confirmar senha é obrigatório"})}
+                                                       {...register("confirmarSenha",
+                                                           {validate:(value) => value === confirmarSenha || "As senhas não sao iguais"})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Confirme a senha"/>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
