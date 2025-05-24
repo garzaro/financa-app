@@ -27,22 +27,9 @@ const fazerLogin = (data) => {
     senha:data.senha,
 }).then(response => {
     setUsuarioLogado(response.data);
-    Swal.fire({
-        title: 'Login efetuado com sucesso!',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading()
-            const barraDeProgresso = Swal.getHtmlContainer().querySelector('.swal2-progress-bar')
-            //barraDeProgresso.style.backgroundColor = '#3498db'
-        }
-    })
         setTimeout(() => navigate("/home"), 2000);
-
 }).catch(err => {
-    mensagemDeErro(err.response.data);
+    mensagemDeErro(err.response.data || "Erro inesperado ao fazer login. Tente novamente mais tarde.");
 });
 };
 function handleCancelar() {
@@ -89,7 +76,8 @@ return (
                                                 className="form-control form-control-sm inputPlaceholder"
                                                 placeholder="Digite sua senha"
                                             />
-                                            {errors.senha && <span className="error-backend">{errors.senha.message}</span>}
+                                            {errors.senha &&
+                                                <span className="error-backend">{errors.senha.message}</span>}
                                         </FormGroup>
 
                                         {/*esqueceu a senha*/}
@@ -99,24 +87,18 @@ return (
                                                aria-label="Esqueceu a senha? Clique aqui para criar uma nova.">&nbsp;
                                                 Clique aqui.</a>
                                         </div>
-
                                         {/* Botão de Login */}
                                         <button
-                                            type="submit" className="btn btn-success btn-sm mt-3"
-                                            onClick={handleCancelar}>Entrar
+                                            type="submit" className="btn btn-success btn-sm mt-3">
+                                            Entrar
                                         </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </Card>
-                    {/*cadastro*/}
-                    <Card title="Seja bem vindo!">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="bs-component">
-                                    <div className="card-body">
-                                        <div className="m-sm-4">
+                                        {/*cadastre-se*/}
+                                        <div className="d-flex align-items-center my-4">
+                                            <div className="flex-grow-1 border-top border-secondary"></div>
+                                            <span className="px-3 text-secondary text-nowrap">Ou Cadastre-se</span>
+                                            <div className="flex-grow-1 border-top border-secondary"></div>
+                                        </div>
+                                        <div className="sm-4">
                                             <h2 className="text-center">Primeiro acesso?</h2>
                                             <p className="text-center mb-3">
                                                 Se ainda não possui acesso, clique no
@@ -126,12 +108,11 @@ return (
                                                    title="Não tem uma conta? Clique aqui!">Criar conta</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </Card>
-
                 </div>
             </div>
         </div>
