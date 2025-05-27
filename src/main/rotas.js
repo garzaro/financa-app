@@ -4,8 +4,7 @@ import Navbar from '../components/navbar/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
-import FormularioSenha from "../pages/signupFormPassword";
-import ConsultaLancamentos from "../pages/consultaLancamentos";
+import ConsultarLancamentos from "../pages/consultarLancamentos";
 //import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
 
 const Rotas = () => {
@@ -17,7 +16,7 @@ const Rotas = () => {
                     <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/consulta-lancamentos" element={<ConsultaLancamentos />} />
+                    <Route path="/consultar-lancamentos" element={<ConsultarLancamentos />} />
                 </Routes>
             </Router>
            );
