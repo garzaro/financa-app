@@ -4,8 +4,9 @@ import Navbar from '../components/navbar/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
-import ConsultarLancamentos from "../pages/consultarLancamentos";
+import ConsultarLancamentos from "../pages/consultar-lancamentos";
 import FormularioSenha from "../pages/signupFormPassword";
+import ConsultarLancamento from "../pages/consultar-lancamentos";
 //import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
 
 const Rotas = () => {
