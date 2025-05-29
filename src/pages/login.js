@@ -8,6 +8,7 @@ import {mensagemDeErro} from '../components/utils/toastr'
 import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 import Swal from "sweetalert2";
+import DefinirSenha from "./senha-redefinicao";
 
 function LoginForm () {
 const [email, setEmail] = useState('');
@@ -82,7 +83,7 @@ return (
 
                                         {/*esqueceu a senha*/}
                                         <div className="nav-signin-tooltip-footer ">Esqueceu a senha?
-                                            <a href="/register"
+                                            <a href="/signupFormPassword"
                                                className="nav-a"
                                                aria-label="Esqueceu a senha? Clique aqui para criar uma nova.">&nbsp;
                                                 Clique aqui.</a>
