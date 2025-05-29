@@ -1,6 +1,6 @@
 import {useLocation} from "react-router-dom";
 
-function DefinirSenha() {
+function RedefinirSenha() {
     const location = useLocation();
     const email = location.state?.email; // Recupera o email passado no redirecionamento
 
@@ -19,4 +19,4 @@ function DefinirSenha() {
     );
 }
 
-export default DefinirSenha;
+export default RedefinirSenha;

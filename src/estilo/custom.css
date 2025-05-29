@@ -392,44 +392,93 @@ pre{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-/*validacao do fomrulario de senha*/
-.password-checklist ul {
-    list-style-type: none;
-    padding: 0;
+/*personalizando estilo para feedback visual na criacao e redefinicao de senha*/
+.password-checklist{
+    font-size: 0.75rem; /*12px*/
+    line-height: 1.4rem;
 }
-
 .password-checklist li {
-    margin-bottom: 8px;
-    font-size: 14px;
+    font-size: 0.75rem; /* cada linha/mensagem com o tamanho ajustado */
 }
 
 .password-checklist li::before {
-    content: "";
+    content: "✘";
     display: inline-block;
     margin-right: 8px;
-    width: 16px;
-    height: 16px;
-    background-size: contain;
+    width: 5px; /* tamanho do ícone */
+    height: 14px; /*tamanho do ícone */
+    font-size: 12px; /* tamanho da fonte do ícone */
+    color: rgba(243, 28, 8, 0.89);
 }
 
 .password-checklist li.valid {
-    color: green;
+    color: rgb(184, 248, 170);
 }
 
 .password-checklist li.valid::before {
-    content: "✔"; /* Ícone de válido */
-    color: green;
+    content: "✔"; /* Ícone de válido*/
+    color: rgba(70, 244, 11, 0.97);
+    width: 5px; /* tamanho do ícone */
+    height: 20px; /*tamanho do ícone */
+    font-size: 15px; /* tamanho da fonte do ícone */
+}
+/* Oculta os ícones original da lib ReactPasswordChecklist */
+.password-checklist .check-icon, svg{
+    display: none;
+}
+.password-checklist .cross-icon svg{
+    display: none;
 }
 
+/*validacao do formulario de senha*/
+/*.password-checklist ul {
+    list-style-type: none;
+    padding: 0;
+}*/
+
+/*.password-checklist li {
+    margin-bottom: 8px;
+    font-size: 14px;
+}*/
+/*
 .password-checklist li.invalid {
+    color: #daf8f4;
+}*/
+/* Adiciona o X customizado
+.password-checklist .cross-icon::before {
+    content: "✕"; /* ou qualquer outro símbolo
+    font-size: 14px;
     color: red;
+}*/
+/* Adiciona o ✓ customizado
+.password-checklist .check-icon::before {
+    content: "✓";
+    font-size: 14px;
+    color: green;
+}*/
+
+/* personalizar o ícone como pseudo-elemento
+.password-checklist .check-icon::before {
+    content: "✓";
+    font-size: 4px;
+    color: green;
+    position: relative;
+    left: 0;
+}*/
+
+/*.password-checklist .cross-icon::before {
+    content: "✕";
+    font-size: -4px;
+    color: red;
+    position: relative;
+    left: 0;
+}*/
+
+/* Para garantir que o ícone maior seja exibido
+.password-checklist li::before {
+    font-size: 8px; /*tamanho do ícone
 }
 
-.password-checklist li.invalid::before {
-    content: "✘"; /* Ícone de inválido */
-    color: red;
-}
 
 /*feedback visual - setTimeOut*/
 .loading-overlay {
@@ -444,6 +493,7 @@ pre{
     justify-content: center;
     z-index: 9999;
 }
+
 
 
 

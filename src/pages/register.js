@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 /*lembrando que o name é criado automaticamente pelo react-hook-form */
 import {useForm} from "react-hook-form";
+import ReactPasswordChecklist from "react-password-checklist";
 import Card from "../components/card/card";
 import FormGroup from "../components/form/form-group";
 import Astered from "../components/utils/astered";
@@ -14,9 +15,11 @@ const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
         defaultValues: {
             nome: '', cpf: '', usuario: '', email: '',senha: '',
-            confirmarEmail: '', confimrarSenha: '',
+            confirmarEmail: '', confirmarSenha: '',
         }
     });
+    const [senha, setSenha] = useState('');
+    const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
     /*contexto do cadastro*/
@@ -42,7 +45,8 @@ const Register = () => {
         setValue('cpf', mascaraCpf);
     }
     /*verificacao de senhas*/
-    const confirmarSenha = watch('senha');
+    const senhaDigitada = watch("senha");
+    const confirmarSenha = watch('confirmarSenha');
     /*verificação de email*/
     const confirmarEmail = watch('email');
 
@@ -129,35 +133,72 @@ const Register = () => {
                                                     Senha:<Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <input type="password"
-                                                       {...register("senha", {required: "A senha é obrigatória",
-                                                           minLength: {
-                                                               value: 6,
-                                                               message: "A senha deve ter no mínimo 6 caracteres",
-                                                           },
-                                                           validate: validateSenhaTrim,
-                                                       })}
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       placeholder="Digite sua senha"/>
+                                                <input
+                                                    type="password"
+                                                    {...register("senha", {
+                                                        required: "A senha é obrigatória",
+                                                        minLength: {
+                                                            value: 6,
+                                                            message: "A senha deve ter no mínimo 6 caracteres",
+                                                        },
+                                                        validate: validateSenhaTrim,
+                                                    })}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Digite sua senha"
+                                                />
                                                 {errors.senha && <span className="error">{errors.senha.message}</span>}
                                             </FormGroup>
-                                            {/*campo confirmar senha*/}
+                                            {/* campo confirmar senha */}
                                             <FormGroup label={
                                                 <span>
                                                     Confirmar senha:<Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <input type="password"
-                                                       {...register("confirmarSenha",
-                                                           {validate:(value) => value === confirmarSenha || "As senhas não são iguais"})}
-                                                       className="form-control form-control-sm inputPlaceholder"
-                                                       placeholder="Confirme a senha"/>
+                                                <input
+                                                    type="password"
+                                                    {...register("confirmarSenha", {
+                                                        validate: (value) =>
+                                                            value === watch("senha") || "As senhas não são iguais",
+                                                    })}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Confirme a senha"
+                                                />
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
                                             </FormGroup>
+                                            {/* checklist de senha */}
+                                            {(watch("senha")?.length > 0 || watch("confirmarSenha")?.length > 0) && (
+                                                <ReactPasswordChecklist
+                                                    rules={[
+                                                        "minLength",
+                                                        "specialChar",
+                                                        "number",
+                                                        "capital",
+                                                        "lowercase",
+                                                        "noSpaces",
+                                                        "match",
+                                                    ]}
+                                                    minLength={8}
+                                                    value={watch("senha")}
+                                                    valueAgain={watch("confirmarSenha")}
+                                                    className="password-checklist check-icon cross-icon"
+                                                    messages={{
+                                                        minLength: "A senha deve ter no mínimo 8 caracteres",
+                                                        specialChar: "Deve conter caractere especial - !@#$%+",
+                                                        number: "Deve conter número",
+                                                        capital: "Deve conter letra maiúscula",
+                                                        lowercase: "Deve conter letra minúscula",
+                                                        noSpaces: "Não deve conter espaços",
+                                                        match: "As senhas coincidem",
+                                                    }}
+                                                    onChange={(isValid) => setIsValid(isValid)}
+                                                />
+                                            )}
+
                                             {/* Botão de cadastro*/}
-                                            <button className="btn btn-success btn-sm mt-2" onClick={cadastrarUsuario}>
-                                                Avançar
+                                            <button className="btn btn-success btn-sm mt-2" type="submit" disabled={!isValid}>
+                                                Cadastrar
                                             </button>
+                                            {/* Botão para Login */}
                                             <button className="btn btn-danger btn-sm mt-2" onClick={handleCancelar}>
                                                 Cancelar
                                             </button>
