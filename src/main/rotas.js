@@ -4,7 +4,7 @@ import Navbar from '../components/navbar/navbar';
 import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
-import ConsultarLancamentos from "../pages/consultarLancamentos";
+import ConsultarLancamentos from "../pages/lancamentos/consultarLancamentos";
 import FormularioSenha from "../pages/signupFormPassword";
 //import {ProvedorCadastroUsuario} from "../context/contextoCadastroUsuario";
 
