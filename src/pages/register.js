@@ -55,7 +55,7 @@ const Register = () => {
         navigate('/Login');
     };
     return (
-        <div className="container-fluid mt-5"> {/*style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>">*/}
+        <div className="container-fluid mt-1"> {/*style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>">*/}
             <div className="row justify-content-center w-10">
                 <div className="col-md-6">
                     <div className="bs-docs-section">
