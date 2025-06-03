@@ -1048,7 +1048,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.27.1"
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.27.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.27.0", "@babel/runtime@^7.27.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
   version "7.27.1"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.27.1.tgz"
   integrity sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==
@@ -1082,6 +1082,16 @@
   dependencies:
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
+
+"@base-ui-components/react@^1.0.0-beta.0":
+  version "1.0.0-beta.0"
+  resolved "https://registry.npmjs.org/@base-ui-components/react/-/react-1.0.0-beta.0.tgz"
+  integrity sha512-lPw5/40g/TbpSG1e1g4drl10kaSY2VBOFFQ9axmGhwPGqrQmTuW42jcUq/7OPdXQAyMakfWMWLSXyk3NXbRk+Q==
+  dependencies:
+    "@babel/runtime" "^7.27.0"
+    "@floating-ui/react" "^0.27.9"
+    "@floating-ui/utils" "^0.2.9"
+    use-sync-external-store "^1.5.0"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -1361,6 +1371,42 @@
   integrity sha512-3Ncze6JsJpB7BpYhqIgvBpfvEX1jsEKrad5hQBpyRQxtoAp6hx3+R46zqfsuQG4D9egQZ+xftQ0u4LPFMB7Wmg==
   dependencies:
     tslib "^2.4.1"
+
+"@floating-ui/core@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@floating-ui/core/-/core-1.7.0.tgz"
+  integrity sha512-FRdBLykrPPA6P76GGGqlex/e7fbe0F1ykgxHYNXQsH/iTEtjMj/f9bpY5oQqbjt5VgZvgz/uKXbGuROijh3VLA==
+  dependencies:
+    "@floating-ui/utils" "^0.2.9"
+
+"@floating-ui/dom@^1.0.0":
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.7.0.tgz"
+  integrity sha512-lGTor4VlXcesUMh1cupTUTDoCxMb0V6bm3CnxHzQcw8Eaf1jQbgQX4i02fYgT0vJ82tb5MZ4CZk1LRGkktJCzg==
+  dependencies:
+    "@floating-ui/core" "^1.7.0"
+    "@floating-ui/utils" "^0.2.9"
+
+"@floating-ui/react-dom@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-2.1.2.tgz"
+  integrity sha512-06okr5cgPzMNBy+Ycse2A6udMi4bqwW/zgBF/rwjcNqWkyr82Mcg8b0vjX8OJpZFy/FKjJmw6wV7t44kK6kW7A==
+  dependencies:
+    "@floating-ui/dom" "^1.0.0"
+
+"@floating-ui/react@^0.27.9":
+  version "0.27.9"
+  resolved "https://registry.npmjs.org/@floating-ui/react/-/react-0.27.9.tgz"
+  integrity sha512-Y0aCJBNtfVF6ikI1kVzA0WzSAhVBz79vFWOhvb5MLCRNODZ1ylGSLTuncchR7JsLyn9QzV6JD44DyZhhOtvpRw==
+  dependencies:
+    "@floating-ui/react-dom" "^2.1.2"
+    "@floating-ui/utils" "^0.2.9"
+    tabbable "^6.0.0"
+
+"@floating-ui/utils@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.9.tgz"
+  integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
 "@hookform/resolvers@^5.0.1":
   version "5.0.1"
@@ -1676,6 +1722,13 @@
   resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-7.1.0.tgz"
   integrity sha512-E0OqhZv548Qdc0PwWhLVA2zmjJZSTvaL4ZhoswmI8NJEC1tpW2js6LLP827jrW9MEiXYdz3QS6+hask83w74yQ==
 
+"@mui/icons-material@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-7.1.0.tgz#c20860d4f2f09160697a3dd353234a802c45b1e9"
+  integrity sha512-1mUPMAZ+Qk3jfgL5ftRR06ATH/Esi0izHl1z56H+df6cwIlCWG66RXciUqeJCttbOXOQ5y2DCjLZI/4t3Yg3LA==
+  dependencies:
+    "@babel/runtime" "^7.27.1"
+
 "@mui/material@^7.1.0":
   version "7.1.0"
   resolved "https://registry.npmjs.org/@mui/material/-/material-7.1.0.tgz"
@@ -1763,7 +1816,7 @@
     prop-types "^15.8.1"
     reselect "^5.1.1"
 
-"@mui/x-data-grid@8.4.0", "@mui/x-data-grid@^8.4.0":
+"@mui/x-data-grid@8.4.0":
   version "8.4.0"
   resolved "https://registry.npmjs.org/@mui/x-data-grid/-/x-data-grid-8.4.0.tgz"
   integrity sha512-c0fgMhvQTjCSo3LgRK1Mdk2msktCl9uwMYUYlP6bbqJ7I03IvS+1aZ+s3nSLmaq1aVh7sE2Bnuz63OnVerTLJA==
@@ -1776,10 +1829,31 @@
     reselect "^5.1.1"
     use-sync-external-store "^1.5.0"
 
+"@mui/x-data-grid@^8.5.0":
+  version "8.5.0"
+  resolved "https://registry.npmjs.org/@mui/x-data-grid/-/x-data-grid-8.5.0.tgz"
+  integrity sha512-5rrMm9anFaLk9O5XRIw3J9tAAnaiE1GxFeocyqhDj23RUReMg0YSp3FYnCaFLAehRQVgT9pC4675XO571paxKw==
+  dependencies:
+    "@babel/runtime" "^7.27.1"
+    "@mui/utils" "^7.0.2"
+    "@mui/x-internals" "8.5.0"
+    clsx "^2.1.1"
+    prop-types "^15.8.1"
+    reselect "^5.1.1"
+    use-sync-external-store "^1.5.0"
+
 "@mui/x-internals@8.4.0":
   version "8.4.0"
   resolved "https://registry.npmjs.org/@mui/x-internals/-/x-internals-8.4.0.tgz"
   integrity sha512-Z7FCahC4MLfTVzEwnKOB7P1fiR9DzFuMzHOPRNaMXc/rsS7unbtBKAG94yvsRzReCyjzZUVA7h37lnQ1DoPKJw==
+  dependencies:
+    "@babel/runtime" "^7.27.1"
+    "@mui/utils" "^7.0.2"
+
+"@mui/x-internals@8.5.0":
+  version "8.5.0"
+  resolved "https://registry.npmjs.org/@mui/x-internals/-/x-internals-8.5.0.tgz"
+  integrity sha512-Ef4KJij1pBGk6/xILyVZHf76tcuRpJIX30k4Ghklsd5QJujZ9ENCGAjvd7aWRAFAs5p3ffn0H8UDESoIcroj1Q==
   dependencies:
     "@babel/runtime" "^7.27.1"
     "@mui/utils" "^7.0.2"
@@ -9324,6 +9398,11 @@ symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
+
+tabbable@^6.0.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/tabbable/-/tabbable-6.2.0.tgz"
+  integrity sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==
 
 tailwindcss@^3.0.2:
   version "3.4.17"
