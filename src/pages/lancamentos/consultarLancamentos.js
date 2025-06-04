@@ -21,6 +21,7 @@ function ConsultarLancamentos () {
             ano: '', mes: '', tipoLancamento: '',
         }
     });
+    /*botão desabilitado até que filtro preenchido*/
     const handleAnoChange = (e) => setValue('ano', e.target.value);
     const handleMesChange = (e) => setValue('mes', e.target.value);
     /*tipo lancamento*/
@@ -35,54 +36,63 @@ function ConsultarLancamentos () {
     }
 
     return (
-        <Card title="Consultar Lançamentos">
-            <div className="container-fluid mt-auto">
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="bs-component">
-                                <form onSubmit={handleSubmit(buscarLancamentos)}>
-                                    {/* chamando os selects */}
-                                    <SelectLancamentoVariants
-                                        ano={ watch('ano')}
-                                        onAnoChange={handleAnoChange}
-                                        onMesChange={handleMesChange}
-                                        tipoLancamento={watch('tipoLancamento')}
-                                        onTipoLancamentoChange={handleTipoChange}
-                                    />
-                                    <hr/>
-                                    <Box sx={{ '& button': { m: 1 } }}>
-                                        <Button
-                                            type="submit"
-                                            size="small"
-                                            variant="contained"
-                                            disabled={!watch('ano') || !watch('tipoLancamento')}
-                                        >
-                                            Buscar
-                                        </Button>
-                                        <Button
-                                            size="small"
-                                            variant="contained"
-                                            color="error"
-                                        >
-                                            Cadastrar
-                                        </Button>
-                                    </Box>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/*data table*/}
-            <div className="row">
+        <div className="container-fluid mt-5">
+            <div className="row justify-content-center w-100" >
                 <div className="col-md-12">
-                    <div className="bs-component">
-                        <DataTable />
+                    <div className="bs-docs-section">
+                        <Card title="Consultar Lançamentos">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="bs-component">
+                                        <div className="col-md-6">
+                                            <div className="bs-component">
+                                                <form onSubmit={handleSubmit(buscarLancamentos)}>
+                                                    {/* chamando os selects */}
+                                                    <SelectLancamentoVariants
+                                                        ano={ watch('ano')}
+                                                        onAnoChange={handleAnoChange}
+                                                        onMesChange={handleMesChange}
+                                                        tipoLancamento={watch('tipoLancamento')}
+                                                        onTipoLancamentoChange={handleTipoChange}
+                                                    />
+                                                    <hr/>
+                                                    <Box sx={{ '& button': { m: 1 } }}>
+                                                        <Button
+                                                            type="submit"
+                                                            size="small"
+                                                            variant="contained"
+                                                            disabled={!watch('ano') || !watch('tipoLancamento')}
+                                                        >
+                                                            Buscar
+                                                        </Button>
+                                                        <Button
+                                                            size="small"
+                                                            variant="contained"
+                                                            color="error"
+                                                        >
+                                                            Cadastrar
+                                                        </Button>
+                                                    </Box>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/*data table*/}
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="bs-component">
+                                        <DataTable />
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
                     </div>
                 </div>
             </div>
-        </Card>
+        </div>
     )
 }
 export default ConsultarLancamentos;

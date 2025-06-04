@@ -10,6 +10,7 @@ import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
 import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
 import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
+import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 
 const Register = () => {
     const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -19,6 +20,8 @@ const Register = () => {
         }
     });
     const [senha, setSenha] = useState('');
+    const [showSenha, setShowSenha] = useState(false);
+    const [showSenhaConfirmar, setShowSenhaConfirmar] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
@@ -47,16 +50,22 @@ const Register = () => {
     /*verificacao de senhas*/
     const senhaDigitada = watch("senha");
     const confirmarSenha = watch('confirmarSenha');
+    /*visibilidade de senha*/
+    const toggleSenhaVisibility = () => {
+        setShowSenha(!showSenha);
+    }
+    const toggleSenhaConfirmar = () => {
+        setShowSenhaConfirmar(!showSenhaConfirmar);
+    }
     /*verificação de email*/
     const confirmarEmail = watch('email');
-
     /*cancelar cadastro de usuario*/
     function handleCancelar() {
         navigate('/Login');
     };
     return (
-        <div className="container-fluid mt-1"> {/*style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>">*/}
-            <div className="row justify-content-center w-10">
+        <div className="container mt-5"> {/*  style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>*/}
+            <div className="row justify-content-center w-100">
                 <div className="col-md-6">
                     <div className="bs-docs-section">
                         <Card title="Cadastro de Usuário">
@@ -67,7 +76,7 @@ const Register = () => {
                                             {/*campo nome completo*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Nome completo:<Astered>*</Astered>
+                                                    Nome completo: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="text"
@@ -80,7 +89,7 @@ const Register = () => {
                                             {/*campo cpf*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Cadastro Pessoa Física:<Astered>*</Astered>
+                                                    Cadastro Pessoa Física: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="text"
@@ -93,7 +102,7 @@ const Register = () => {
                                             {/*campo nome usuario*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Nome de Usuário:<Astered>*</Astered>
+                                                    Nome de Usuário: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="text"
@@ -105,7 +114,7 @@ const Register = () => {
                                             {/*campo email*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Email:<Astered>*</Astered>
+                                                    Email: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="email"
@@ -117,7 +126,7 @@ const Register = () => {
                                             {/*campo repetir email*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Repetir email:<Astered>*</Astered>
+                                                    Repetir email: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="email"
@@ -130,39 +139,54 @@ const Register = () => {
                                             {/*campo senha*/}
                                             <FormGroup label={
                                                 <span>
-                                                    Senha:<Astered>*</Astered>
+                                                    Senha: <Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <input
-                                                    type="password"
-                                                    {...register("senha", {
-                                                        required: "A senha é obrigatória",
-                                                        minLength: {
-                                                            value: 6,
-                                                            message: "A senha deve ter no mínimo 6 caracteres",
-                                                        },
-                                                        validate: validateSenhaTrim,
-                                                    })}
-                                                    className="form-control form-control-sm inputPlaceholder"
-                                                    placeholder="Digite sua senha"
-                                                />
+                                            <div className="position-relative">
+                                                    <input
+                                                        type={ showSenha ? "text" : "password" }
+                                                        {...register("senha", {
+                                                            required: "A senha é obrigatória",
+                                                            minLength: {
+                                                                value: 6,
+                                                                message: "A senha deve ter no mínimo 6 caracteres",
+                                                            },
+                                                            validate: validateSenhaTrim,
+                                                        })}
+                                                        className="form-control form-control-sm inputPlaceholder"
+                                                        placeholder="Digite sua senha"
+                                                    />
+                                                    {/*visibilidade de senha*/}
+                                                    <SenhaVisibilityToggle
+                                                    mostrarSenha={showSenha}
+                                                    onClick={toggleSenhaVisibility}
+                                                    />
+                                                </div>
                                                 {errors.senha && <span className="error">{errors.senha.message}</span>}
                                             </FormGroup>
                                             {/* campo confirmar senha */}
                                             <FormGroup label={
                                                 <span>
-                                                    Confirmar senha:<Astered>*</Astered>
+                                                    Confirmar senha: <Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <input
-                                                    type="password"
-                                                    {...register("confirmarSenha", {
-                                                        validate: (value) =>
-                                                            value === watch("senha") || "As senhas não são iguais",
-                                                    })}
-                                                    className="form-control form-control-sm inputPlaceholder"
-                                                    placeholder="Confirme a senha"
-                                                />
+                                                <div>
+                                                    <input
+                                                        type="password"
+                                                        {...register("confirmarSenha", {
+                                                            validate: (value) =>
+                                                                value === watch("senha") || "As senhas não são iguais",
+                                                        })}
+                                                        className="form-control form-control-sm inputPlaceholder"
+                                                        placeholder="Confirme a senha"
+                                                    />
+                                                    <SenhaVisibilityToggle
+                                                        mostrarSenhaConfirmar={showSenhaConfirmar}
+                                                        onClick={toggleSenhaVisibility}
+
+                                                    />
+
+                                                </div>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
                                             </FormGroup>
                                             {/* checklist de senha */}

@@ -11,13 +11,13 @@ const ConsultarLancamentos = () => {
     });
     return (
         <div className="container">
-            <div className="card mb-3">
-                <div className="card-body">
-                    <div className="col-lg-6">
+            <div className="row justify-content-center w-100">
+                <div className="col-md-6">
+                    <div className="bs-docs-section">
                         <Card title="Consultar Lancamentos">
-                            <div className="">
-                                <div>
-                                    <div>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="bs-component">
                                         <form>
                                             <fieldset>
                                                 <FormGroup label={
@@ -26,7 +26,7 @@ const ConsultarLancamentos = () => {
                                                     </span>
                                                 }>
                                                     <input type="text"
-                                                           {...register("ano", {required: "Digite o ano"})}
+                                                           {...register("ano", {required: true})}
                                                            className="form-control form-control-sm inputPlaceholder"
                                                            id="ano"
                                                            placeholder="Digite o ano"
