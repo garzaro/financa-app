@@ -8,13 +8,15 @@ import {useForm} from "react-hook-form";
 
 export default function SelectLancamentoVariants({
 
-    ano, mes, tipoLancamento, onAnoChange, onMesChange, onTipoLancamentoChange}) {
+    ano, mes, tipoLancamento, onAnoChange, onMesChange, onTipoLancamentoChange, onChange}) {
 
     return (
         <div style={{ display: 'table', gap: '16px' }}>
             {/*campo ano*/}
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="select-ano-label">Ano: <Astered>*</Astered></InputLabel>
+                <InputLabel id="select-ano-label">
+                    Ano: <Astered>*</Astered>
+                </InputLabel>
                 <Select
                     labelId="select-ano-label"
                     id="select-ano"

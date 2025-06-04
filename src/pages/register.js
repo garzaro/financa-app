@@ -12,7 +12,7 @@ import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
 import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
 
 const Register = () => {
-    const {control, register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
+    const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
         defaultValues: {
             nome: '', cpf: '', usuario: '', email: '',senha: '',
             confirmarEmail: '', confirmarSenha: '',

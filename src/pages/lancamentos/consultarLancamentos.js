@@ -21,6 +21,7 @@ function ConsultarLancamentos () {
             ano: '', mes: '', tipoLancamento: '',
         }
     });
+    /**/
     const handleAnoChange = (e) => setValue('ano', e.target.value);
     const handleMesChange = (e) => setValue('mes', e.target.value);
     /*tipo lancamento*/
@@ -28,7 +29,7 @@ function ConsultarLancamentos () {
 
     const ano = watch('ano');
     const tipo = watch('tipoLancamento');
-
+    const [rows, setRows] = useState([]);
     const buscarLancamentos = (data) => {
         console.log("FILTRO PREENCHIDO ",data);
         /*FAZER A CHAMADA À API*/
@@ -44,6 +45,7 @@ function ConsultarLancamentos () {
                                 <form onSubmit={handleSubmit(buscarLancamentos)}>
                                     {/* chamando os selects */}
                                     <SelectLancamentoVariants
+                                        /*desabilitando o botão o filtro - buscar*/
                                         ano={ watch('ano')}
                                         onAnoChange={handleAnoChange}
                                         onMesChange={handleMesChange}
