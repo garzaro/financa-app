@@ -3,8 +3,8 @@ import React from "react";
 {/*addBreak = true* opcional = <br>*/}
 function FormGroup({htmlFor, label, children, addBreak = false}){
     return (
-        <div className="form-group text-success" style={{ marginTop: '5px' }}>
-            <label htmlFor={htmlFor} className="text-success">{label}</label>
+        <div className="form-group text-danger" style={{ marginTop: '5px' }}>
+            <label htmlFor={htmlFor} className="text-white">{label}</label>
             {children}
             {addBreak && <br/>}
         </div>
