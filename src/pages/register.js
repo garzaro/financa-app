@@ -21,7 +21,7 @@ const Register = () => {
     });
     const [senha, setSenha] = useState('');
     const [showSenha, setShowSenha] = useState(false);
-    const [showSenhaConfirmar, setShowSenhaConfirmar] = useState(false);
+    const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
@@ -54,8 +54,8 @@ const Register = () => {
     const toggleSenhaVisibility = () => {
         setShowSenha(!showSenha);
     }
-    const toggleSenhaConfirmar = () => {
-        setShowSenhaConfirmar(!showSenhaConfirmar);
+    const toggleSenhaConfirmadaVisibility = () => {
+        setShowSenhaConfirmada(!showSenhaConfirmada);
     }
     /*verificação de email*/
     const confirmarEmail = watch('email');
@@ -170,9 +170,9 @@ const Register = () => {
                                                     Confirmar senha: <Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <div>
+                                                <div className="position-relative">
                                                     <input
-                                                        type="password"
+                                                        type={showSenhaConfirmada ? "text" : "password"}
                                                         {...register("confirmarSenha", {
                                                             validate: (value) =>
                                                                 value === watch("senha") || "As senhas não são iguais",
@@ -181,10 +181,11 @@ const Register = () => {
                                                         placeholder="Confirme a senha"
                                                     />
                                                     <SenhaVisibilityToggle
-                                                        mostrarSenhaConfirmar={showSenhaConfirmar}
-                                                        onClick={toggleSenhaVisibility}
-
+                                                        mostrarSenhaConfirmacao={showSenhaConfirmada}
+                                                        onClick={toggleSenhaConfirmadaVisibility}
+                                                        isConfirmacao={true}
                                                     />
+
 
                                                 </div>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
