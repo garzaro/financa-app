@@ -16,12 +16,6 @@ const SenhaVisibilityToggle = ({mostrarSenha, mostrarSenhaConfirmar, onClick}) =
                 <i className="bi-eye-fill"></i>
             )}
 
-            {mostrarSenhaConfirmar ? (
-                <i className="bi-eye-slash-fill"></i>
-            ) : (
-                // Ícone de olho (mostrar senha)
-                <i className="bi-eye-fill"></i>
-            )}
             {/* Exemplo de SVG para caso não use Bootstrap Icons: */}
             {/*{mostrarSenha ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye-slash" viewBox="0 0 16 16">
@@ -40,7 +34,6 @@ const SenhaVisibilityToggle = ({mostrarSenha, mostrarSenhaConfirmar, onClick}) =
 /*validacao das propriedades para o componente*/
 SenhaVisibilityToggle.propTypes = {
     mostrarSenha: PropTypes.bool.isRequired,
-    mostrarSenhaConfirmar: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired
 }
 export default SenhaVisibilityToggle;
