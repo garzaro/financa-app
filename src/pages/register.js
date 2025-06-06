@@ -170,7 +170,7 @@ const Register = () => {
                                                     Confirmar senha: <Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <div>
+                                                <div className="position-relative">
                                                     <input
                                                         type="password"
                                                         {...register("confirmarSenha", {

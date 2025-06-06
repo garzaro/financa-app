@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SenhaVisibilityToggle = ({mostrarSenha, onClick}) => {
+const SenhaVisibilityToggle = ({mostrarSenha, mostrarSenhaConfirmar, onClick}) => {
     return (
         <span
             className="position-absolute top-50 translate-middle-y end-0 pe-3"
