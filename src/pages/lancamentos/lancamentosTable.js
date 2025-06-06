@@ -9,7 +9,11 @@ import {ptBR} from "@mui/x-data-grid/locales";
 
 const columns = [
     { field: 'descricao', headerName: 'Descrição', flex: 3, },
-    { field: 'valor', headerName: 'Valor', flex: 1, },
+    { field: 'valor', headerName: 'Valor', flex: 1,
+    valueFormatter: (params) => params.value.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    }) || 'R$ 0,00'},
     { field: 'tipo', headerName: 'Tipo', flex: 1, },
     { field: 'mes', headerName: 'Mês', flex: 1 },
     { field: 'situacao', headerName: 'Situação', flex: 1 },
@@ -46,7 +50,6 @@ const columns = [
                         <GridDeleteIcon/>
                     </IconButton>
                 </Box>
-
             </>
         )
         },
@@ -58,14 +61,13 @@ const paginationModel = { page: 0, pageSize: 5 };
 export default function DataTable({ lancamentos = [] }) {
 
     /*transforma a lista de lancamentos em linhas para o datagrid*/
-    const rows = lancamentos.map((lancamento, i) => ({
-        /*ou id ou index como fallback*/
-        id: lancamento.id || i + 1,
-        descricao: lancamento.descricao,
+    const rows = lancamentos.map((lancamento) => ({
+        id: lancamento.id,
+        /*operador nullish coalescing - ?*/
+        descricao: lancamento.descricao ?? 'Sem descrição',
         valor: lancamento.valor,
-        tipo: lancamento.tipo,
+        tipoLancamento: lancamento.tipoLancamento,
         mes: lancamento.mes,
-        situacao: lancamento.situacao,
     }));
 
     return (

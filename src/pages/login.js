@@ -9,10 +9,12 @@ import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 import Swal from "sweetalert2";
 import DefinirSenha from "./senha-redefinicao";
+import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 
 function LoginForm () {
 const [email, setEmail] = useState('');
 const [senha, setSenha] = useState('');
+const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
 const { register, handleSubmit, formState: { errors }} = useForm();
 const navigate = useNavigate();
 /*chamando o servico de usuario*/
@@ -38,6 +40,10 @@ function handleCancelar() {
 }
 function handleAvancar() {
     navigate('/Definirsenha');
+}
+
+function toggleSenhaLogin() {
+    setMostrarSenhaLogin(!mostrarSenhaLogin);
 }
 return (
     <div className="container-fluid mt-5" style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>
@@ -70,13 +76,19 @@ return (
                                                 Senha:<span className="asterisco-vermelho">*</span>
                                             </span>
                                         }>
-                                            {/* Campo Senha */}
-                                            <input
-                                                type="password"
-                                                {...register("senha", {required: "Senha é obrigatória"})}
-                                                className="form-control form-control-sm inputPlaceholder"
-                                                placeholder="Digite sua senha"
-                                            />
+                                            <div className="position-relative">
+                                                {/* Campo Senha */}
+                                                <input
+                                                    type={mostrarSenhaLogin ? "text" : "password"}
+                                                    {...register("senha", {required: "Senha é obrigatória"})}
+                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    placeholder="Digite sua senha"
+                                                />
+                                                <SenhaVisibilityToggle
+                                                    mostrarSenha={mostrarSenhaLogin}
+                                                    onClick={toggleSenhaLogin}
+                                                />
+                                            </div>
                                             {errors.senha &&
                                                 <span className="error-backend">{errors.senha.message}</span>}
                                         </FormGroup>
