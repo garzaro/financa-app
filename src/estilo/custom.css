@@ -371,7 +371,7 @@ pre{
 
 /*FEEDBACK DE ERRO SERVIDOR OFFLINE*/
 .error, .error-backend {
-    color: #d81533;
+    color: #f32e4d;
     font-size: 14px;
     margin-top: 4px;
 }
