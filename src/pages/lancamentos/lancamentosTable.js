@@ -56,18 +56,22 @@ const columns = [
     },
 ];
 
+const lancamentos = [
+    {descricao:'salario', valor: 5000, mes: 'janeiro', tipoLancamento: 'RECEITA', status: 'efetivado' }];
+
 const paginationModel = { page: 0, pageSize: 5 };
 /*desestruturacao com valor padrao para lancamentos = [] - caso a prop não seja passada */
 export default function DataTable({ lancamentos = [] }) {
 
     /*transforma a lista de lancamentos em linhas para o datagrid*/
-    const rows = lancamentos.map((lancamento) => ({
-        id: lancamento.id,
-        /*operador nullish coalescing - ?*/
-        descricao: lancamento.descricao ?? 'Sem descrição',
-        valor: lancamento.valor,
-        tipoLancamento: lancamento.tipoLancamento,
-        mes: lancamento.mes,
+    const rows = lancamentos.map((lancamentos) => ({
+        id: lancamentos.id,
+        /*operador nullish coalescing - ? */
+        descricao: lancamentos.descricao ?? 'Sem descrição',
+        valor: lancamentos.valor,
+        tipoLancamento: lancamentos.tipoLancamento,
+        mes: lancamentos.mes,
+        status: lancamentos.status,
     }));
 
     return (

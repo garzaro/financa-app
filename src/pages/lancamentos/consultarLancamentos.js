@@ -26,7 +26,6 @@ function ConsultarLancamentos () {
     const handleMesChange = (e) => setValue('mes', e.target.value);
     /*tipo lancamento*/
     const handleTipoChange = (e) => setValue('tipoLancamento', e.target.value);
-
     const ano = watch('ano');
     const tipo = watch('tipoLancamento');
 
@@ -34,6 +33,9 @@ function ConsultarLancamentos () {
         console.log("FILTRO PREENCHIDO ",data);
         /*FAZER A CHAMADA À API*/
     }
+
+    const lancamentos = [
+        {descricao:'salario', valor: 5000, mes: 'janeiro', tipoLancamento: 'RECEITA', status: 'efetivado' }];
 
     return (
         <div className="container-fluid mt-5">
@@ -47,7 +49,7 @@ function ConsultarLancamentos () {
                                         <div className="col-md-6">
                                             <div className="bs-component">
                                                 <form onSubmit={handleSubmit(buscarLancamentos)}>
-                                                    {/* chamando os selects */}
+                                                    {/* chamando os selects - filtro */}
                                                     <SelectLancamentoVariants
                                                         ano={ watch('ano')}
                                                         onAnoChange={handleAnoChange}
@@ -61,10 +63,11 @@ function ConsultarLancamentos () {
                                                             type="submit"
                                                             size="small"
                                                             variant="contained"
-                                                            disabled={!watch('ano') || !watch('tipoLancamento')}
+                                                            disabled={!ano || !tipo}
                                                         >
                                                             Buscar
                                                         </Button>
+                                                        {/*cadastrar lancamento*/}
                                                         <Button
                                                             size="small"
                                                             variant="contained"
@@ -83,7 +86,7 @@ function ConsultarLancamentos () {
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="bs-component">
-                                        <DataTable />
+                                        <DataTable Lancamento = {lancamentos}/>
                                     </div>
                                 </div>
                             </div>
