@@ -21,11 +21,11 @@ function ConsultarLancamentos () {
             ano: '', mes: '', tipoLancamento: '',
         }
     });
-    /*botão desabilitado até que filtro preenchido*/
     const handleAnoChange = (e) => setValue('ano', e.target.value);
     const handleMesChange = (e) => setValue('mes', e.target.value);
     /*tipo lancamento*/
     const handleTipoChange = (e) => setValue('tipoLancamento', e.target.value);
+    /*botão desabilitado até que filtro preenchido*/
     const ano = watch('ano');
     const tipo = watch('tipoLancamento');
 
@@ -53,8 +53,9 @@ function ConsultarLancamentos () {
                                                     <SelectLancamentoVariants
                                                         ano={ watch('ano')}
                                                         onAnoChange={handleAnoChange}
+                                                        mes={watch('mes')}
                                                         onMesChange={handleMesChange}
-                                                        tipoLancamento={watch('tipoLancamento')}
+                                                        tipoLancamento={ watch('tipoLancamento')}
                                                         onTipoLancamentoChange={handleTipoChange}
                                                     />
                                                     <hr/>
