@@ -31,9 +31,9 @@ const SenhaVisibilityToggle = ({mostrarSenha, mostrarSenhaConfirmar, onClick}) =
         </span>
     );
 };
-/*validacao das propriedades para o componente*/
+/*validacao das propriedades para o componente
 SenhaVisibilityToggle.propTypes = {
     mostrarSenha: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired
-}
+}*/
 export default SenhaVisibilityToggle;
