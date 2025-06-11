@@ -6,9 +6,12 @@ import Select from '@mui/material/Select';
 import Astered from "../utils/astered";
 import {useForm} from "react-hook-form";
 /*filtro*/
-export default function SelectLancamentoVariants({
-
-    ano, mes, tipoLancamento, onAnoChange, onMesChange, onTipoLancamentoChange, onChange}) {
+export default function SelectMenuVariants({
+    ano, mes, tipo, onAnoChange, onMesChange, onTipoChange, onChange
+}) {
+    const { watch, formState:{ errors},} = useForm({});
+    const anoSelect = watch ("ano")
+    const tipoSelect = watch ("tipo")
 
     return (
         <div style={{ display: 'table', gap: '16px' }}>
@@ -32,8 +35,7 @@ export default function SelectLancamentoVariants({
                         const anoAtual = new Date().getFullYear();
                         const anoValue = anoAtual - i;
                         return (
-                            /*VER O QUE REALMENTE ESTÁ ACONTENCENDO AQUI*/
-                            <MenuItem key={anoValue} value={anoValue}>
+                            <MenuItem key={i} value={anoValue}>
                                 {anoValue}
                             </MenuItem>
                         );
@@ -65,11 +67,11 @@ export default function SelectLancamentoVariants({
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="select-tipo-lancamento-label">Tipo: <Astered>*</Astered></InputLabel>
                 <Select
-                    labelId="select-tipo-lancamento-label"
-                    id="select-tipo-lancamento"
-                    value={tipoLancamento}
-                    onChange={onTipoLancamentoChange}
-                    label="Tipo Lancamento"
+                    labelId="select-tipo-label"
+                    id="select-tipo"
+                    value={tipo}
+                    onChange={onTipoChange}
+                    label="Tipo"
                     required
                 >
                     <MenuItem value="">
@@ -84,4 +86,9 @@ export default function SelectLancamentoVariants({
 }
 
 
-
+/*
+* MenuItem - tem um value vazio (""), ou seja, representa uma opção "nenhuma selecionada".
+* key={anoValue}: chave única para React.
+* value={anoValue}: o valor que será enviado ao selecionar essa opção.
+* {anoValue}: o texto exibido no dropdown (por exemplo: "2025", "2024").
+* */
