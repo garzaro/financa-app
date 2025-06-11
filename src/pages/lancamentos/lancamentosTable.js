@@ -3,25 +3,32 @@ import {DataGrid, GridDeleteIcon} from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
-import {Box, IconButton} from "@mui/material";
+import {Box, Chip, IconButton} from "@mui/material";
 import {auto} from "@popperjs/core";
 import {ptBR} from "@mui/x-data-grid/locales";
+import {statusColorChip} from "../../components/utils/utils";
+
 
 const columns = [
     { field: 'descricao', headerName: 'Descrição', flex: 3, },
-    { field: 'valor', headerName: 'Valor', flex: 1,
-    valueFormatter: (params) => params.value.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    }) || 'R$ 0,00'},
+    { field: 'valor', headerName: 'Valor', flex: 1},
     { field: 'tipo', headerName: 'Tipo', flex: 1, },
     { field: 'mes', headerName: 'Mês', flex: 1 },
-    { field: 'situacao', headerName: 'Situação', flex: 1 },
+    { field: 'status', headerName: 'Status', flex: 1,
+        renderCell: (params) => statusColorChip(params.value, {
+            variant: 'outlined',
+            sx: {
+              fontSize : '0.7rem',
+              borderRadius: '4px',
+                border: 'none'
+            }
+        })
+    },
+
     { field: 'acoes', headerName: 'Ações', flex: 2, sortable: false,
         columnMenu: false, disableColumnMenu: true, filterable: false,
         renderCell: (params) => {
-
-        const handleEditar = (e) =>{
+            const handleEditar = (e) =>{
             console.log("EDITAR A PORRA TODA ", params.row);
             const {name, value} = e.target;
                 {/*setFiltro((prev) => ({ ...prev, [name]: value }));*/}
@@ -56,20 +63,16 @@ const columns = [
     },
 ];
 
-const lancamentos = [
-    {descricao:'salario', valor: 5000, mes: 'janeiro', tipoLancamento: 'RECEITA', status: 'efetivado' }];
-
 const paginationModel = { page: 0, pageSize: 5 };
 /*desestruturacao com valor padrao para lancamentos = [] - caso a prop não seja passada */
-export default function DataTable({ lancamentos = [] }) {
-
+export default function DataTable({ lancamentos }) { /* = [] */
     /*transforma a lista de lancamentos em linhas para o datagrid*/
-    const rows = lancamentos.map((lancamentos) => ({
+    const rows = lancamentos.map(lancamentos => ({
         id: lancamentos.id,
         /*operador nullish coalescing - ? */
-        descricao: lancamentos.descricao ?? 'Sem descrição',
-        valor: lancamentos.valor,
-        tipoLancamento: lancamentos.tipoLancamento,
+        descricao: lancamentos.descricao,
+        valor: lancamentos.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}),
+        tipo: lancamentos.tipo,
         mes: lancamentos.mes,
         status: lancamentos.status,
     }));
