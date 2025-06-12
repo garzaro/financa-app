@@ -69,3 +69,39 @@ export const statusColorChip = (value, options = {}) => {
         />
     );
 }
+/*erros de response da api*/
+export const handleApiError = (
+    error,
+    mensagemPadrao = "Erro inesperado. Tente novamente mais tarde.",
+    options = { log: false, console: console }
+) => {
+    let mensagemErro = mensagemPadrao;
+    let detalhesDoErro = null;
+
+    if (!error.response) {
+        mensagemErro = "Falha na conexão. Verifique sua rede e tente novamente.";
+        detalhesDoErro = error.message || 'Erro de rede';
+    }
+    else if (error.response.data) {
+        mensagemErro = error.response.data.message || JSON.stringify(error.response.data);
+        detalhesDoErro = error.response.data;
+    }
+    else {
+        mensagemErro = `Erro ${error.response.status}: ${error.response.statusText || 'Sem detalhes'}`;
+        detalhesDoErro = {
+            status: error.response.status,
+            statusText: error.response.statusText
+        };
+    }
+
+    if (options.log) {
+        const logger = options.console || console;
+        logger.error('Erro na API:', {
+            message: mensagemErro,
+            details: detalhesDoErro,
+            originalError: error
+        });
+    }
+
+    return mensagemErro;
+};
