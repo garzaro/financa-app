@@ -9,7 +9,7 @@ import Astered from "../components/utils/astered";
 import ServiceUsuario from "../app/service/usuarioService";
 import Swal from "sweetalert2";
 import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
-import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
+import {handleApiError, handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 
 const Register = () => {
@@ -22,7 +22,7 @@ const Register = () => {
     const [senha, setSenha] = useState('');
     const [showSenha, setShowSenha] = useState(false);
     const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
-    const [isValid, setIsValid] = useState(true);
+    const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
     /*contexto do cadastro*/
@@ -34,12 +34,13 @@ const Register = () => {
         usuarioService.salvar(dadosDoUsuario)
         .then(response => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
-            setTimeout(navigate('/login'), 2000);
+            setTimeout(() => navigate('/login'), 2000);
         }).catch(err => {
-            mensagemDeAlerta(
-                err.response.data?.message ||
-                err.response.data ||
-                "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
+            console.log("VER QUE ERRO ESTA ACONTECE AQUI", err);
+            const erroDaApi = handleApiError(
+                err, "Erro inesperado ao finalizar o cadastro. Tente novamente mais tarde."
+            );
+            mensagemDeAlerta(erroDaApi, err);
         });
     }
     /*macara cpf*/
@@ -92,7 +93,7 @@ const Register = () => {
                                                     Cadastro Pessoa Física: <Astered>*</Astered>
                                                 </span>
                                             }>
-                                                <input type="text"
+                                                <input type="tel" /*X mobile*/
                                                        {...register("cpf", {required: "O cpf é obrigatório",
                                                        onChange: handleCpfMask})}
                                                        className="form-control form-control-sm inputPlaceholder"
@@ -185,13 +186,11 @@ const Register = () => {
                                                         onClick={toggleSenhaConfirmadaVisibility}
                                                         isConfirmacao={true}
                                                     />
-
-
                                                 </div>
                                                 {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
                                             </FormGroup>
                                             {/* checklist de senha */}
-                                            {(watch("senha")?.length > 0 || watch("confirmarSenha")?.length > 0) && (
+                                            {(!isValid && (senhaDigitada?.length > 0 || confirmarSenha?.length > 0)) && (
                                                 <ReactPasswordChecklist
                                                     rules={[
                                                         "minLength",
@@ -202,12 +201,12 @@ const Register = () => {
                                                         "noSpaces",
                                                         "match",
                                                     ]}
-                                                    minLength={8}
-                                                    value={watch("senha")}
-                                                    valueAgain={watch("confirmarSenha")}
+                                                    minLength={6}
+                                                    value={watch('senha')}
+                                                    valueAgain={watch('confirmarSenha')}
                                                     className="password-checklist check-icon cross-icon"
                                                     messages={{
-                                                        minLength: "A senha deve ter no mínimo 8 caracteres",
+                                                        minLength: "A senha deve ter no mínimo 6 caracteres",
                                                         specialChar: "Deve conter caractere especial - !@#$%+",
                                                         number: "Deve conter número",
                                                         capital: "Deve conter letra maiúscula",
