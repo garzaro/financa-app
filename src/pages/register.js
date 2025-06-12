@@ -36,7 +36,6 @@ const Register = () => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
             setTimeout(() => navigate('/login'), 2000);
         }).catch(err => {
-            console.log("VER QUE ERRO ESTA ACONTECE AQUI", err);
             const erroDaApi = handleApiError(
                 err, "Erro inesperado ao finalizar o cadastro. Tente novamente mais tarde."
             );
