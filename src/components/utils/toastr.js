@@ -34,3 +34,21 @@ export function mensagemDeAlerta(mensagem) {
     mostrarMensagem('Alerta', mensagem, 'warning');
 }
 
+/**
+ * módulo Handlers reutilizável para exibição de toastr
+ *
+ **/
+export const toastErrorHandlers = new Map([
+    [400, (msg) => toast.error(msg || 'Requisição inválida.')],
+    [401, (msg) => {
+        toast.warn('Sua sessão expirou. Faça login novamente.');
+        localStorage.removeItem('token_acesso');
+        navigate('/login');
+    }],
+    [403, (msg) => toast.error('Você não tem permissão para essa ação.')],
+    [404, (msg) => toast.info('Recurso não encontrado.')],
+    [500, (msg) => toast.error('Erro interno no servidor.')],
+]);
+
+
+
