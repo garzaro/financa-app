@@ -1,4 +1,5 @@
 import toastr from 'toastr'
+import {toast} from "react-toastify";
 
 toastr.options = {
     "closeButton": false,
@@ -36,6 +37,7 @@ export function mensagemDeAlerta(mensagem) {
 
 /**
  * módulo Handlers reutilizável para exibição de toastr
+ * mapear e tratar erros conhecidos (400, 401, 403 etc.)
  *
  **/
 export const toastErrorHandlers = new Map([
@@ -43,7 +45,8 @@ export const toastErrorHandlers = new Map([
     [401, (msg) => {
         toast.warn('Sua sessão expirou. Faça login novamente.');
         localStorage.removeItem('token_acesso');
-        navigate('/login');
+        //navigate('/login');
+        window.location.href="/login";
     }],
     [403, (msg) => toast.error('Você não tem permissão para essa ação.')],
     [404, (msg) => toast.info('Recurso não encontrado.')],
