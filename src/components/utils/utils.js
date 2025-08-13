@@ -1,4 +1,6 @@
-/*mascara cpf*/
+/**
+ * mascara cpf
+ * */
 export const handleCpfChange = (valor) => {
     /*remove os pontos na base de dados*/
     valor = valor.replace(/\D/g, '');
@@ -14,7 +16,9 @@ export const handleCpfChange = (valor) => {
     return valor;
     /*console.log('mudou', valor)*/
 };
-/*trim nos inputs de cadastro*/
+/**
+ * trim nos inputs de cadastro
+ * */
 export const validateSenhaTrim = (value) =>{
     if (value.includes(' ')) {
         return "A senha não pode conter espaços";
