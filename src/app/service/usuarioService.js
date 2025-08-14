@@ -1,6 +1,10 @@
 import Apiservice from "../apiservice";
-/*tratando da api de serviços do usuario - sobrescrevendo para utilização dos metodos da apiService*/
-/*instanciando ApiService - composiçao*/
+/**
+ * tratando da api de serviços do usuario -
+ * sobrescrevendo para utilização dos metodos da apiService
+ *
+ * instanciando ApiService - composiçao - React 16+
+ * */
 
 const usuarioApi = Apiservice('/api/usuarios');
 
