@@ -16,8 +16,7 @@ function Home () {
     useEffect(() => {
         const buscarSaldo = () => {
           const usuario = storageRecuperado.obterItem('_usuario_logado');
-          axios.get(`http://localhost:8080/api/usuarios/${usuario.id}/saldo`)
-          console.log('Usuario recuperado do localStorage do login', usuario);
+          console.log('Usuario recuperado do localStorage', usuario);
           const retornoSaldo = saldoServico.buscarSaldoPorUsuario(usuario.id)
             .then(respondeAiManoBanco => {
               setSaldo(respondeAiManoBanco.data);
