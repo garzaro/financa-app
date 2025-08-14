@@ -12,21 +12,18 @@ import DefinirSenha from "./senha-redefinicao";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 
 function LoginForm () {
-const { register, handleSubmit, formState: { errors }} = useForm();
-const [email, setEmail] = useState('');
-const [senha, setSenha] = useState('');
-const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
-const storageUsuario = LocalStorageService();
-const navigate = useNavigate();
-/**
- * chamando o servico de usuario
- * */
-const usuarioService = UsuarioService();
+  /**
+   * chamando o servico de usuario
+   * */
+  const usuarioService = UsuarioService();
+  
+  const { register, handleSubmit, formState: { errors }} = useForm();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
+  const storageUsuario = LocalStorageService();
+  const navigate = useNavigate();
 
-/**
- * @param setItem - salvar a chave - identificação
- * */
-//const [usuarioLogado, setUsuarioLogado] = LocalStorageService.salvarItem('_usuario_logado', null);
 /**
  * logar
  * */
@@ -39,7 +36,9 @@ const fazerLogin = (data) => {
     email:data.email,
     senha:data.senha,
 }).then(respondeAiManoBanco => {
-      //setUsuarioLogado(response.data);
+      /**
+       * @param setItem - salvar a chave - identificação
+       * */
       storageUsuario.salvarItem('_usuario_logado', respondeAiManoBanco.data);
       setTimeout(() => navigate("/home"), 2000);
 
