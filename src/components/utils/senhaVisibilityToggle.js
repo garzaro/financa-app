@@ -33,7 +33,7 @@ const SenhaVisibilityToggle = ({mostrarSenha, mostrarSenhaConfirmar, onClick}) =
 };
 /*validacao das propriedades para o componente*/
 SenhaVisibilityToggle.propTypes = {
-    mostrarSenha: PropTypes.bool.isRequired,
+    mostrarSenha: PropTypes.bool,
     onClick: PropTypes.func.isRequired
 }
 export default SenhaVisibilityToggle;
