@@ -12,25 +12,37 @@ import DefinirSenha from "./senha-redefinicao";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 
 function LoginForm () {
+const { register, handleSubmit, formState: { errors }} = useForm();
 const [email, setEmail] = useState('');
 const [senha, setSenha] = useState('');
 const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
-const { register, handleSubmit, formState: { errors }} = useForm();
+const storageUsuario = LocalStorageService();
 const navigate = useNavigate();
-/*chamando o servico de usuario*/
+/**
+ * chamando o servico de usuario
+ * */
 const usuarioService = UsuarioService();
-/*recuperar id do usuario - response*/
-const [usuarioLogado, setUsuarioLogado] = LocalStorageService('_usuario_logado', null);
-/*logar*/
+
+/**
+ * @param setItem - salvar a chave - identificação
+ * */
+//const [usuarioLogado, setUsuarioLogado] = LocalStorageService.salvarItem('_usuario_logado', null);
+/**
+ * logar
+ * */
 const fazerLogin = (data) => {
-    /*limpe dados antigos*/
-    localStorage.removeItem('_usuario_logado');
+    /**
+     * limpe a chave antiga
+     * */
+    storageUsuario.removerItem('_usuario_logado');
     usuarioService.autenticar({
     email:data.email,
     senha:data.senha,
-}).then(response => {
-    setUsuarioLogado(response.data);
-        setTimeout(() => navigate("/home"), 2000);
+}).then(respondeAiManoBanco => {
+      //setUsuarioLogado(response.data);
+      storageUsuario.salvarItem('_usuario_logado', respondeAiManoBanco.data);
+      setTimeout(() => navigate("/home"), 2000);
+
 }).catch(err => {
     mensagemDeErro(err.response.data || "Erro inesperado ao fazer login. Tente novamente mais tarde.");
 });
