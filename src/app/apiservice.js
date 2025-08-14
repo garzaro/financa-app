@@ -8,8 +8,14 @@ export const httpClient = axios.create({
 /*responsável por fazer requisições para toda a api*/
 const ApiService = (apiurl) => {
     return {
+      /**
+       * recebe como parametro a url de um api
+       * @param prefixo  - usuarios/api do servidor
+       * */
         apiurl: apiurl,
-        /*metodos*/
+        /**
+         * metodos
+         * */
         post: (url, objeto) => {
             const requestUrl = `${apiurl}${url}`;
             return httpClient.post(requestUrl, objeto);
