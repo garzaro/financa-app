@@ -1,3 +1,4 @@
+import Chip from '@mui/material/Chip';
 /**
  * mascara cpf
  * */
@@ -31,3 +32,38 @@ export const validarTrim = (value) =>{
     }
     return true;
 }
+
+
+/**
+ * Renderiza um Chip estilizado para status
+ * @param {string} value - Valor do status
+ * @param {object} options - Opções adicionais
+ * @param {object} options.sx - Estilos adicionais
+ * @returns {JSX.Element} Componente Chip estilizado
+ */
+export const statusColorChip = (value, options = {}) => {
+    if (!value) return null;
+
+    const status = String(value).toUpperCase();
+
+    const colorMap = {
+        'EFETIVADO': 'success',
+        'PENDENTE': 'warning',
+        'CANCELADO': 'error'
+    };
+
+    const chipColor = colorMap[status] || 'default';
+
+    return (
+        <Chip
+            label={status}
+            variant="outlined"
+            color={chipColor}
+            sx={{
+                fontWeight: 'bold',
+                minWidth: 100,
+                ...options.sx
+            }}
+        />
+    );
+};
