@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
 import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
+import {CircularProgress} from "@mui/material";
 
 const Register = () => {
     const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -40,6 +41,9 @@ const Register = () => {
         usuarioService.salvar(dadosDoUsuario)
         .then(response => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
+            if (mensagemDeSucesso){
+                return <CircularProgress />
+            }
             setTimeout(navigate('/login'), 2000);
         }).catch(err => {
             mensagemDeAlerta(
