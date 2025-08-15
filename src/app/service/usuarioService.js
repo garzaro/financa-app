@@ -1,4 +1,4 @@
-import Apiservice from "../apiservice";
+import Apiservice from "../api/apiservice";
 /**
  * tratando da api de serviços do usuario -
  * sobrescrevendo para utilização dos metodos da apiService
