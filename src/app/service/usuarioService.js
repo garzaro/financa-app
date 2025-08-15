@@ -24,5 +24,4 @@ const ServiceUsuario = (credentials) =>{
     // cadastrar: (dados) => usuarioApi.post('/cadastrar', dados),
     // buscarPorId: (id) => usuarioApi.get(`/${id}`),
 };
-
 export default ServiceUsuario;
