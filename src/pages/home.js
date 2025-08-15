@@ -1,12 +1,34 @@
 import React, {useEffect, useState} from 'react';
-import {useSaldo} from "../app/service/useSaldo";
+import axios from "axios";
+//import {useSaldo} from "../app/service/useSaldo";
+
+import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
+
 /*pagina inicial*/
 function Home () {
     /*aqui é feito a composicao - em componente de classe seria feito um extends - heranca - destructure*/
-    const { saldo, loading, erro } = useSaldo();
+    //const { saldo, loading, erro } = useSaldo();
+    const saldoServico = UsuarioService();
+    const storageRecuperado = LocalStorageService();
+    const [saldo, setSaldo] = useState(0);
 
-    return (
+    useEffect(() => {
+        const buscarSaldo = () => {
+          const usuario = storageRecuperado.obterItem('_usuario_logado');
+          console.log('Usuario recuperado do localStorage', usuario);
+          const retornoSaldo = saldoServico.buscarSaldoPorUsuario(usuario.id)
+            .then(respondeAiManoBanco => {
+              setSaldo(respondeAiManoBanco.data);
+            })
+            .catch(error => {
+              console.log(error);
+              })
+          }
+          buscarSaldo();
+    },[]);
+
+  return (
         <div className="container ">
             <div className="jumbotron ">
                 <h1 className="display-5">Bem-vindo à Página Inicial!!!</h1>
@@ -14,7 +36,7 @@ function Home () {
 
                 {/*retorno do saldo*/}
                 <p className="lead">
-                    Seu saldo para o mês atual é de R$ ${saldo}.
+                    Seu saldo para o mês atual é de R$ {saldo || '0,00'}.
                 </p>
 
                 <hr className="my-4"/>
@@ -32,3 +54,29 @@ function Home () {
 };
 
 export default Home;
+
+/**
+ * ideia para posteriormente quando for declarado o estado de atualizar estado
+ * const [saldo, setSaldo] = useState(0);
+ * const saldoServico = UsuarioService();
+ * const lancamentoServico = LancamentoService();
+ *
+ * // Carrega saldo ao montar a tela
+ * useEffect(() => {
+ *     buscarSaldo();
+ * }, []);
+ *
+ * const buscarSaldo = () => {
+ *     saldoServico.buscarSaldoPorUsuario()
+ *         .then(response => setSaldo(response.data))
+ *         .catch(console.log);
+ * };
+ *
+ * const criarLancamento = (lancamento) => {
+ *     lancamentoServico.criar(lancamento)
+ *         .then(() => {
+ *             buscarSaldo(); // <-- aqui atualiza saldo com valor real do backend
+ *         })
+ *         .catch(console.log);
+ * };
+ * */
