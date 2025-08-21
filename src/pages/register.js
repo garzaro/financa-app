@@ -41,9 +41,9 @@ const Register = () => {
         usuarioService.salvar(dadosDoUsuario)
         .then(response => {
             mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
-            if (mensagemDeSucesso){
+            /**if (mensagemDeSucesso){
                 return <CircularProgress />
-            }
+            }*/
             setTimeout(navigate('/login'), 2000);
         }).catch(err => {
             mensagemDeAlerta(
