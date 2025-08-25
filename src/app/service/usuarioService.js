@@ -3,7 +3,9 @@ import Apiservice from "../api/apiservice";
  * tratando da api de serviços do usuario -
  * sobrescrevendo para utilização dos metodos da apiService
  *
- * instanciando ApiService - composiçao - React 16+
+ * @param ApiService - importada, (composiçao, pensar em extends) - React 16+
+ *
+ * @returns credencials - recebe como objeto as credenciais do usuario
  * */
 
 const usuarioApi = Apiservice('/api/usuarios');

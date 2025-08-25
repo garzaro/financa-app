@@ -29,10 +29,14 @@ const httpClient = axios.create({
  * responsável por fazer requisições para toda a api
  *
  * factory funtion const ApiService = (apiurl) => {}
+ *
+ * @param ApiService - recebe a prop (apiurl), a url que recebe uma api
+ * @return url - recebe a url do backend - Controller
  * */
+
 const ApiService = (apiurl) => {
     return {
-        apiurl: apiurl,
+        //apiurl: apiurl,
         /**
          * metodos
          */
@@ -45,7 +49,7 @@ const ApiService = (apiurl) => {
             return httpClient.put(requestUrl, objeto);
         },
         delete:(url) => {
-            const requestUrl = `${apiurl}${url}`;
+            const requestUrl = `${url}`;
             return httpClient.delete(requestUrl);
         },
         get: (url) => {

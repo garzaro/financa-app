@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Sistema de Finanças Pessoais
+***
+## Descrição
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um sistema de finanças pessoais desenvolvido em React (Create React App) no frontend e springboot no backend, banco de dados postgresql  que permite aos usuários gerenciar suas despesas e receitas de forma eficiente. O sistema oferece funcionalidades para criação de contas de usuário, login, visualização de saldo, cadastro e acompanhamento de lançamentos financeiros.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Funcionalidades 
 
-### `npm start`
+`Telas`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- <font color="" >**Criação de Usuário**</font>: Permite que novos usuários se cadastrem no sistema. 
+- **Login**: Autenticação de usuários existentes para acesso ao sistema.
+- <font color="red">**Home (Saldo)**</font>: Exibe o saldo atual do usuário.
+- **Cadastro de Lançamentos Financeiros**: Permite registrar novas RECEITAS e DESPESAS.
+- **Visualização de Lançamentos**: Lista todos os lançamentos financeiros cadastrados, PENDENTE, CANCELADO, EFETIVADO.
+- **Botões de Acesso Rápido**: Na tela Home, botões para facilitar o cadastro de novos lançamentos.
+- **Validações**: Implementação de validações para cadastro de usuários e lançamentos financeiros, garantindo a integridade dos dados.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Tecnologias Utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
++ React (Create React App)
+ 
+- Primereact
++ Spring Boot
+- Postgresql
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Como Rodar o Projeto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para executar este projeto localmente, siga os passos abaixo:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone o repositório:**
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd <NOME_DA_PASTA_DO_PROJETO>
+   ```
 
-### `npm run eject`
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm start
+   # ou
+   yarn start
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   O aplicativo será aberto automaticamente no seu navegador padrão em `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Uso
 
-## Learn More
+> - Ao iniciar o sistema, sera direcionado para tela inicial onde poderá fazer login. Caso não possua uma conta, poderá criar uma nova através da tela de cadastro de usuário. Após o login bem-sucedido, o usuário terá acesso à tela Home, onde poderá visualizar seu saldo atual e acessar as opções para cadastrar novos lançamentos financeiros (receitas ou despesas) e visualizar o histórico de todos os lançamentos.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Validações
 
-### Code Splitting
+>> O sistema possui validações implementadas para garantir a integridade e consistência dos dados. Isso inclui:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Cadastro de Usuários**: Validações para campos como e-mail (formato único), senha (complexidade mínima) e outros dados obrigatórios.
+- **Cadastro de Lançamentos Financeiros**: Validações para garantir que os valores sejam numéricos positivo, datas válidas e que os campos obrigatórios sejam preenchidos.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> DOC: <https://react.dev/learn>
+ 

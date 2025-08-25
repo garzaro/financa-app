@@ -7,12 +7,22 @@ import {LocalStorageService} from "../app/service/localStorageService";
 
 /*pagina inicial*/
 function Home () {
-    /*aqui é feito a composicao - em componente de classe seria feito um extends - heranca - destructure*/
+
+    /**
+     * @param saldoServico é a composicao - em componente de classe
+     * seria feito um extends do servico e depois o construtor para
+     * instanciar o servico.
+     * @param service = new UsuarioService();
+     * */
     //const { saldo, loading, erro } = useSaldo();
     const saldoServico = UsuarioService();
     const storageRecuperado = LocalStorageService();
+    const apresentarUsuario = storageRecuperado.obterItem('_usuario_logado');
     const [saldo, setSaldo] = useState(0);
 
+    /**
+     * retornar o saldo do usuario logado
+     * */
     useEffect(() => {
         const buscarSaldo = () => {
           const usuario = storageRecuperado.obterItem('_usuario_logado');
@@ -31,12 +41,18 @@ function Home () {
   return (
         <div className="container ">
             <div className="jumbotron ">
-                <h1 className="display-5">Bem-vindo à Página Inicial!!!</h1>
+                <h1 className="display-5">Olá, {apresentarUsuario.nome}! Seja bem-vindo(a) 👋</h1>
+
                 <p className="lead">Este é o seu sistema de finanças pessoais.</p>
 
                 {/*retorno do saldo*/}
                 <p className="lead">
                     Seu saldo para o mês atual é de R$ {saldo || '0,00'}.
+                </p>
+
+                {/*retorno do saldo*/}
+                <p className="lead">
+                    Seu saldo pendente R$ {saldo || '0,00'}.
                 </p>
 
                 <hr className="my-4"/>
@@ -79,4 +95,14 @@ export default Home;
  *         })
  *         .catch(console.log);
  * };
+ * */
+
+/**
+ * <div>
+ *       {usuario ? (
+ *         <h1>Olá, {usuario.nome}! Seja bem-vindo 👋</h1>
+ *       ) : (
+ *         <h1>Bem-vindo ao sistema</h1>
+ *       )}
+ *     </div>
  * */
