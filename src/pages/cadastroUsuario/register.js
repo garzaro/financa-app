@@ -5,14 +5,14 @@ import {useNavigate} from "react-router-dom";
  * */
 import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
-import Card from "../components/card/card";
-import FormGroup from "../components/form/form-group";
-import Astered from "../components/utils/astered";
-import ServiceUsuario from "../app/service/usuarioService";
+import Card from "../../components/card/card";
+import FormGroup from "../../components/form/form-group";
+import Astered from "../../components/utils/astered";
+import ServiceUsuario from "../../app/service/usuarioService";
 import Swal from "sweetalert2";
-import {mensagemDeAlerta, mensagemDeSucesso} from "../components/utils/toastr";
-import {handleCpfChange, validateSenhaTrim} from "../components/utils/utils";
-import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
+import {mensagemDeAlerta, mensagemDeSucesso} from "../../components/utils/toastr";
+import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
+import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
 import {CircularProgress} from "@mui/material";
 
 const Register = () => {

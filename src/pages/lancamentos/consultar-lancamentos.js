@@ -1,5 +1,5 @@
-import Card from "../components/card/card";
-import Astered from "../components/utils/astered";
+import Card from "../../components/card/card";
+import Astered from "../../components/utils/astered";
 import {FormGroup} from "@mui/material";
 import {useForm} from "react-hook-form";
 

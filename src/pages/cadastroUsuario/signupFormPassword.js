@@ -1,11 +1,11 @@
 import {useState} from "react";
-import Card from "../components/card/card";
-import FormGroup from "../components/form/form-group";
+import Card from "../../components/card/card";
+import FormGroup from "../../components/form/form-group";
 import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {mensagemDeErro} from "../components/utils/toastr";
+import {mensagemDeErro} from "../../components/utils/toastr";
 
 function FormularioSenha() {
     const [senha, setSenha] = useState('');
