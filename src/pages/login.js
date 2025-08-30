@@ -8,8 +8,11 @@ import {mensagemDeErro} from '../components/utils/toastr'
 import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 import Swal from "sweetalert2";
-import DefinirSenha from "./senha-redefinicao";
+import DefinirSenha from "./cadastroUsuario/senha-redefinicao";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
+import PanoDeFundo from "../components/feedback/loader";
+import Button from "@mui/material/Button";
+import {Backdrop, CircularProgress} from "@mui/material";
 
 function LoginForm () {
 
@@ -24,11 +27,13 @@ function LoginForm () {
   const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
   const storageUsuario = LocalStorageService();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
 /**
  * logar
  * */
 const fazerLogin = (data) => {
+    setLoading(false);
     /**
      * limpe a chave antiga
      * */
@@ -41,7 +46,8 @@ const fazerLogin = (data) => {
        * @param setItem - salvar a chave - identificação
        * */
       storageUsuario.salvarItem('_usuario_logado', respondeAiManoBanco.data);
-      setTimeout(() => navigate("/home"), 2000);
+      setLoading(true);
+      setTimeout(() => navigate("/home"), 5500);
 
 }).catch(err => {
     mensagemDeErro(err.response.data || "Erro inesperado ao fazer login. Tente novamente mais tarde.");
@@ -53,16 +59,18 @@ function handleCancelar() {
 function handleAvancar() {
     navigate('/Definirsenha');
 }
-
 function toggleSenhaLogin() {
     setMostrarSenhaLogin(!mostrarSenhaLogin);
 }
+//const togglePassword = () => setShowPassword((prev) => !prev);
+
 return (
     <div className="container-fluid mt-5" style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>
         <div className="row justify-content-center w-100" >
             <div className="col-md-6">
                 <div className="bs-docs-section">
-                    <Card title="Login">
+                    <Card title="Seja bem-vindo">
+                        <p className="text-center text-body-secondary ">Faça login para acessar sua conta</p>
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="bs-component">
@@ -105,19 +113,27 @@ return (
                                                 <span className="error-backend">{errors.senha.message}</span>}
                                         </FormGroup>
 
-                                        {/*esqueceu a senha*/}
+                                        {/**
+                                         esqueceu a senha
+                                         **/}
                                         <div className="nav-signin-tooltip-footer ">Esqueceu a senha?
-                                            <a href="/signupFormPassword"
+                                            <a href="/cadastroUsuario/signupFormPassword"
                                                className="nav-a"
                                                aria-label="Esqueceu a senha? Clique aqui para criar uma nova.">&nbsp;
                                                 Clique aqui.</a>
                                         </div>
-                                        {/* Botão de Login */}
-                                        <button
-                                            type="submit" className="btn btn-success btn-sm mt-3">
-                                            Entrar
-                                        </button>
-                                        {/*cadastre-se*/}
+                                        {/**
+                                         Botão de Login
+                                         **/}
+                                        <div>
+                                            <button
+                                                type="submit" className="btn btn-success btn-sm mt-3">
+                                                Entrar
+                                            </button>
+                                        </div>
+                                        {/**
+                                         cadastre-se
+                                         **/}
                                         <div className="d-flex align-items-center my-4">
                                             <div className="flex-grow-1 border-top border-secondary"></div>
                                             <span className="px-3 text-secondary text-nowrap">Ou Cadastre-se</span>
@@ -129,7 +145,7 @@ return (
                                                 Se ainda não possui acesso, clique no
                                                 botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.</p>
                                             <div className="text-center">
-                                                <a href="/register" className="btn btn-sm btn-warning"
+                                                <a href="/cadastroUsuario/register" className="btn btn-sm btn-warning"
                                                    title="Não tem uma conta? Clique aqui!">Criar conta</a>
                                             </div>
                                         </div>
@@ -141,8 +157,43 @@ return (
                 </div>
             </div>
         </div>
+    {/**
+     Backdrop MUI
+     indicador de carregamento durante o processo de autenticação.
+     **/}
+        <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+        >
+            <div>
+                <CircularProgress color="inherit" />
+                <h1>Autenticando</h1>
+                <p>Estamos verificando suas credenciais, por favor aguarde...</p>
+            </div>
+        </Backdrop>
     </div>
-);
+   );
 };
 
 export default LoginForm;
+
+
+/**
+ *  {/**
+ *                                          indicador de carregamento durante o processo de autenticação.
+ *                                          *
+}
+*
+*
+<div>
+    * <Button type="submit" className="mt-2" variant="contained" onClick={handleAbrirBackdrop}>Entrar</Button>
+    * <Backdrop
+    *                                 sx={(theme) => ({color: '#fff', zIndex: theme.zIndex.drawer + 1})}
+    * open={abrirBackdrop}
+    * onClick={handleCloseBackdrop}
+    * >
+    * <CircularProgress color="inherit"/>
+    * </Backdrop>
+*
+</div>
+ * */
