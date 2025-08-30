@@ -161,16 +161,12 @@ return (
      Backdrop MUI
      indicador de carregamento durante o processo de autenticação.
      **/}
-        <Backdrop
-            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        <PanoDeFundo
             open={loading}
-        >
-            <div>
-                <CircularProgress color="inherit" />
-                <h1>Autenticando</h1>
-                <p>Estamos verificando suas credenciais, por favor aguarde...</p>
-            </div>
-        </Backdrop>
+            color="inherit"
+            titulo="Autenticando"
+            mensagem="Estamos verificando suas credenciais, por favor aguarde..."
+        />
     </div>
    );
 };
@@ -179,21 +175,16 @@ export default LoginForm;
 
 
 /**
- *  {/**
- *                                          indicador de carregamento durante o processo de autenticação.
- *                                          *
-}
-*
-*
-<div>
-    * <Button type="submit" className="mt-2" variant="contained" onClick={handleAbrirBackdrop}>Entrar</Button>
-    * <Backdrop
-    *                                 sx={(theme) => ({color: '#fff', zIndex: theme.zIndex.drawer + 1})}
-    * open={abrirBackdrop}
-    * onClick={handleCloseBackdrop}
-    * >
-    * <CircularProgress color="inherit"/>
-    * </Backdrop>
-*
-</div>
+ * indicador de carregamento durante o processo de autenticação.
+ *
+ * <Backdrop
+ *             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+ *             open={loading}
+ *         >
+ *             <div>
+ *                 <CircularProgress color="inherit" />
+ *                 <h1>Autenticando</h1>
+ *                 <p>Estamos verificando suas credenciais, por favor aguarde...</p>
+ *             </div>
+ *         </Backdrop>
  * */
