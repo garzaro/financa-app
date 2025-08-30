@@ -4,6 +4,7 @@ import axios from "axios";
 
 import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
+import {Link, useNavigate} from "react-router-dom";
 
 /*pagina inicial*/
 function Home () {
@@ -19,6 +20,8 @@ function Home () {
     const storageRecuperado = LocalStorageService();
     const apresentarUsuario = storageRecuperado.obterItem('_usuario_logado');
     const [saldo, setSaldo] = useState(0);
+    const [saldoPendente, setSaldoPendente] = useState(0);
+    const navigate = useNavigate();
 
     /**
      * retornar o saldo do usuario logado
@@ -52,7 +55,7 @@ function Home () {
 
                 {/*retorno do saldo*/}
                 <p className="lead">
-                    Seu saldo pendente R$ {saldo || '0,00'}.
+                    Seu saldo pendente R$ {saldoPendente || '0,00'}. (implementar saldo pendente, ao salvar o padrao é pendente)
                 </p>
 
                 <hr className="my-4"/>
@@ -61,7 +64,10 @@ function Home () {
                     <a className="btn btn-primary btn-lg"
                        href="https://www.geeksforgeeks.org/reactjs-usenavigate-hook/"
                        role="button"><i className="fa fa-users"></i>Cadastrar Usuário</a>
-                    <a className="btn btn-danger btn-lg " href="https://bootswatch.com/flatly/#" role="button"><i
+
+                    <Link className="nav-link" to="/">Login</Link>
+
+                    <a className="btn btn-danger btn-lg " role="button"><i
                         className="fa fa-users"></i> Cadastrar Lançamento</a>
                 </p>
             </div>
