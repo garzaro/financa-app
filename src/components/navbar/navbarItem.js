@@ -1,11 +1,80 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function NavbarItens({label, href}) {
+/**
+ * a ideia é renderizar dropdown e link simples
+ * de acordo com a necessidade
+ * */
+function NavbarItem({label, href, id, items}) {
+    /**
+     * Se items for undefined ou null, o resultado já é false (curto-circuito).
+     *
+     * Se items existir, então ele avalia a segunda parte (items.length > 0).
+     * **/
+    const hasChildren = items && items.length > 0;
+
+    if (hasChildren) {
+
+        return (
+            /**da documentação boostrap*/
+            <li className="dropdown">
+                <a
+                    className="nav-link dropdown-toggle dropdown-item"
+                    href={href}
+                    id={id}
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    /**para evitar scroll ao top*/
+                    onClick={(e) => e.preventDefault()}
+                >
+                    {label}
+                </a>
+                <ul className="dropdown-menu" aria-labelledby={id}>
+                    {/**cada item é um objeto do array, index é a posição dele*/}
+                    {items.map((item, i) => (
+                        <li key={i}>
+                            <Link to={item.href}>
+                                {item.label}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </li>
+        );
+    }
     return (
-        <li className="nav-item">
-            <Link className="nav-link aria-current" to={href}>{label}</Link>
-        </li>
+        <Link
+            className="nav-link aria-current" to={href}>
+            {label}
+        </Link>
     );
 }
-export default NavbarItens;
+export default NavbarItem;
+
+
+
+/**
+ * key={item.id}>
+ * Porque o risco de "chaves trocadas" só aparece quando:
+ *
+ * você insere no meio da lista,
+ *
+ * ou reordena os itens.
+ *
+ * // Se eu adiciono "X" no começo, o index muda:
+ * setItems(["X", "A", "B", "C"]);
+ *
+ * usando dessa forma evita bug em listas
+ * **/
+// <ul className="dropdown-menu" aria-labelledby={id}>
+//     {/**cada item é um objeto do array, index é a posição dele*/}
+//     {items.map((item) => (
+//         <li key={item.id}> ou item.href
+//             <Link to={item.href}>
+//                 {item.label}
+//             </Link>
+//         </li>
+//
+//     ))}
+// </ul>
