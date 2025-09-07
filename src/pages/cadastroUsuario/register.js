@@ -1,8 +1,5 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-/**
- * lembrando que o name é criado automaticamente pelo react-hook-form
- * */
 import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
 import Card from "../../components/card/card";
@@ -14,6 +11,8 @@ import {mensagemDeAlerta, mensagemDeSucesso} from "../../components/utils/toastr
 import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
 import {CircularProgress} from "@mui/material";
+import {PasswordStrengthMeter} from "../../components/feedback/forcaSenha";
+
 
 const Register = () => {
     const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
@@ -26,7 +25,7 @@ const Register = () => {
     const [senha, setSenha] = useState('');
     const [showSenha, setShowSenha] = useState(false);
     const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
-    const [isValid, setIsValid] = useState(true);
+    const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
     const usuarioService = ServiceUsuario();
 
@@ -62,8 +61,10 @@ const Register = () => {
     /**
      * verificacao de senhas
      * */
+    const forcaSenha = watch('senha', '');
     const senhaDigitada = watch("senha");
     const confirmarSenha = watch('confirmarSenha');
+    const mostrarChecklist = !(isValid && senhaDigitada === confirmarSenha);
     /**
      * visibilidade de senha
      * */
@@ -117,7 +118,7 @@ const Register = () => {
                                                 </span>
                                             }>
                                                 <input type="text"
-                                                       {...register("cpf", {required: "O cpf é obrigatório",
+                                                       {...register("cpf", {required: "O CPF é obrigatório",
                                                        onChange: handleCpfMask})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Digite seu CPF"/>
@@ -156,11 +157,11 @@ const Register = () => {
                                              */}
                                             <FormGroup label={
                                                 <span>
-                                                    Repetir email: <Astered>*</Astered>
+                                                    Confirmar e-mail: <Astered>*</Astered>
                                                 </span>
                                             }>
                                                 <input type="email"
-                                                       {...register("confirmarEmail",
+                                                       {...register("confirmarEmail",{required: "Confirme o email"},
                                                            {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
                                                        className="form-control form-control-sm inputPlaceholder"
                                                        placeholder="Confirme o email"/>
@@ -196,8 +197,13 @@ const Register = () => {
                                                     onClick={toggleSenhaVisibility}
                                                     />
                                                 </div>
+                                                {/**
+                                                 Passa o valor atual da senha para o componente de força
+                                                 */}
+                                                <PasswordStrengthMeter senha={forcaSenha} />
                                                 {errors.senha && <span className="error">{errors.senha.message}</span>}
                                             </FormGroup>
+
                                             {/**
                                              campo confirmar senha
                                              */}
@@ -209,9 +215,9 @@ const Register = () => {
                                                 <div className="position-relative">
                                                     <input
                                                         type={showSenhaConfirmada ? "text" : "password"}
-                                                        {...register("confirmarSenha", {
-                                                            validate: (value) =>
-                                                                value === watch("senha") || "As senhas não são iguais",
+                                                        {...register("confirmarSenha", {required: "Confirme a senha"},
+                                                            {validate: (value) =>
+                                                            value === watch("senha") || "As senhas não são iguais",
                                                         })}
                                                         className="form-control form-control-sm inputPlaceholder"
                                                         placeholder="Confirme a senha"
@@ -227,7 +233,7 @@ const Register = () => {
                                             {/**
                                              checklist de senha
                                              */}
-                                            {(watch("senha")?.length > 0 || watch("confirmarSenha")?.length > 0) && (
+                                            {(senhaDigitada.length > 0 || confirmarSenha.length > 0) && mostrarChecklist && (
                                                 <ReactPasswordChecklist
                                                     rules={[
                                                         "minLength",
