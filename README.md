@@ -2,16 +2,33 @@
 ***
 ## Descrição
 
-Este é um sistema de finanças pessoais desenvolvido em React (Create React App) no frontend e springboot no backend, banco de dados postgresql  que permite aos usuários gerenciar suas despesas e receitas de forma eficiente. O sistema oferece funcionalidades para criação de contas de usuário, login, visualização de saldo, cadastro e acompanhamento de lançamentos financeiros.
+Este é um sistema de finanças pessoais desenvolvido em React (Create React App)
+que permite aos usuários gerenciar suas despesas e receitas de forma eficiente. O sistema oferece funcionalidades para criação de contas de usuário, login, visualização de saldo, cadastro e acompanhamento de lançamentos financeiros.
 
 ---
+
+---
+## Caso de uso
+
+`Lançamentos`
+- Formulario de cadastro de lançamentos
+- Formulario de consulta de lançamentos 
+
+`Filtros` 
+- Por ano
+- Por mes
+- Por tipo de lançamento - RECEITA e DESPESA
+- Por situação - PENDENTE, CANCELADO, EFETIVADO
+- Por data de cadastro
+- Por descrição
+- 
 
 ## Funcionalidades 
 
 `Telas`
 
-- <font color="" >**Criação de Usuário**</font>: Permite que novos usuários se cadastrem no sistema. 
-- **Login**: Autenticação de usuários existentes para acesso ao sistema.
+- <font color="red" >**Criação de Usuário**</font>: Permite que novos usuários se cadastrem no sistema. 
+- <font color="red">**Login**</font>: Autenticação de usuários existentes para acesso ao sistema.
 - <font color="red">**Home (Saldo)**</font>: Exibe o saldo atual do usuário.
 - **Cadastro de Lançamentos Financeiros**: Permite registrar novas RECEITAS e DESPESAS.
 - **Visualização de Lançamentos**: Lista todos os lançamentos financeiros cadastrados, PENDENTE, CANCELADO, EFETIVADO.
@@ -23,10 +40,11 @@ Este é um sistema de finanças pessoais desenvolvido em React (Create React App
 ## Tecnologias Utilizadas
 
 + React (Create React App)
- 
+- MUI
 - Primereact
 + Spring Boot
 - Postgresql
+
 
 ---
 
@@ -72,4 +90,19 @@ Para executar este projeto localmente, siga os passos abaixo:
 - **Cadastro de Lançamentos Financeiros**: Validações para garantir que os valores sejam numéricos positivo, datas válidas e que os campos obrigatórios sejam preenchidos.
 
 > DOC: <https://react.dev/learn>
+
+## correções de erros
+- rm -rf node_modules package-lock.json
++ rm -rf node_modules yarn.lock
+- npm cache clean --force
++ yarn cache clean
+- npm install
++ yarn install
+- npm start
++ yarn start
  
+
+ 
+ 
+
+
