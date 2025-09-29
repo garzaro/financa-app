@@ -6,6 +6,12 @@ import UsuarioService from "../app/service/usuarioService";
 import {LocalStorageService} from "../app/service/localStorageService";
 import {Link, useNavigate} from "react-router-dom";
 
+/**
+ * Anotações
+ * Trazer outros servicos para dashboard -buscar outras informações
+ *
+ * **/
+
 /*pagina inicial*/
 function Home () {
 

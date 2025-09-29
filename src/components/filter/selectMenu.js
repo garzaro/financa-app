@@ -4,20 +4,38 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Astered from "../utils/astered";
-import {useForm} from "react-hook-form";
 /*filtro*/
-export default function SelectMenuVariants({
-    ano, mes, tipo, onAnoChange, onMesChange, onTipoChange, onChange
-}) {
-    const { watch, formState:{ errors},} = useForm({});
-    const anoSelect = watch ("ano")
-    const tipoSelect = watch ("tipo")
 
+/**
+ * Anotações
+ *
+ * [] Mostrar mes string
+ * **/
+
+export default function FiltroLancamento({
+
+    ano,
+    mes,
+    tipoLancamento,
+    onAnoChange,
+    onMesChange,
+    onTipoLancamentoChange,
+    onChange
+    }) {
+
+    // const monthFormatter = new Intl.DateTimeFormat('pt-BR', {month: 'long'});
     return (
         <div style={{ display: 'table', gap: '16px' }}>
-            {/*campo ano*/}
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="select-ano-label">
+            {/**
+            campo ano
+            **/}
+            <FormControl
+                variant="standard"
+                sx={{ m: 1, minWidth: 120 }}
+            >
+                <InputLabel
+                    id="select-ano-label"
+                >
                     Ano: <Astered>*</Astered>
                 </InputLabel>
                 <Select
@@ -55,6 +73,12 @@ export default function SelectMenuVariants({
                     <MenuItem value="">
                         <em>Selecione...</em>
                     </MenuItem>
+                    {/*{[...Array(12)].map((_, i) => {*/}
+                    {/*    <MenuItem key={i + 1} value={i +1 }>*/}
+                    {/*        {monthFormatter.format(new Date(2025, i))}*/}
+                    {/*    </MenuItem>*/}
+
+                    {/*})}*/}
                     {[...Array(12)].map((_, i) => (
                        <MenuItem key={ i + 1 } value={ i + 1 }>
                            {new Date( 0, i ).toLocaleDateString(
@@ -65,12 +89,15 @@ export default function SelectMenuVariants({
             </FormControl>
             {/*campo tipo lancamento*/}
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="select-tipo-lancamento-label">Tipo: <Astered>*</Astered></InputLabel>
+                <InputLabel id="select-tipo-lancamento-label">
+                    Tipo:
+                    <Astered>*</Astered>
+                </InputLabel>
                 <Select
                     labelId="select-tipo-label"
                     id="select-tipo"
-                    value={tipo}
-                    onChange={onTipoChange}
+                    value={tipoLancamento}
+                    onChange={onTipoLancamentoChange}
                     label="Tipo"
                     required
                 >

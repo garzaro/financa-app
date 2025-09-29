@@ -35,6 +35,10 @@ export function mensagemDeAlerta(mensagem) {
     mostrarMensagem('Alerta', mensagem, 'warning');
 }
 
+/**Consulta lancamento**/
+export function errorConsultarLancamento(mensagem){
+    mostrarMensagem('Mensagem', mensagem, 'error');
+}
 /**
  * módulo Handlers reutilizável para exibição de toastr
  * mapear e tratar erros conhecidos (400, 401, 403 etc.)

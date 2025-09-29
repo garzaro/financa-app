@@ -1,5 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom"; to={item.href}
+import Link from '@mui/material/Link';
 
 /**
  * a ideia é renderizar dropdown e link simples
@@ -34,7 +35,7 @@ function NavbarItem({label, href, id, items}) {
                     {/**cada item é um objeto do array, index é a posição dele*/}
                     {items.map((item, i) => (
                         <li key={i}>
-                            <Link to={item.href}>
+                            <Link href={item.href} className="" underline="none">
                                 {item.label}
                             </Link>
                         </li>
@@ -45,7 +46,7 @@ function NavbarItem({label, href, id, items}) {
     }
     return (
         <Link
-            className="nav-link aria-current" to={href}>
+            className="nav-link aria-current" href={href}>
             {label}
         </Link>
     );
@@ -67,7 +68,7 @@ export default NavbarItem;
  *
  * usando dessa forma evita bug em listas
  * **/
-// <ul className="dropdown-menu" aria-labelledby={id}>
+// <ul className="dropdown-filter" aria-labelledby={id}>
 //     {/**cada item é um objeto do array, index é a posição dele*/}
 //     {items.map((item) => (
 //         <li key={item.id}> ou item.href

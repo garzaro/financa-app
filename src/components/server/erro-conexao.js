@@ -41,7 +41,7 @@ const styles = {
     },
 };
 
-// Adicionando animação no estilo global
+// Adicionando animação no styles global
 const spinAnimation = `@keyframes spin {
   from {
     transform: rotate(0deg);

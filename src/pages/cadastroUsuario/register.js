@@ -14,6 +14,11 @@ import {CircularProgress} from "@mui/material";
 import {PasswordStrengthMeter} from "../../components/feedback/forcaSenha";
 
 
+/**
+ * [] Deixar somente uma visiualizacao de senha no primeiro campo
+ * [] Nao esta salvando novo usuario
+ * **/
+
 const Register = () => {
     const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
         defaultValues: {

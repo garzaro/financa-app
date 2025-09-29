@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import NavbarItem from "./navbarItem";
 
 /*barra de navegação com os links*/
 const Navbar = () => {
@@ -10,7 +11,7 @@ const Navbar = () => {
                 <Link className="navbar-brand" to="/">Financas</Link>
 
                 {/*Em telas menores, a navbar geralmente se "contrai"
-                 para um botão de menu (o "toggler", menu de hamburger)
+                 para um botão de filter (o "toggler", filter de hamburger)
                  */}
                 <button className="navbar-toggler"
                         type="button"
@@ -25,30 +26,38 @@ const Navbar = () => {
 
                 <div className="collapse navbar-collapse" id="navbarNav">
 
-                    <ul className="navbar-nav mx-5 me-auto mb-2 mb-lg-0 "> {/*me-auto mb-2 mb-lg-0*/}
+                    <ul className="navbar-nav mx-5 me-5 mb-2 mb-lg-0 "> {/*me-auto mb-2 mb-lg-0*/}
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/home">Home</Link>
-                        </li>
+                        <NavbarItem
+                            id="home"
+                            href="/home"
+                            label="Home"
+                        />
+                        <NavbarItem
+                            id="lancamento"
+                            label="Lançamento"
+                            items={[
+                                {
+                                    label: "Cadastrar",
+                                    href: "/cadastrar"
+                                },
+                                {
+                                    label: "Consultar",
+                                    href: "/table-consultar"
+                                },
+                            ]}
+                        />
+                        <NavbarItem
+                            id="login"
+                            href="/login"
+                            label="Login"
+                        />
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/consultar-lancamentos">Lançamentos</Link>
-                        </li>
 
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login">Login</Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/cadastroUsuario">Cadastro</Link>
-
-                        </li>
                     </ul>
-
                 </div>
             </div>
         </div>
     );
 };
-
 export default Navbar;

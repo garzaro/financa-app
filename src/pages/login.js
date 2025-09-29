@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Card from "../components/card/card";
 import FormGroup from "../components/form/form-group";
@@ -12,7 +12,13 @@ import DefinirSenha from "./cadastroUsuario/senha-redefinicao";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle";
 import PanoDeFundo from "../components/feedback/loader";
 import Button from "@mui/material/Button";
-import {Backdrop, CircularProgress} from "@mui/material";
+import {Backdrop, CircularProgress, IconButton} from "@mui/material";
+
+/**
+ * Anotações de manutencao de codigo
+ *
+ * [] Nao esta fazendo login
+ * **/
 
 function LoginForm () {
 
@@ -47,7 +53,7 @@ const fazerLogin = (data) => {
        * */
       storageUsuario.salvarItem('_usuario_logado', respondeAiManoBanco.data);
       setLoading(true);
-      setTimeout(() => navigate("/home"), 5500);
+      setTimeout(() => navigate("/home"), 4500);
 
 }).catch(err => {
     mensagemDeErro(err.response.data || "Erro inesperado ao fazer login. Tente novamente mais tarde.");
@@ -65,12 +71,12 @@ function toggleSenhaLogin() {
 //const togglePassword = () => setShowPassword((prev) => !prev);
 
 return (
-    <div className="container-fluid mt-5" style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>
-        <div className="row justify-content-center w-100" >
+    <div className="container-fluid mt-2">
+        <div className="row justify-content-center" >
             <div className="col-md-6">
                 <div className="bs-docs-section">
                     <Card title="Seja bem-vindo">
-                        <p className="text-center text-body-secondary ">Faça login para acessar sua conta</p>
+                        <h6 className="text-center text-body-secondary ">Faça login para acessar sua conta</h6>
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="bs-component">
@@ -84,7 +90,7 @@ return (
                                             <input
                                                 type="email"
                                                 {...register("email", {required: "E-mail é obrigatório"})}
-                                                className="form-control form-control-sm inputPlaceholder"
+                                                className="form-control form-control-lg inputPlaceholder"
                                                 placeholder="Digite seu email"
                                                 id="email"
                                             />
@@ -101,7 +107,7 @@ return (
                                                 <input
                                                     type={mostrarSenhaLogin ? "text" : "password"}
                                                     {...register("senha", {required: "Senha é obrigatória"})}
-                                                    className="form-control form-control-sm inputPlaceholder"
+                                                    className="form-control form-control-lg inputPlaceholder"
                                                     placeholder="Digite sua senha"
                                                 />
                                                 <SenhaVisibilityToggle
@@ -139,13 +145,14 @@ return (
                                             <span className="px-3 text-secondary text-nowrap">Ou Cadastre-se</span>
                                             <div className="flex-grow-1 border-top border-secondary"></div>
                                         </div>
+
                                         <div className="sm-4">
                                             <h2 className="text-center">Primeiro acesso?</h2>
                                             <p className="text-center mb-3">
                                                 Se ainda não possui acesso, clique no
                                                 botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.</p>
                                             <div className="text-center">
-                                                <a href="/cadastroUsuario/register" className="btn btn-sm btn-warning"
+                                                <a href="/register" className="btn btn-sm btn-warning"
                                                    title="Não tem uma conta? Clique aqui!">Criar conta</a>
                                             </div>
                                         </div>

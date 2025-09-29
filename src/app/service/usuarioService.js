@@ -16,7 +16,7 @@ const ServiceUsuario = (credentials) =>{
             return usuarioApi.post('/autenticar', credentials);
     },
         buscarSaldoPorUsuario: (id) => {
-            return usuarioApi.get(`/${id}/saldo`);
+            return usuarioApi.get(`/${id}/saldo`); {/**template string ``*/}
     },
         salvar: (usuarios) => {
             return usuarioApi.post('', usuarios);
