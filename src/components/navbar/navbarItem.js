@@ -7,20 +7,21 @@ import Link from '@mui/material/Link';
  * de acordo com a necessidade
  * */
 function NavbarItem({label, href, id, items}) {
-    /**
-     * Se items for undefined ou null, o resultado já é false (curto-circuito).
-     *
-     * Se items existir, então ele avalia a segunda parte (items.length > 0).
-     * **/
-    const hasChildren = items && items.length > 0;
 
-    if (hasChildren) {
+  /**
+   * Se items for undefined ou null, o resultado já é false (curto-circuito).
+   *
+   * Se items existir, então ele avalia a segunda parte (items.length > 0).
+   * **/
+  const hasChildren = items && items.length > 0;
+  if (hasChildren) {
+    return (
+      <div>
+        {/*da documentação boostrap*/}
+        <li className="dropdown">
+          <a
 
-        return (
-            /**da documentação boostrap*/
-            <li className="dropdown">
-                <a
-                    className="nav-link dropdown-toggle dropdown-item"
+                    className="nav-link dropdown-toggle"
                     href={href}
                     id={id}
                     role="button"
@@ -31,22 +32,24 @@ function NavbarItem({label, href, id, items}) {
                 >
                     {label}
                 </a>
-                <ul className="dropdown-menu" aria-labelledby={id}>
+                <ul className="dropdown-menu bg-primary border-primary-subtle" aria-labelledby={id}>
                     {/**cada item é um objeto do array, index é a posição dele*/}
                     {items.map((item, i) => (
                         <li key={i}>
-                            <Link href={item.href} className="" underline="none">
+                            <Link href={item.href} className="text-white link-success bg-opacity-50 dropdown-item" underline="none">
                                 {item.label}
                             </Link>
                         </li>
                     ))}
                 </ul>
             </li>
+
+          </div>
         );
     }
     return (
         <Link
-            className="nav-link aria-current" href={href}>
+            className="nav-link aria-current text-decoration-none" href={href}>
             {label}
         </Link>
     );

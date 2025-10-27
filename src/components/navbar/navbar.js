@@ -6,7 +6,7 @@ import NavbarItem from "./navbarItem";
 const Navbar = () => {
     return (
         <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
-            <div className="container-fluid">
+            <div className="container-fluid ">
 
                 <Link className="navbar-brand" to="/">Financas</Link>
 
@@ -24,9 +24,9 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button> {/*aria-control = navbarSupportedContent*/}
 
-                <div className="collapse navbar-collapse" id="navbarNav">
+                <div className="collapse navbar-collapse " id="navbarNav">
 
-                    <ul className="navbar-nav mx-5 me-5 mb-2 mb-lg-0 "> {/*me-auto mb-2 mb-lg-0*/}
+                    <ul className="navbar-nav mx-5 "> {/*navbar-nav mx-5 me-5 mb-2 mb-lg-0 me-auto mb-2 mb-lg-0*/}
 
                         <NavbarItem
                             id="home"
@@ -38,11 +38,11 @@ const Navbar = () => {
                             label="Lançamento"
                             items={[
                                 {
-                                    label: "Cadastrar",
+                                    label: "Cadastrar Lançamento",
                                     href: "/cadastrar"
                                 },
                                 {
-                                    label: "Consultar",
+                                    label: "Consultar Lançamento",
                                     href: "/table-consultar"
                                 },
                             ]}
