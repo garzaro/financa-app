@@ -13,7 +13,7 @@ import {
   DialogContentText,
   DialogActions,
   IconButton,
-  Fade
+  Fade, TextField
 } from "@mui/material";
 import { DataGrid, GridDeleteIcon } from '@mui/x-data-grid';
 import { ptBR } from '@mui/x-data-grid/locales';
@@ -35,6 +35,7 @@ function ConsultarLancamento() {
   const [ano, setAno] = useState('');
   const [mes, setMes] = useState('');
   const [tipoLancamento, setTipoLancamento] = useState('');
+  const [limparFiltro, setLimparFiltro] = useState('');
   const [lancamento, setLancamento] = useState([]); //rows
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -106,6 +107,16 @@ function ConsultarLancamento() {
     setLoading(true);
     setTimeout(() => navigate('/home'), 1000);
   }, [navigate]);
+
+  /**
+   * limpar o filtro - filtro pequeno por enqaunto mas é so pra existir a limpeza
+   * **/
+  const handleLimparFiltro = useCallback(() => {
+    setAno('');
+    setMes('');
+    setTipoLancamento('');
+
+  })
 
   /**
    * deletar lançamento pelo id
@@ -228,6 +239,7 @@ function ConsultarLancamento() {
               onAnoChange={(e) => setAno(e.target.value)}
               onMesChange={(e) => setMes(e.target.value)}
               onTipoLancamentoChange={(e) => setTipoLancamento(e.target.value)}
+              onLimparChange={(e) => setLimparFiltro(e.target.value)}
             />
             {/**
              botões do filtro
@@ -248,6 +260,15 @@ function ConsultarLancamento() {
             >
               {loading ? <CircularProgress size={20} />
                 : 'Cancelar'
+              }
+            </Button>
+
+            <Button
+              variant="outlined"
+              onClick={handleLimparFiltro}
+            >
+              {loading ? <CircularProgress size={20} />
+                : 'Limpar'
               }
             </Button>
 
