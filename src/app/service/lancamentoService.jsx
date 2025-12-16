@@ -2,16 +2,7 @@ import ApiService from '../api/apiservice.jsx';
 import {schemaLancamento} from "../../pages/lancamentos/schemaLancamento.jsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-/**
- * Anotações
- *
- * [x] Construir a url da requisicao para busca de lancamentos
- * [] url para filtrar por descrição
- *
- * URLSearchParams()
- * Garante a formatação correta: Cuida da codificação dos caracteres especiais automaticamente.
- * Evita erros: É menos propenso a erros de digitação, como esquecer um & ou ?
- * **/
+
 
 /**Base path for lancamentos API**/
 const lancamentoApi = ApiService('/api/lancamento');
@@ -66,22 +57,24 @@ export default ServiceLancamento;
 
 /**
  * contrução do url de forma manual
+ *
+ * consultar: ( LancamentoFiltro ) => {
+ *
+ *     let params = `?ano=${LancamentoFiltro.ano}`
+ *     if (LancamentoFiltro.mes){
+ *         params = `${params}&mes=${LancamentoFiltro.mes}`
+ *     }
+ *     if (LancamentoFiltro.tipoLancamento){
+ *         params = `${params}&tipoLancamento=${LancamentoFiltro.tipoLancamento}`
+ *     }
+ *     if (LancamentoFiltro.status){
+ *         params = `${params}&statusLancamento=${LancamentoFiltro.statusLancamento}`
+ *     }
+ *     if (LancamentoFiltro.usuario){
+ *         params = `${params}&usuario=${LancamentoFiltro.usuario}`
+ *     }
+ *     return lancamentoApi.get(params);
+ * }
+ *
  * **/
 
-// consultar: ( LancamentoFiltro ) => {
-//
-//     let params = `?ano=${LancamentoFiltro.ano}`
-//     if (LancamentoFiltro.mes){
-//         params = `${params}&mes=${LancamentoFiltro.mes}`
-//     }
-//     if (LancamentoFiltro.tipoLancamento){
-//         params = `${params}&tipoLancamento=${LancamentoFiltro.tipoLancamento}`
-//     }
-//     if (LancamentoFiltro.status){
-//         params = `${params}&statusLancamento=${LancamentoFiltro.statusLancamento}`
-//     }
-//     if (LancamentoFiltro.usuario){
-//         params = `${params}&usuario=${LancamentoFiltro.usuario}`
-//     }
-//     return lancamentoApi.get(params);
-// }
