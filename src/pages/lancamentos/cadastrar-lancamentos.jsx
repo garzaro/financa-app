@@ -21,42 +21,6 @@ import PanoDeFundo from "../../components/feedback/loader.jsx";
 import {LancamentoFormField} from "./lancamentoFormField.jsx";
 import {schemaLancamento} from "./schemaLancamento.jsx";
 
-/**
- * [x] descricao
- * [x] mes
- * [x] ano
- * [x] Colocar botão -  botoes
- * [x] usuario - pk
- * [x] Colocar a API para funcionar
- * [x] valor
- * [x] tipo_lancamento - enum
- * [x] Criar schema com zod - validar campos
- * [] ver - import Visibility from '@mui/icons-material/Visibility';
- * [] ver - import VisibilityOff from '@mui/icons-material/VisibilityOff';
- * [x] Campo observações nao esta sendo logado na tela
- * [] Campo (disable) para mostrar o status do lancamneto diretamente da aplicação = disable={true}
- * [] Ao atualizar por id esta validando os campos Mes e Valor nao atualiza, cria- verificar
- *
- * Checar usuário:
- * [] sempre validar se usuario existe antes de acessar .id, para evitar erros - sessão expirada.
- * [] Verificar lancamento duplicado - estudar a logica
- *
- * Observações
- * O htmlFor é um atributo usado no React para associar
- * um rótulo (elemento <label>) a um controle de formulário
- * (como <input>, <textarea> ou <select>). Ele desempenha
- * a mesma função que o atributo for no HTML comum.
- *
- *  nunca devemos usar o índice como key (key={i}) quando temos
- *  valores únicos disponíveis
- *
- *  Assim como no TextField, é uma boa prática adicionar um
- *  espaço (" ") {error?.message || " "} como valor padrão para
- *  a mensagem de erro. Isso garante que o espaço reservado para
- *  o texto de ajuda exista sempre, evitando que o layout do
- *  formulário "pule" quando uma mensagem de erro aparecer ou
- *  desaparecer.
- * **/
 function CadastrarLancamento() {
   const { register, control, handleSubmit, watch,
     formState: { errors, isSubmitting }, reset} =
@@ -151,7 +115,13 @@ function CadastrarLancamento() {
     };
     // determinar o id da rota ou do form e validar
     const routeId = params?.id;
-    const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
+    const mergedId = (
+      routeId && routeId !== 'undefined'
+      &&
+      routeId !== 'null'
+    )
+      ? routeId : id;
+
     if (!mergedId || mergedId === 'undefined' || mergedId === 'null') {
       setLoading(false);
       messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
@@ -251,7 +221,6 @@ function CadastrarLancamento() {
           </div>
         </Box>
 
-        {/*p: 2, border: '1px dashed grey'*/}
         <Box
           component="form"
           onSubmit={handleSubmit((data) => {
@@ -266,7 +235,6 @@ function CadastrarLancamento() {
             display: 'flex',
             flexDirection: 'flexwrap',
             gap:1,
-            // justifyContent: "center",
             p: 4,
             mr: 2,
             ml: 2,
@@ -344,188 +312,3 @@ function CadastrarLancamento() {
   );
 }
 export default CadastrarLancamento;
-
-/**
- * SUGESTAO
- * components/
- *  ├─ CadastrarLancamento/
- *  │    ├─ index.jsx
- *  │    ├─ FormFields.jsx
- *  │    ├─ useLancamentoForm.js
- *  │    ├─ useLancamentoLoader.js
- *  │    ├─ schema.js
- *  │    └─ styles.js
- * **/
-
-/**
- *
- * // const handleSubmitLancamento = (data) => {
- *   //   console.log('Dados submetidos - valor de id:', data.id); // Verifique se o ID também está chegando
- *   //   console.log('Dados submetidos - valor de atualizando:', data.atualizando);
- *   //   if (data.atualizando) {
- *   //     updateLancamento(data);
- *   //   }else {
- *   //     createLancamento(data);
- *   //   }
- *   // }
- * **/
-
-/**
- * {Array.from({ length: 2 }, (_, i) => {
- *                     const anoValue = new Date().getFullYear() + i;
- *                     return (
- *                       <MenuItem key={anoValue} value={anoValue}>
- *                         {anoValue}
- *                       </MenuItem>
- *                     );
- *                   })}
- * <TextField
- *             label="ValorIZACAO"
- *             type="text"
- *             {...register('valor', { required: 'Campo obrigatório' })}
- *             error={!!errors.valor}
- *             helperText={errors.valor?.message}
- *             fullWidth
- *             margin="normal"
- *           />
- *
- *           // componentDidMount(){
- *   //   const  params = this.props.match.params;
- *   //   if(params.id){
- *   //     this.lancamentoService.obterPorId(params.id)
- *   //       .then(response => {
- *   //         this.setState( {...response.data} )
- *   //       })
- *   //     .catch(error => {
- *   //       console.log(error);
- *   //     })
- *   //   }
- *   // }
- *
- * **/
-
-
-/**
- *  const isEdit = Boolean(id);
- *   /**{descricao, valor, mes, ano, tipoLancamento, statusLancamento, usuario, id}/
- *
- const createUser = async (data) => {
- *
- setLoading (true);
- *
- try {
- *
- const usuario = usuarioLogado.obterItem ('_usuario_logado');
- *
- if ( ! usuario) {
- *
- throw new Error ("Você não está logado(a) no sistema")
- *
- }
- *       //descricao, valor, mes, ano, tipoLancamento, statusLancamento,
- *
- const payload = {
- *         ...data,
- *         id: id, //|| id, /* usa o id da url se o form nao tiver
- *         usuario: usuario.id,
- *
- };
- *       //DEPOIS Q  UE ATUALIZA, Select FOR FAZER NOVO UPDATE RETONRA SEM O STATUS
- *
- console.log ("Payload enviado:", payload);
- *
- if (isEdit) {
- *
- await servicoLancamento.atualizarLancamento (id, payload)
- * mensagemDeSucesso ("lançamento atualizado")
- *
- } else {
- *
- await servicoLancamento.salvarLancamento (payload)
- * mensagemDeSucesso ("Lançamento criado")
- *
- }
- *       // const response = isEdit
- *       // ? await servicoLancamento.atualizarLancamento(payload)
- *       //   :
- *       //   await servicoLancamento.salvarLancamento(payload);
- *       // mensagemDeSucesso(isEdit ? "Lançamento atualizado" : "Lançamento criado" );
- *
- reset ();
- *
- setTimeout (() => navigate ("/consultar-lancamento"), 500);
- *
- } catch (error) {
- *
- console.log ("Qual erro esta sendo retornado ", error.response);
- *
- mensagemDeErro (error?.response?.data?.message || error.message ||
- * error.response.data || "Erro inesperado");
- *
- }
- *     finally
- {
- *
- setLoading (false);
- *
- }
- *
- }
- * **/
-
-/**
- * const onSubmit = async (data) => {
- *     setLoading(true);
- *     const usuario = usuarioLogado.obterItem( '_usuario_logado' );
- *
- *     const lancamento = {
- *       ...data,
- *       usuario,
- *     };
- *     try {
- *       if (lancamento.id) {
- *         console.log("Executando UPDATE", lancamento.id);
- *         servicoLancamento.atualizarLancamento(lancamento)
- *           .then(response => {
- *             mensagemDeSucesso("Lancamento atualizado com sucesso", response);
- *           })
- *       } else{
- *         console.log("Executando CREATE");
- *         /**remove a chave id se estive vazia, evita erro na api de criçao
-*
-delete lancamento.id;
-*
-servicoLancamento.atualizarLancamento (lancamento)
-*
-.
-then (response => {
-*
-  mensagemDeSucesso ("Lancamento cadastrado com sucesso mano", response);
-*
-})
-*
-}
-*
-console.log ("Resposta do servidor ", response);
-*
-setTimeout (() => navigate ("/consultar-lancamento"), 1500);
-*
-}catch
-(error)
-{
-*
-  console.log (error);
-*
-  mensagemDeErro (error.response.data?.message || error.response.data || 'FUDEU');
-*
-}
-*     finally
-{
-*
-  setLoading (false);
-*
-}
-*
-}
-;
- * **/

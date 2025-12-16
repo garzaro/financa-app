@@ -1,6 +1,9 @@
 import Chip from '@mui/material/Chip';
 /**
  * mascara cpf
+ *
+ * to-do list
+ * [] Implementar o colorMap nas linhas dos lancamentos cada situacao uma cor diferente
  * */
 export const handleCpfChange = (valor) => {
   /*remove os pontos na base de dados*/

@@ -31,16 +31,6 @@ import {
 import Slide from "@mui/material/Slide";
 import {no} from "zod/locales";
 
-/**
- * todo list
- * [x] Passando paramentros para o formulario atraves da rota
- * [] Funcionalidade para consultar lancamento por descrição
- * [] Funcionalidade para atualizar lancamento
- * [] Funcionalidade para alterar status - PENDANTE EFETIVADO CANCELADO
- * [] Manter os dados do filtro ao retornar (botao Cancelar) do cadastro
- *
- * **/
-
 function ConsultarLancamento(props) {
   /**filtro**/
   const [ano, setAno] = useState('');
@@ -58,13 +48,14 @@ function ConsultarLancamento(props) {
   const lancamentoService = useMemo(() => ServiceLancamento(), []);
 
   /**
-   * função para realizar a busca de lancamentos usando filtro
+   * realizar a busca de lancamentos usando filtro
    * **/
   const handleBuscar = useCallback( async () => {
     const usuario = usuarioLogado.obterItem( '_usuario_logado' );
     const usuarioID = usuario ? usuario.id : null;
     if ( !usuarioID ) {
       console.log('Sua sessão expirou');
+      /**ver depois sessao expirada**/
       mensagemDeErro('Sua sessão expirou! Faça login');
       return;
     }
@@ -111,9 +102,6 @@ function ConsultarLancamento(props) {
     }
   }, [ano, mes, tipoLancamento, lancamentoService]);
 
-  /**
-   * voltar para home
-   * **/
   const handleCancelar = useCallback(() => {
     setLoading(true);
     setTimeout(() => navigate('/home'), 1000);
@@ -311,7 +299,7 @@ function ConsultarLancamento(props) {
                 noRowsLabel: 'Nenhum lançamento encontrado',
                 paginationRowsPerPage: 'Linhas por página:',
                 paginationDisplayedRows: ({ from, to, count }) =>
-                  `página ${from} até ${to} de ${count !== -1 ? count : `mais de ${to} páginas`}`,
+                  `página ${from} - ${to} de ${count !== -1 ? count : `mais de ${to} páginas`}`,
               }}
             />
           </Box>
@@ -328,8 +316,19 @@ function ConsultarLancamento(props) {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClickCloseDialog}>Cancelar</Button>
-              <Button onClick={handleClickConfirmDelete} color="error">Excluir</Button>
+
+              <Button
+                onClick={handleClickCloseDialog}
+              >
+                Cancelar
+              </Button>
+
+              <Button
+                onClick={handleClickConfirmDelete}
+                color="error"
+              >
+                Excluir
+              </Button>
             </DialogActions>
           </Dialog>
 

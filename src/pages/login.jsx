@@ -13,19 +13,8 @@ import PanoDeFundo from "../components/feedback/loader.jsx";
 import Button from "@mui/material/Button";
 import {Backdrop, CircularProgress, IconButton} from "@mui/material";
 
-/**
- * Anotações de manutencao de codigo
- *
- * [] Nao esta fazendo login
- * **/
-
 function LoginForm () {
-
-  /**
-   * chamando o servico de usuario
-   * */
   const usuarioService = UsuarioService();
-
   const { register, handleSubmit, formState: { errors }} = useForm();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -82,8 +71,8 @@ function LoginForm () {
                     <form onSubmit={handleSubmit(fazerLogin)}>
                       <FormGroup label={
                         <span className="text-white">
-                                                Email:<span className="asterisco-vermelho">*</span>
-                                            </span>
+                          Email:<span className="asterisco-vermelho">*</span>
+                        </span>
                       }>
                         {/* Campo E-mail */}
                         <input
@@ -98,8 +87,8 @@ function LoginForm () {
 
                       <FormGroup label={
                         <span className="text-white">
-                                                Senha:<span className="asterisco-vermelho">*</span>
-                                            </span>
+                          Senha:<span className="asterisco-vermelho">*</span>
+                        </span>
                       }>
                         <div className="position-relative">
                           {/* Campo Senha */}
@@ -180,17 +169,3 @@ function LoginForm () {
 export default LoginForm;
 
 
-/**
- * indicador de carregamento durante o processo de autenticação.
- *
- * <Backdrop
- *             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
- *             open={loading}
- *         >
- *             <div>
- *                 <CircularProgress color="inherit" />
- *                 <h1>Autenticando</h1>
- *                 <p>Estamos verificando suas credenciais, por favor aguarde...</p>
- *             </div>
- *         </Backdrop>
- * */

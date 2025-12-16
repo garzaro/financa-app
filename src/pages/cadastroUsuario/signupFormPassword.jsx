@@ -24,7 +24,7 @@ function FormularioSenha() {
   };
 
   return (
-    <div className="container-fluid mt-5" > {/*style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}*/}
+    <div className="container-fluid mt-5" >
       <div className="row justify-content-center w-100">
         <div className="col-md-6">
           <div className="bs-docs-section">
@@ -36,8 +36,8 @@ function FormularioSenha() {
                       {/*senha*/}
                       <FormGroup label={
                         <span>
-                                                    Senha:<span className="asterisco-vermelho">*</span>
-                                                </span>
+                          Senha:<span className="asterisco-vermelho">*</span>
+                        </span>
                       } name={"senha"} //deixei o nome de forma didatica, a lib react-hook-form dispensa a necessidade de nomear o input
                       >
                         <input type="password" id="senha" value={senha}
@@ -51,9 +51,9 @@ function FormularioSenha() {
                       {/*repetir a senha*/}
                       <FormGroup label={
                         <span>
-                                                    Confirmar Senha:<span className="asterisco-vermelho">*</span>
-                                                </span>
-                      } name={"senhaNovamente"} //deixei o nome de forma didatica, a lib react-hook-form dispensa a necessidade de nomear o input
+                          Confirmar Senha:<span className="asterisco-vermelho">*</span>
+                        </span>
+                      }
                       >
                         <input type="password" id="confirmarSenha" value={confirmarSenha}
                                {...register("confirmarSenha", {required: "Confirmar sua nova senha"} )}
@@ -87,10 +87,17 @@ function FormularioSenha() {
                         />
                       )}
                       {/* Botão para Login */}
-                      <button className="btn btn-success btn-sm mt-3" type="submit" disabled={!isvalid}>
+                      <button
+                        className="btn btn-success btn-sm mt-3"
+                        type="submit"
+                        disabled={!isvalid}
+                      >
                         Avançar
                       </button>
-                      <button className="btn btn-danger btn-sm mt-3" onClick={redirecionarParaLogin}>
+                      <button
+                        className="btn btn-danger btn-sm mt-3"
+                        onClick={redirecionarParaLogin}
+                      >
                         Cancelar
                       </button>
                     </form>

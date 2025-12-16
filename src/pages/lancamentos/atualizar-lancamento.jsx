@@ -11,7 +11,7 @@ export default function AtualizarLancamento() {
 
   const { id } = useParams();
   useEffect(() => {
-    console.log('Mostrar os Parâmetros:', id);
+    console.log('Mostrar os Parâmetros:', id); 
     if (id){
       /**se houver um id (edição) carrega os dados do lancamento**/
       servicoLancamento.obterLancamentoPorId(id)

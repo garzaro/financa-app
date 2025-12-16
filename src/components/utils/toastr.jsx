@@ -1,6 +1,9 @@
 import toastr from 'toastr'
 import {toast} from "react-toastify";
-
+ /**
+  * to-do list
+  * [] Verificar funcionamento do Handlers
+  * **/
 toastr.options = {
   "closeButton": false,
   "debug": false,

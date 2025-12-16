@@ -5,25 +5,18 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Astered from "../utils/astered.jsx";
 /*filtro*/
-
-/**
- * Anotações
- *
- * [] Mostrar mes string
- * **/
-
-export default function FiltroLancamento({
-
-                                           ano,
-                                           mes,
-                                           tipoLancamento,
-                                           limpar,
-                                           onAnoChange,
-                                           onMesChange,
-                                           onTipoLancamentoChange,
-                                           onLimparChange,
-                                           onChange
-                                         }) {
+export default function FiltroLancamento(
+  {
+    ano,
+    mes,
+    tipoLancamento,
+    limpar,
+    onAnoChange,
+    onMesChange,
+    onTipoLancamentoChange,
+    onLimparChange,
+    onChange
+  }) {
 
   // const monthFormatter = new Intl.DateTimeFormat('pt-BR', {month: 'long'});
   return (

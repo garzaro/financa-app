@@ -12,12 +12,6 @@ import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle"
 import {CircularProgress} from "@mui/material";
 import {PasswordStrengthMeter} from "../../components/feedback/forcaSenha";
 
-
-/**
- * [] Deixar somente uma visiualizacao de senha no primeiro campo
- * [] Nao esta salvando novo usuario
- * **/
-
 const Register = () => {
   const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
     defaultValues: {
@@ -89,7 +83,7 @@ const Register = () => {
     navigate('/Login');
   };
   return (
-    <div className="container mt-5"> {/**  style={{minHeight: '0vh', display: 'flex', flexDirection: 'column', alignItens:'center'}}>*/}
+    <div className="container mt-5">
       <div className="row justify-content-center w-100">
         <div className="col-md-6">
           <div className="bs-docs-section">
@@ -103,8 +97,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Nome completo: <Astered>*</Astered>
-                                                </span>
+                          Nome completo: <Astered>*</Astered>
+                        </span>
                       }>
                         <input type="text"
                                {...register("nome", {required: "Nome completo é obrigatório"})}
@@ -118,8 +112,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Cadastro Pessoa Física: <Astered>*</Astered>
-                                                </span>
+                          Cadastro Pessoa Física: <Astered>*</Astered>
+                        </span>
                       }>
                         <input type="text"
                                {...register("cpf", {required: "O CPF é obrigatório",
@@ -133,8 +127,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Nome de Usuário: <Astered>*</Astered>
-                                                </span>
+                          Nome de Usuário: <Astered>*</Astered>
+                        </span>
                       }>
                         <input type="text"
                                {...register("usuario", {required: "Nome de usuário é obrigatório"})}
@@ -147,8 +141,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Email: <Astered>*</Astered>
-                                                </span>
+                          Email: <Astered>*</Astered>
+                        </span>
                       }>
                         <input type="email"
                                {...register("email", {required: "Email é obrigatório"})}
@@ -161,8 +155,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Confirmar e-mail: <Astered>*</Astered>
-                                                </span>
+                          Confirmar e-mail: <Astered>*</Astered>
+                        </span>
                       }>
                         <input type="email"
                                {...register("confirmarEmail",{required: "Confirme o email"},
@@ -176,8 +170,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Senha: <Astered>*</Astered>
-                                                </span>
+                          Senha: <Astered>*</Astered>
+                        </span>
                       }>
                         <div className="position-relative">
                           <input
@@ -213,8 +207,8 @@ const Register = () => {
                        */}
                       <FormGroup label={
                         <span>
-                                                    Confirmar senha: <Astered>*</Astered>
-                                                </span>
+                          Confirmar senha: <Astered>*</Astered>
+                        </span>
                       }>
                         <div className="position-relative">
                           <input

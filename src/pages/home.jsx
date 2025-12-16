@@ -14,7 +14,7 @@ import {Link, useNavigate} from "react-router-dom";
 /**
  * to-do list
  * [] Trazer saldo
- * Trazer outros servicos para dashboard -buscar outras informações
+ * [] Trazer outros servicos para dashboard - buscar outras informações
  *
  * **/
 
@@ -50,7 +50,7 @@ function Home () {
           console.log(error);
         })
     }
-    // buscarSaldo();
+    buscarSaldo();
   },[]);
 
   function capitalizar(string){
@@ -93,38 +93,3 @@ function Home () {
 
 export default Home;
 
-/**
- * ideia para posteriormente quando for declarado o estado de atualizar estado
- * const [saldo, setSaldo] = useState(0);
- * const saldoServico = UsuarioService();
- * const lancamentoServico = LancamentoService();
- *
- * // Carrega saldo ao montar a tela
- * useEffect(() => {
- *     buscarSaldo();
- * }, []);
- *
- * const buscarSaldo = () => {
- *     saldoServico.buscarSaldoPorUsuario()
- *         .then(response => setSaldo(response.data))
- *         .catch(console.log);
- * };
- *
- * const criarLancamento = (lancamento) => {
- *     lancamentoServico.criar(lancamento)
- *         .then(() => {
- *             buscarSaldo(); // <-- aqui atualiza saldo com valor real do backend
- *         })
- *         .catch(console.log);
- * };
- * */
-
-/**
- * <div>
- *       {usuario ? (
- *         <h1>Olá, {usuario.nome}! Seja bem-vindo 👋</h1>
- *       ) : (
- *         <h1>Bem-vindo ao sistema</h1>
- *       )}
- *     </div>
- * home*/;
