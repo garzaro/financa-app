@@ -49,10 +49,3 @@ const ApiService = (apiurl) => {
 }
 export default ApiService;
 
-/**
- put: async (url, objeto) => {
- const requestUrl = `${apiurl}${url}`;
- const response = await httpClient.put(requestUrl, objeto);
- return response.data;
- },
- **/
