@@ -42,6 +42,7 @@ function CadastrarLancamento() {
   const usuarioLogado = LocalStorageService();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [lancamentoAtual, setLancamentoAtual] = useState(null);
   const isUpdating = watch('atualizando');
   /** contexto do cadastro
    * apos o formulario montado - executa o useeffect e atualiza o formulario.
@@ -62,6 +63,8 @@ function CadastrarLancamento() {
       servicoLancamento.obterLancamentoPorId(params.id)
         .then(response => {
           console.log("ID retornado ", response);
+           // guarda objeto atual para fallback e popula formulário
+          setLancamentoAtual(response.data);
           reset( { ...response.data, atualizando: true } );
         })
         .catch(error => {
@@ -89,58 +92,56 @@ function CadastrarLancamento() {
     setLoading(false);
   }
 
-  /**atualizar**/
+  /**atualizar - LER**/
   const updateLancamento = (
-    {
-      descricao,
-      valor,
-      mes,
-      ano,
-      tipoLancamento,
-      statusLancamento,
-      usuario,
-      id
-    }) => {
+    { descricao, valor, mes, ano, tipoLancamento, statusLancamento, id, usuario }) => {
     setLoading(true);
-    /**garante usuario correto do contexto de sessão**/
-    const usuarioSessao = usuarioLogado.obterItem('_usuario_logado');
-    const payload = {
-      descricao,
-      valor,
-      mes,
-      ano,
-      tipoLancamento,
-      usuario: usuarioSessao?.id ?? usuario,
-      statusLancamento
-    };
-    // determinar o id da rota ou do form e validar
-    const routeId = params?.id;
-    const mergedId = (
-      routeId && routeId !== 'undefined'
-      &&
-      routeId !== 'null'
-    )
-      ? routeId : id;
+    try {
+      // prioriza id da rota; fallback para id do formulário
+      const routeId = params?.id;
+      const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
 
-    if (!mergedId || mergedId === 'undefined' || mergedId === 'null') {
+      if (!mergedId) {
+        messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
+        return;
+      }
+      // garantir usuario correto do contexto de sessão
+      const usuarioSessao = usuarioLogado.obterItem('_usuario_logado');
+      // normalizar/garantir status sempre preenchido
+      const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
+      const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
+        ? statusTrimmed
+        : (lancamentoAtual?.statusLancamento ?? 'PENDENTE');
+      const payload = {
+        descricao,
+        valor,
+        mes,
+        ano,
+        tipoLancamento,
+        // enviar status garantindo valor não-nulo
+        statusLancamento: statusFinal,
+        // se vier no form usa-o como fallback; prioridade para sessão
+        usuario: usuarioSessao?.id ?? usuario,
+      };
+      console.log('Atualizando lançamento', { id: mergedId, payload });
+      servicoLancamento.atualizarLancamento(mergedId, payload)
+        .then(() => {
+          setTimeout(() => navigate('/consultar-lancamento'), 2000);
+          messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
+        })
+        .catch(error => {
+          messages.mensagemDeErro(
+            error.response?.data?.message ||
+            error.response?.data ||
+            error.message ||
+            'Erro ao atualizar lançamento.'
+          );
+        })
+        .finally(() => setLoading(false));
+    } catch (e) {
+      messages.mensagemDeErro(e?.message || 'Falha inesperada ao atualizar.');
       setLoading(false);
-      messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
-      return;
     }
-
-    // RESOLVER - BANCO RECEBENDO STATUS undefined NA ATUALIZACAO - ESTE PROJETO ESTA NO lixo
-    
-    console.log("Payload para atualização ", { id: mergedId, ...payload })
-    servicoLancamento.atualizarLancamento(mergedId, payload)
-      .then(response => {
-        setTimeout(() => navigate("/consultar-lancamento"), 2000);
-        messages.mensagemDeSucesso("Lançamento atualizado com sucesso")
-      })
-      .catch(error => {
-          messages.mensagemDeErro(error.response.data?.message || error.response.data)
-        }
-      );
-    setLoading(false);
   }
 
   const handleLimpar = () => {
