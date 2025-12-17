@@ -190,21 +190,21 @@ function CadastrarLancamento() {
           <Typography
             variant="h4"
             component="h1"
-            title={
-            isUpdating ?
-              'Atualização de lançamento' : 'Cadastro de lançamento'
-          }
+          //   title={
+          //   isUpdating ?
+          //     'Atualização de lançamento' : 'Cadastro de lançamento'
+          // }
             sx={
             {
               textAlign: 'center',
               color: 'rgba(248,244,244,0.89)'
             }}
           >
-            {/*Cadastro de lançamentos*/}
-            {
-              isUpdating ?
-                'Atualização de lançamento' : 'Cadastro de lançamento'
-            }
+            {/*/!*Cadastro de lançamentos*!/*/}
+            {/*{*/}
+            {/*  isUpdating ?*/}
+            {/*    'Atualização de lançamentos' : 'Cadastro de lançamento'*/}
+            {/*}*/}
             </Typography>
             <Typography
               variant="body2"
