@@ -8,6 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 const lancamentoApi = ApiService('/api/lancamento');
 
 const ServiceLancamento = () => {
+
   return {
     salvarLancamento: (lancamento) => {
       return lancamentoApi.post('', lancamento);
@@ -23,6 +24,12 @@ const ServiceLancamento = () => {
 
     atualizarLancamento: (id, lancamento) => {
       return lancamentoApi.put(`/${id}`, lancamento);
+    },
+
+    alterarStatus: (id, statusLancamento) => {
+      // const lancamentoDTO = {statusLancamento: statusLancamento};
+      console.log("Payload enviado:", statusLancamento );
+      return lancamentoApi.put( `/${id}/atualizar-statusLancamento`, statusLancamento ); /** -> minificada**/  /**{lancamentoDTO}**/
     },
 
     /**desestruturação**/
