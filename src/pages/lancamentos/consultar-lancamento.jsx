@@ -14,22 +14,25 @@ import {
   DialogContentText,
   DialogActions,
   IconButton,
-  Fade, TextField, Modal, TableCell
+  Fade, TextField, Modal, TableCell, Tooltip, RadioGroup, FormControlLabel, Radio,
 } from "@mui/material";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { DataGrid, GridDeleteIcon } from '@mui/x-data-grid';
 import { ptBR } from '@mui/x-data-grid/locales';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SellSharp from '@mui/icons-material/SellSharp';
 import FiltroLancamento from "../../components/template/selectMenu.jsx";
 import ServiceLancamento from "../../app/service/lancamentoService.jsx";
 import {LocalStorageService} from "../../app/service/localStorageService.jsx";
-import {
-  errorConsultarLancamento,
-  mensagemDeErro,
-  mensagemDeSucesso
-} from "../../components/utils/toastr.jsx";
+import * as messages from "../../components/utils/toastr.jsx";
 import Slide from "@mui/material/Slide";
-import {no} from "zod/locales";
+
+/**
+ * TODO-LIST
+ * [] Deixar o campo status truncado mesmo quando for consulta - ataulizar status no botao
+ * [] Manter o filtro nao limpar apos atualizacao
+ * **/
 
 function ConsultarLancamento(props) {
   /**filtro**/
@@ -38,10 +41,13 @@ function ConsultarLancamento(props) {
   const [tipoLancamento, setTipoLancamento] = useState('');
   const [limparFiltro, setLimparFiltro] = useState('');
   const [lancamento, setLancamento] = useState([]); //rows
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [openStatusModal, setOpenStatusModal] = useState(false);
+  const [newStatus, setNewStatus] = useState('');
   const navigate = useNavigate();
   const usuarioLogado = LocalStorageService();
 
@@ -56,7 +62,7 @@ function ConsultarLancamento(props) {
     if ( !usuarioID ) {
       console.log('Sua sessão expirou');
       /**ver depois sessao expirada**/
-      mensagemDeErro('Sua sessão expirou! Faça login');
+      messages.mensagemDeErro('Sua sessão expirou! Faça login');
       return;
     }
     setLoading( true );
@@ -90,7 +96,7 @@ function ConsultarLancamento(props) {
        */
       setLancamento(dadosNormalizados);
     } catch (e) {
-      mensagemDeErro('Falha ao buscar lançamentos')
+      messages.mensagemDeErro('Falha ao buscar lançamentos')
       /**
        * Limpa a tabela definindo lancamentos (rows) como array vazio
        * evita dados antigos em caso de dar algum erro.
@@ -101,6 +107,33 @@ function ConsultarLancamento(props) {
       setLoading(false);
     }
   }, [ano, mes, tipoLancamento, lancamentoService]);
+
+  /**disparar no botao**/
+  const handleAlterarStatusLancamento = useCallback((id) => {
+    setSelectedId(id);
+    setOpenStatusModal(true);
+  }, []);
+
+  const handleAlterarStatusAtual = useCallback(async (statusLancamento) => {
+    if ( !selectedId ) return ;
+    const copyBefore = [...lancamento];
+    setLancamento((currentRows) => currentRows.map((row) => row.id === selectedId ? { ...row, statusLancamento } : row));
+    setOpenStatusModal(false);
+    console.log("Resposta da API ", statusLancamento);
+    /**envia ra ao banco em silencio**/
+    await lancamentoService.alterarStatus(selectedId, statusLancamento)
+      .then(() => {
+        messages.mensagemDeSucesso("Status atualizado com sucesso");
+      })
+      .catch(error => {
+        setLancamento(copyBefore);
+        console.error('Erro ao alterar status:', error);
+        const errorMessage = error.response?.data?.message ||
+          'Erro ao atualizar status. Tente novamente.';
+        messages.mensagemDeErro(errorMessage);
+      }
+    );
+  }, [selectedId, lancamento]);
 
   const handleCancelar = useCallback(() => {
     setLoading(true);
@@ -135,10 +168,10 @@ function ConsultarLancamento(props) {
     setLancamento((prevRows) => prevRows.filter((row) => row.id !== id));
     lancamentoService.deletarLancamento( id )
       .then(() => {
-        mensagemDeSucesso("Lançamento excluído com sucesso")
+        messages.mensagemDeSucesso("Lançamento excluído com sucesso")
       })
       .catch((err) => {
-        mensagemDeErro("Erro ao excluir o lançamento");
+        messages.mensagemDeErro("Erro ao excluir o lançamento");
       });
   }, [ lancamentoService, lancamento ]);
 
@@ -174,6 +207,11 @@ function ConsultarLancamento(props) {
     navigate(`/cadastrar-lancamento/${id}`);
   },[])
 
+  const moneyFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+
    /**
    * objetos de colunas - props fl hr minW
    * **/
@@ -182,32 +220,49 @@ function ConsultarLancamento(props) {
     /** valueFormatter - executada a cada linha - nao memoizada aqui **/
     { field: 'valor', headerName: 'Valor', width: 120, valueFormatter: ( params ) => {
         /**valor moeda - Real**/
-        const vmR = Number( params.valueOf() || 0 );
-        return vmR.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const vmR = Number( params.valueOf() || 0 ); {/*valueOf()*/}
+        return moneyFormatter.format(vmR);
       }
     },
     { field: 'tipoLancamento', headerName: 'Tipo', width: 120 },
     { field: 'mes', headerName: 'Mês', width: 120 },
     { field: 'ano', headerName: 'Ano', width: 100, },
     { field: 'statusLancamento', headerName: 'Situação', width: 120 },
-    { field: 'actions', headerName: 'Ações', width: 120, sortable: false,
+    { field: 'actions', headerName: 'Ações', width: 130, disableColumnResize: true, minWidth: 130,
+      maxWidth: 150, sortable: false,
       renderCell: ( params ) => ( /**so pra saber que poder ser outro nome aqui**/
         <React.Fragment>
-          <IconButton color="primary" size="small"
-            onClick={() => handleEditarLancamento(params.row.id) }
-          >
-            <EditIcon />
-          </IconButton>
+          <Tooltip title="Editar">
+            <IconButton color="primary" size="small"
+              onClick={() => handleEditarLancamento(params.row.id) }
+            >
+              <EditIcon />
+            </IconButton>
 
-          <IconButton color="secondary" size="small"
-            onClick={() => handleClickOpenDialog(params.row.id) }
-          >
-            <DeleteIcon />
-          </IconButton>
+          </Tooltip>
+
+          {/*ReceiptIcon ListAltIcon SellSharp*/}
+          <Tooltip title="Alterar situação">
+            <IconButton color="info" size="small"
+              onClick={() => handleAlterarStatusLancamento(params.row.id) }
+            >
+              <ListAltIcon fontSize="small"/>
+            </IconButton>
+
+          </Tooltip>
+
+
+          <Tooltip title="Deletar">
+            <IconButton color="secondary" size="small"
+              onClick={() => handleClickOpenDialog(params.row.id) }
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
         </React.Fragment>
       )
     },
-  ], [ handleClickOpenDialog ]);
+  ], [ handleEditarLancamento, handleAlterarStatusAtual, handleClickOpenDialog ]);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 0.5, mb: 3 }}>
@@ -304,6 +359,39 @@ function ConsultarLancamento(props) {
             />
           </Box>
 
+          {/** alteração de status **/}
+          <Dialog open={openStatusModal} onClose={() => !loading && setOpenStatusModal(false)}>
+            <DialogTitle>Alterar Situação</DialogTitle>
+
+            <DialogContent dividers>
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+                  <CircularProgress size={24} />
+                  <Typography sx={{ ml: 2 }}>Atualizando...</Typography>
+                </Box>
+              ) : (
+                <RadioGroup
+                  // onChange={(e) => alterarStatusImediato(e.target.value)}
+                  onChange={(e) => handleAlterarStatusAtual(e.target.value)}
+                >
+                  <FormControlLabel value="EFETIVADO" control={<Radio color="success" />} label="Efetivado" />
+                  <FormControlLabel value="CANCELADO" control={<Radio color="error" />} label="Cancelado" />
+                  <FormControlLabel value="PENDENTE" control={<Radio />} label="Pendente" />
+                </RadioGroup>
+              )}
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                onClick={() => setOpenStatusModal(false)}
+                disabled={loading}
+              >
+                Cancelar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/** confirmacao de exclusão **/}
           <Dialog
             open={showConfirmDialog}
             aria-labelledby="dialog-title"

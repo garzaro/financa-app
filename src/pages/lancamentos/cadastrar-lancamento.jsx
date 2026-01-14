@@ -13,6 +13,7 @@ import {
   FormHelperText, Button, Tooltip
 } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Reply from '@mui/icons-material/Reply';
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as messages from "../../components/utils/toastr.jsx";
 import LancamentoService from "../../app/service/lancamentoService.jsx";
@@ -184,27 +185,22 @@ function CadastrarLancamento() {
                 left: 0
               }}
             >
-              <ArrowBackIcon size={40} color="primary"/>
+              <Reply size={40} color="primary"/>
             </IconButton>
           </Tooltip>
           <Typography
             variant="h4"
             component="h1"
-          //   title={
-          //   isUpdating ?
-          //     'Atualização de lançamento' : 'Cadastro de lançamento'
-          // }
             sx={
             {
               textAlign: 'center',
               color: 'rgba(248,244,244,0.89)'
             }}
           >
-            {/*/!*Cadastro de lançamentos*!/*/}
-            {/*{*/}
-            {/*  isUpdating ?*/}
-            {/*    'Atualização de lançamentos' : 'Cadastro de lançamento'*/}
-            {/*}*/}
+            {/*Cadastro de lançamentos*!*/}
+            {  isUpdating ?
+              'Atualização de lançamentos' : 'Cadastro de lançamento'
+            }
             </Typography>
             <Typography
               variant="body2"
