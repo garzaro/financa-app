@@ -5,8 +5,8 @@ import Home from '../pages/home.jsx';
 import Login from '../pages/login.jsx';
 import Register from '../pages/cadastroUsuario/register.jsx';
 import FormularioSenha from "../pages/cadastroUsuario/signupFormPassword.jsx";
-import CadastrarLancamento from "../pages/lancamentos/cadastrar-lancamentos.jsx";
-import ConsultarLancamento from "../pages/lancamentos/consultar-lancamentos.jsx";
+import CadastrarLancamento from "../pages/lancamentos/cadastrar-lancamento.jsx";
+import ConsultarLancamento from "../pages/lancamentos/consultar-lancamento.jsx";
 import AtualizarLancamento from "../pages/lancamentos/atualizar-lancamento.jsx";
 
 const Rotas = () => {
