@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import NavbarItem from "./navbarItem.jsx";
-import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamentos.jsx';
+import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamento.jsx';
 
 const Navbar = () => {
   return (
