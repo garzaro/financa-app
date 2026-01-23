@@ -24,10 +24,7 @@ export default function FiltroLancamento(
       {/**
        campo ano
        **/}
-      <FormControl
-        variant="standard"
-        sx={{ m: 1, minWidth: 120 }}
-      >
+      <FormControl variant="standard" size={"small"} sx={{ m: 1, minWidth: 120 }}>
         <InputLabel
           id="select-ano-label"
         >
@@ -56,7 +53,7 @@ export default function FiltroLancamento(
         </Select>
       </FormControl>
       {/*campo mes*/}
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <FormControl variant="standard" size={"small"} sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="select-mes-label">Mês: </InputLabel>
         <Select
           labelId="select-mes-label"
@@ -83,7 +80,7 @@ export default function FiltroLancamento(
         </Select>
       </FormControl>
       {/*campo tipo lancamento*/}
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <FormControl variant="standard" size={"small"} sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="select-tipo-lancamento-label">
           Tipo:
           <Astered> *</Astered>
