@@ -1,8 +1,11 @@
 import React from "react";
 import {Navigate, Outlet} from 'react-router-dom';
+import {LocalStorageService} from "../app/service/localStorageService.jsx";
+
+const storageLocal = LocalStorageService();
 
 const isAuthenticated = () => {
-    return !!localStorage.getItem('_usuario_logado');
+    return !!storageLocal.obterItem('_usuario_logado');
 }
 const ProtectedRoute = () => {
   return isAuthenticated() ? <Outlet /> : <Navigate to='/login' replace />;
