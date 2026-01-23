@@ -1,49 +1,56 @@
 import React from "react";
 // import {Link} from "react-router-dom"; to={item.href}
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
 
-function NavbarItem({label, href, id, items}) {
+const NavbarItem = ({label, to, id, items}) => {
 
   const hasChildren = items && items.length > 0;
+
   if (hasChildren) {
     return (
-      <div>
-        <li className="dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            href={href}
-            id={id}
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            /**para evitar scroll ao top*/
-            onClick={(e) => e.preventDefault()}
-          >
-            {label}
-          </a>
-          <ul className="dropdown-menu bg-primary border-primary-subtle" aria-labelledby={id}>
+      <li className="dropdown">
+        <Link
+          className="nav-link dropdown-toggle"
+          to={to}
+          id={id}
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          /**para evitar scroll ao top*/
+          onClick={(e) => e.preventDefault()}
+        >
+          {label}
+        </Link>
+        <ul className="dropdown-menu bg-primary border-primary-subtle" aria-labelledby={id}>
 
-            {items.map((item, i) => (
-              <li key={i}>
-                <Link href={item.href} className="text-white link-success bg-opacity-50 dropdown-item" underline="none">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
-
-      </div>
+          {items.map((item, i) => (
+            <li key={i}>
+              <Link
+                className="text-white link-success bg-opacity-50 dropdown-item" underline="none"
+                to={item.to}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </li>
     );
   }
   return (
-    <Link
-      className="nav-link aria-current text-decoration-none" href={href}>
-      {label}
-    </Link>
+    <li className="navbar-item">
+      <Link
+        className="nav-link aria-current text-decoration-none" to={to}>
+        {label}
+      </Link>
+    </li>
   );
 }
 export default NavbarItem;
+
+
+
+
 
 
 

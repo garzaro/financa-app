@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import NavbarItem from "./navbarItem.jsx";
 import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamento.jsx';
-
+// NAVEGACAO SPA
 const Navbar = () => {
   return (
     <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
@@ -23,12 +23,12 @@ const Navbar = () => {
 
         <div className="collapse navbar-collapse " id="navbarNav">
 
-          <ul className="navbar-nav mx-5 ">
+          <ul className="navbar-nav mx-5">
 
             <NavbarItem
               id="home"
-              href="/home"
               label="Home"
+              to="/home"
             />
             <NavbarItem
               id="lancamento"
@@ -36,17 +36,17 @@ const Navbar = () => {
               items={[
                 {
                   label: "Cadastrar Lançamento",
-                  href: "/cadastrar-lancamento",
+                  to: "/cadastrar-lancamento",
                 },
                 {
                   label: "Consultar Lançamento",
-                  href: "/consultar-lancamento"
+                  to: "/consultar-lancamento"
                 },
               ]}
             />
             <NavbarItem
               id="login"
-              href="/login"
+              to="/login"
               label="Login"
             />
 
