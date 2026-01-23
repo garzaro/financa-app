@@ -15,26 +15,12 @@ import {PageNotFound} from "../components/notfound/NotFound.jsx";
 import RotaAutenticada from "./protectedRoute.jsx";
 import ProtectedRoute from "./protectedRoute.jsx";
 
-/**
- * TO-LIST
- * [x] Fazer o 404 quando nao encontrar a rota - fazer alguma coisa de tela
- * [x] Rotas aninhadas e Outlet
- * [x] Criar rotas customizadas
- * [x] Verificar se o usuario esta autenticado
- * [x] Usar Outlet para renderizar rotas filhas
- * [] https://www.youtube.com/watch?v=rvS-TdtM8Ak&t=3045s
- * [x] Segurança: informações sensíveis ficam protegidas, e ações críticas só podem ser executadas por quem tem permissão.
- * [] Controle de acesso: é possível definir diferentes níveis de acesso. Por exemplo, um administrador vê mais opções que um usuário comum.
- * [] Experiência do usuário: você guia cada pessoa de forma lógica, mostrando apenas o que faz sentido para o status dela (logada ou não), evitando confusão.
- * **/
-
 const AuthenticatedRoute = ProtectedRoute();
 const Rotas = () => {
   return (
-    // <Router>
     <>
       <Navbar />
-      {/*isso aqui é um if de rotas publicas*/}
+      {/*rotas publicas*/}
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -45,15 +31,10 @@ const Rotas = () => {
           <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />
           <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />
         </Route>
-
         {/* 404 */}
         <Route path="*" element={<PageNotFound />} />
-
-        {/*<RotaAutenticada path="/signupFormPassword" element={<FormularioSenha />} />*/}
-        {/* Adicionar uma rota curinga para diagnosticar se alguma rota é carregada */}
       </Routes>
     </>
-    // </Router>
   );
 };
 export default Rotas;
