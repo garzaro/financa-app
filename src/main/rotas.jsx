@@ -27,11 +27,11 @@ const Rotas = () => {
         <Route path="/login" element={<Login />} />
 
         {/*rotas protegidas - só mostra layout se tiver autenticado (Navbar)*/}
-        <Route element={<Navbar />}>
           <Route element={<AuthenticatedRoute/>}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />
-            <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />
+            <Route element={<Navbar />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />
+              <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />
           </Route>
         </Route>
         {/* 404 */}
