@@ -343,12 +343,14 @@ pre{
 /*MINHAS ADIÇÕES*/
 
 #inputNome::placeholder {
-    color: #ccc;
+    color: #757474;
 }
 
 /* PARA TODOS OS PLACEHOLDERS*/
 .inputPlaceholder::placeholder {
-    color: #ccc;
+    color: #8e8c8c;
+    font-size: 12px;
+    opacity:1
 }
 
 /*APROXIMAR CAMPOS DO FORMULARIO*/
@@ -371,9 +373,19 @@ pre{
 
 /*FEEDBACK DE ERRO SERVIDOR OFFLINE*/
 .error, .error-backend {
-    color: #f32e4d;
+    color: #f62c1a;
     font-size: 14px;
     margin-top: 4px;
+}
+
+/**AUTO RELEVO**/
+.borda-outset {
+    background-color: #d1d1d1;
+    border-top: 3px solid #ffffff;    /* Luz no topo */
+    border-left: 3px solid #ffffff;   /* Luz na esquerda */
+    border-bottom: 3px solid #808080; /* Sombra na base */
+    border-right: 3px solid #808080;  /* Sombra na direita */
+    padding: 10px 20px;
 }
 
 .spinner {

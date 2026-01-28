@@ -5,12 +5,13 @@ import axios from "axios";
 import Card from "../components/template/card.jsx";
 import FormGroup from "../components/template/formGroup.jsx";
 import {mensagemDeErro} from '../components/utils/toastr.jsx'
-import UsuarioService from "../app/service/usuarioService.jsx";
-import {LocalStorageService} from "../app/service/localStorageService.jsx";
+import UsuarioService from "../app/service/usuarioService.js";
+import {LocalStorageService} from "../app/service/localStorageService.js";
 import DefinirSenha from "./cadastroUsuario/senha-redefinicao.jsx";
 import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle.jsx";
 import PanoDeFundo from "../components/feedback/loader.jsx";
 import Button from "@mui/material/Button";
+import LoginIcon from '@mui/icons-material/Login';
 import {Backdrop, CircularProgress, IconButton} from "@mui/material";
 
 function LoginForm () {
@@ -22,7 +23,15 @@ function LoginForm () {
   const storageUsuario = LocalStorageService();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
+/**
+ * TO-LIST
+ * [] Isolar a pagina de login da aplicação
+ * [] Usar href no logoff para recarregar a pagina home, observar recarregamento da pagina, quando altera o componente
+ * [] Usando to (Link - react router dom a pagina nao recarrega ao trocar o componente como estav sendo com href)
+ * [] Faz árte da navegacao SPA
+ *
+ * **/
+  const USUARIO_LOGADO = '_usuario_logado';
   /**
    * logar
    * */
@@ -31,7 +40,7 @@ function LoginForm () {
     /**
      * limpe a chave antiga
      * */
-    storageUsuario.removerItem('_usuario_logado');
+    storageUsuario.removerItem(USUARIO_LOGADO);
     usuarioService.autenticar({
       email:data.email,
       senha:data.senha,
@@ -39,12 +48,17 @@ function LoginForm () {
       /**
        * @param setItem - salvar a chave - identificação
        * */
-      storageUsuario.salvarItem('_usuario_logado', respondeAiManoBanco.data);
+      storageUsuario.salvarItem(USUARIO_LOGADO, respondeAiManoBanco.data);
       setLoading(true);
       setTimeout(() => navigate("/home"), 4500);
 
     }).catch(err => {
-      mensagemDeErro(err.response.data || "Erro inesperado ao fazer login. Tente novamente mais tarde.");
+      mensagemDeErro(
+        err.response.data,
+        err.response.data.message,
+        err.response.data.code,
+        err.response.status )
+        // "Erro inesperado ao fazer login. Tente novamente mais tarde.");
     });
   };
   function handleCancelar() {
@@ -64,7 +78,7 @@ function LoginForm () {
         <div className="col-md-6">
           <div className="bs-docs-section">
             <Card title="Seja bem-vindo">
-              <h6 className="text-center text-body-secondary ">Faça login para acessar sua conta</h6>
+              <h6 className="text-center text-body-primary">Faça login para acessar sua conta</h6>
               <div className="row">
                 <div className="col-lg-12">
                   <div className="bs-component">
@@ -82,7 +96,8 @@ function LoginForm () {
                           placeholder="Digite seu email"
                           id="email"
                         />
-                        {errors.email && <span className="error">{errors.email.message}</span>}
+                        {errors.email &&
+                          <span className="error" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                       </FormGroup>
 
                       <FormGroup label={
@@ -104,13 +119,13 @@ function LoginForm () {
                           />
                         </div>
                         {errors.senha &&
-                          <span className="error-backend">{errors.senha.message}</span>}
+                          <span className="error-backend" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
                       </FormGroup>
 
                       {/**
                        esqueceu a senha
                        **/}
-                      <div className="nav-signin-tooltip-footer ">Esqueceu a senha?
+                      <div className="nav-signin-tooltip-footer">Esqueceu a senha?
                         <a href="/cadastroUsuario/signupFormPassword"
                            className="nav-a"
                            aria-label="Esqueceu a senha? Clique aqui para criar uma nova.">&nbsp;
@@ -119,30 +134,42 @@ function LoginForm () {
                       {/**
                        Botão de Login
                        **/}
-                      <div>
-                        <button
-                          type="submit" className="btn btn-success btn-sm mt-3">
-                          Entrar
-                        </button>
+                      <div className="d-flex align-items-center gap-2">
+                        <div>
+                          <button
+                            type="submit" className="btn btn-success btn-sm mt-3">
+                            <i className="pi pi-sign-in"></i> <span>ENTRAR</span>
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            type="submit" className="btn btn-danger btn-sm mt-3">
+                            <i className="pi pi-times"></i> <span>CANCELAR</span>
+                          </button>
+                        </div>
                       </div>
                       {/**
                        cadastre-se
                        **/}
-                      <div className="d-flex align-items-center my-4">
+                      <div className="d-flex mb-0 mt-1 align-items-center my-3">
                         <div className="flex-grow-1 border-top border-secondary"></div>
-                        <span className="px-3 text-secondary text-nowrap">Ou Cadastre-se</span>
+                        <span className="px-2 text-secondary text-nowrap">Ou Cadastre-se</span>
                         <div className="flex-grow-1 border-top border-secondary"></div>
                       </div>
 
-                      <div className="sm-4">
-                        <h2 className="text-center">Primeiro acesso?</h2>
-                        <p className="text-center mb-3">
+                      <div className="p-0">
+                        <h4 className="text-center mt-0 mb-1">Primeiro acesso?</h4>
+                        <p className="text-center mb-0" style={{ fontSize: '10px', letterSpacing: '2px' }}>
                           Se ainda não possui acesso, clique no
-                          botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.</p>
-                        <div className="text-center">
-                          <a href="/register" className="btn btn-sm btn-warning"
-                             title="Não tem uma conta? Clique aqui!">Criar conta</a>
+                          botão abaixo, crie sua conta e obtenha acesso ao Financas Pessoais.
+                        </p>
+
+                        <div className="text-center mt-2">
+                          <a href="/register" className="btn btn-sm btn-secondary"
+                             title="Não tem uma conta? Clique aqui!"> <i className="pi pi-plus"></i>
+                            <span> Criar conta</span></a>
                         </div>
+
                       </div>
                     </form>
                   </div>

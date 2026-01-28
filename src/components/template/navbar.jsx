@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Outlet} from 'react-router-dom';
 import NavbarItem from "./navbarItem.jsx";
 import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamento.jsx';
 // NAVEGACAO SPA
 const Navbar = () => {
   return (
+  <>
     <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
       <div className="container-fluid ">
 
@@ -49,11 +50,12 @@ const Navbar = () => {
               to="/login"
               label="Login"
             />
-
           </ul>
         </div>
       </div>
     </div>
+    <Outlet/>
+  </>
   );
 };
 export default Navbar;

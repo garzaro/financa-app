@@ -1,7 +1,6 @@
 import React from "react";
 // import {Link} from "react-router-dom"; to={item.href}
-import {Link} from 'react-router-dom';
-
+import {Link, Outlet} from 'react-router-dom';
 const NavbarItem = ({label, to, id, items}) => {
 
   const hasChildren = items && items.length > 0;

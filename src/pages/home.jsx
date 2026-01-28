@@ -7,8 +7,8 @@ import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 import { PrimeIcons } from 'primereact/api';
 
-import UsuarioService from "../app/service/usuarioService.jsx";
-import {LocalStorageService} from "../app/service/localStorageService.jsx";
+import UsuarioService from "../app/service/usuarioService.js";
+import {LocalStorageService} from "../app/service/localStorageService.js";
 import {Link, useNavigate} from "react-router-dom";
 
 /**
@@ -60,7 +60,7 @@ function Home () {
   return (
     <div className="container ">
       <div className="jumbotron ">
-        <h1 className="display-5 text-dark" >Olá, {apresentarUsuario.nome}! Seja bem-vindo(a) 👋</h1>
+        <h1 className="display-5 text-zinc-500" >Olá, {apresentarUsuario.nome}! Seja bem-vindo(a) 👋</h1>
 
         <p className="lead">Este é o seu sistema de finanças pessoais.</p>
 
@@ -76,16 +76,20 @@ function Home () {
 
         <hr className="my-4"/>
         <p>Essa é a sua área administrativa.</p>
-        <p className="lead">
+        <div className="lead">
           <a className="btn btn-primary btn-lg"
              href="https://www.geeksforgeeks.org/reactjs-usenavigate-hook/"
-             role="button"><i className="fa fa-users"></i>Cadastrar Usuário</a>
+             role="button"><i className="pi pi-users"></i> Cadastrar Usuário</a>
+        </div>
 
+        <div className="lead">
           <Link className="nav-link" to="/">Login</Link>
+        </div>
 
+        <div className="lead">
           <a className="btn btn-danger btn-lg " role="button"><i
-            className="fa fa-users"></i> Cadastrar Lançamento</a>
-        </p>
+            className="pi pi-money-bill"> </i> Cadastrar Lançamento</a>
+        </div>
       </div>
     </div>
   );

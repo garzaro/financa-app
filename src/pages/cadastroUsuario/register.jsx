@@ -5,7 +5,7 @@ import ReactPasswordChecklist from "react-password-checklist";
 import Card from "../../components/template/card";
 import FormGroup from "../../components/template/formGroup.jsx";
 import Astered from "../../components/utils/astered";
-import ServiceUsuario from "../../app/service/usuarioService";
+import ServiceUsuario from "../../app/service/usuarioService.js";
 import {mensagemDeAlerta, mensagemDeSucesso} from "../../components/utils/toastr";
 import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
@@ -83,7 +83,7 @@ const Register = () => {
     navigate('/Login');
   };
   return (
-    <div className="container mt-5">
+    <div className="container mt-0">
       <div className="row justify-content-center w-100">
         <div className="col-md-6">
           <div className="bs-docs-section">
@@ -105,7 +105,7 @@ const Register = () => {
                                className="form-control form-control-sm inputPlaceholder"
                                placeholder="Digite seu nome completo"
                                id="nome"/>
-                        {errors.nome && <span className="error">{errors.nome.message}</span>}
+                        {errors.nome && <span className="error" style={{ fontSize: '10px'}}>{errors.nome.message}</span>}
                       </FormGroup>
                       {/**
                        campo cpf
@@ -120,7 +120,7 @@ const Register = () => {
                                  onChange: handleCpfMask})}
                                className="form-control form-control-sm inputPlaceholder"
                                placeholder="Digite seu CPF"/>
-                        {errors.cpf && <span className="error">{errors.cpf.message}</span>}
+                        {errors.cpf && <span className="error" style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
                       </FormGroup>
                       {/**
                        campo nome usuario
@@ -134,7 +134,7 @@ const Register = () => {
                                {...register("usuario", {required: "Nome de usuário é obrigatório"})}
                                className="form-control form-control-sm inputPlaceholder"
                                placeholder="Digite o nome de usuário"/>
-                        {errors.usuario && <span className="error">{errors.usuario.message}</span>}
+                        {errors.usuario && <span className="error" style={{ fontSize: '10px'}}>{errors.usuario.message}</span>}
                       </FormGroup>
                       {/**
                        campo email
@@ -148,7 +148,7 @@ const Register = () => {
                                {...register("email", {required: "Email é obrigatório"})}
                                className="form-control form-control-sm inputPlaceholder"
                                placeholder="Digite seu email"/>
-                        {errors.email && <span className="error">{errors.email.message}</span>}
+                        {errors.email && <span className="error" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                       </FormGroup>
                       {/**
                        campo repetir email
@@ -163,7 +163,8 @@ const Register = () => {
                                  {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
                                className="form-control form-control-sm inputPlaceholder"
                                placeholder="Confirme o email"/>
-                        {errors.confirmarEmail && <span className="error">{errors.confirmarEmail.message}</span>}
+                        {errors.confirmarEmail &&
+                          <span className="error" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
                       </FormGroup>
                       {/**
                        campo senha
@@ -199,7 +200,8 @@ const Register = () => {
                          Passa o valor atual da senha para o componente de força
                          */}
                         <PasswordStrengthMeter senha={forcaSenha} />
-                        {errors.senha && <span className="error">{errors.senha.message}</span>}
+                        {errors.senha &&
+                          <span className="error" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
                       </FormGroup>
 
                       {/**
@@ -226,7 +228,8 @@ const Register = () => {
                             isConfirmacao={true}
                           />
                         </div>
-                        {errors.confirmarSenha && <span className="error">{errors.confirmarSenha.message}</span>}
+                        {errors.confirmarSenha &&
+                          <span className="error" style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
                       </FormGroup>
                       {/**
                        checklist de senha
@@ -264,9 +267,9 @@ const Register = () => {
                       <button
                         className="btn btn-success btn-sm mt-2"
                         type="submit"
-                        disabled={!isValid}
+                        // disabled={!isValid}
                       >
-                        Cadastrar
+                        <i className="bi bi-floppy"></i> Cadastrar
                       </button>
                       {/**
                        Botão para Login
@@ -275,7 +278,7 @@ const Register = () => {
                         className="btn btn-danger btn-sm mt-2"
                         onClick={handleCancelar}
                       >
-                        Cancelar
+                        <i className="bi bi-x-lg"></i> Cancelar
                       </button>
                     </form>
                   </div>
