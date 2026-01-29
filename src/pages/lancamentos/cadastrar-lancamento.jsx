@@ -16,10 +16,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Reply from '@mui/icons-material/Reply';
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as messages from "../../components/utils/toastr.jsx";
-import LancamentoService from "../../app/service/lancamentoService.jsx";
-import {LocalStorageService} from "../../app/service/localStorageService.jsx";
+import LancamentoService from "../../app/service/lancamentoService.js";
+import {LocalStorageService} from "../../app/service/localStorageService.js";
 import PanoDeFundo from "../../components/feedback/loader.jsx";
 import {LancamentoFormField} from "./lancamentoFormField.jsx";
+import SaveIcon from '@mui/icons-material/Save';
+import UpdateIcon from '@mui/icons-material/Update';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import {schemaLancamento} from "./schemaLancamento.jsx";
 
 function CadastrarLancamento() {
@@ -271,6 +274,9 @@ function CadastrarLancamento() {
               type="submit"
               variant="contained"
               disabled={isSubmitting || loading}
+              startIcon={ isSubmitting || loading ? <CircularProgress size={20} color="inherit" /> // ícone de loading
+                : (isUpdating ? <UpdateIcon /> : <SaveIcon />)   // ícone de atualizar ou salvar
+              }
             >
               {
                 isSubmitting || loading
@@ -289,6 +295,7 @@ function CadastrarLancamento() {
               variant="outlined"
               onClick={handleLimpar}
               disabled={ isSubmitting }
+              startIcon={ <CleaningServicesIcon size={20} color="inherit" /> }
             >
               {
                 isSubmitting ?

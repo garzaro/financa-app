@@ -17,21 +17,26 @@ import {
   Fade, TextField, Modal, TableCell, Tooltip, RadioGroup, FormControlLabel, Radio,
 } from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import { DataGrid, GridDeleteIcon } from '@mui/x-data-grid';
+import { DataGrid, GridDeleteIcon, } from '@mui/x-data-grid';
 import { ptBR } from '@mui/x-data-grid/locales';
 import EditIcon from '@mui/icons-material/Edit';
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SellSharp from '@mui/icons-material/SellSharp';
 import FiltroLancamento from "../../components/template/selectMenu.jsx";
-import ServiceLancamento from "../../app/service/lancamentoService.jsx";
-import {LocalStorageService} from "../../app/service/localStorageService.jsx";
+import ServiceLancamento from "../../app/service/lancamentoService.js";
+import {LocalStorageService} from "../../app/service/localStorageService.js";
 import * as messages from "../../components/utils/toastr.jsx";
 import Slide from "@mui/material/Slide";
 
 /**
  * TODO-LIST
- * [] Deixar o campo status truncado mesmo quando for consulta - ataulizar status no botao
+ * [] Deixar o campo status truncado mesmo quando for consulta - atualizar status no botao
  * [] Manter o filtro nao limpar apos atualizacao
+ * [] Esquema de cores na situação - status
  * **/
 
 function ConsultarLancamento(props) {
@@ -47,7 +52,6 @@ function ConsultarLancamento(props) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [openStatusModal, setOpenStatusModal] = useState(false);
-  const [newStatus, setNewStatus] = useState('');
   const navigate = useNavigate();
   const usuarioLogado = LocalStorageService();
 
@@ -117,10 +121,11 @@ function ConsultarLancamento(props) {
   const handleAlterarStatusAtual = useCallback(async (statusLancamento) => {
     if ( !selectedId ) return ;
     const copyBefore = [...lancamento];
-    setLancamento((currentRows) => currentRows.map((row) => row.id === selectedId ? { ...row, statusLancamento } : row));
+    /** atualização otimista - muda a interface antes de ir ao banco**/
+    setLancamento((currentRows) =>
+      currentRows.map((row) => row.id === selectedId ? { ...row, statusLancamento } : row));
     setOpenStatusModal(false);
-    console.log("Resposta da API ", statusLancamento);
-    /**envia ra ao banco em silencio**/
+    /**envia ao banco em silencio**/
     await lancamentoService.alterarStatus(selectedId, statusLancamento)
       .then(() => {
         messages.mensagemDeSucesso("Status atualizado com sucesso");
@@ -301,24 +306,31 @@ function ConsultarLancamento(props) {
             {/**
              botões do filtro
              **/}
-            <Button variant="contained" onClick={handleBuscar}
+            <Button variant="contained" size={"small"} onClick={handleBuscar}
               disabled={loading || !ano || !tipoLancamento}
+              startIcon={!loading && <SearchIcon size="small" />}
             >
               {loading ? <CircularProgress size={20} /> : 'Buscar' }
             </Button>
 
-            <Button variant="outlined" onClick={handleCancelar} >
+            <Button variant="outlined" size={"small"} onClick={handleCancelar}
+              startIcon={!loading && <CloseIcon size="small" />}
+            >
               {loading ? <CircularProgress size={20} /> : 'Cancelar' }
             </Button>
 
-            <Button variant="outlined" onClick={handleCandastrarLancamento} >
+            <Button variant="outlined" size={"small"} onClick={handleCandastrarLancamento}
+            startIcon={!loading && <AddIcon size="small" />}
+            >
               {loading ? <CircularProgress size={20} /> : 'Adicionar' }
             </Button>
+
           </Box>
           {error &&
             <Typography color="error" sx={{ mt: 1 }}>
               { error }
-            </Typography>}
+            </Typography>
+          }
         </Stack>
 
         <Paper
@@ -371,7 +383,6 @@ function ConsultarLancamento(props) {
                 </Box>
               ) : (
                 <RadioGroup
-                  // onChange={(e) => alterarStatusImediato(e.target.value)}
                   onChange={(e) => handleAlterarStatusAtual(e.target.value)}
                 >
                   <FormControlLabel value="EFETIVADO" control={<Radio color="success" />} label="Efetivado" />
