@@ -44,7 +44,7 @@ function LoginForm () {
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const destination = location.state?.from?.pathname || '/home';
+  const destinationBack = location.state?.from?.pathname || '/home';
   const USUARIO_LOGADO = '_usuario_logado';
   /**
    * logar
@@ -65,7 +65,7 @@ function LoginForm () {
        * */
       storageUsuario.salvarItem(USUARIO_LOGADO, respondeAiManoBanco.data);
       setLoading(true);
-      setTimeout(() => navigate(destination,{replace: true}, 4500));
+      setTimeout(() => navigate(destinationBack,{replace: true}, 4500));
 
     }).catch(err => {
       mensagemDeErro(
