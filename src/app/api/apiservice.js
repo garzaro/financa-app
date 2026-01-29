@@ -1,8 +1,10 @@
 import axios from "axios";
+// import {getToken} from "../service/authService.js";
 
 console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
-const httpClient = axios.create({
+/**httpClient**/
+export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -14,16 +16,25 @@ const httpClient = axios.create({
   withCredentials: true
 });
 
+// /**Interceptor de requisições: adiciona o toke JWT ao header Authorization, se existir mano**/
+// api.interceptors.request.use((config) => {
+//   const token = getToken();
+//   if ( token ) {
+//     config.headers.Authorization = `Bearer ${ token }`;
+//   }
+//   return config;
+// })
+
 /**
  * responsável por fazer requisições para toda a api
  * ${apiurl}${url} = server/url
- * factory funtion const ApiService = (apiurl) => {}
+ * factory funtion const Apiservice = (apiurl) => {}
  *
- * @param ApiService - recebe a prop (apiurl), a url que recebe uma api
+ * @param Apiservice - recebe a prop (apiurl), a url que recebe uma api
  * @return url - recebe a url do backend - Controller
  * */
 
-const ApiService = (apiurl) => {
+const Apiservice = (apiurl) => {
   return {
     //apiurl: apiurl,
     /**
@@ -31,21 +42,21 @@ const ApiService = (apiurl) => {
      */
     post: (url, objeto) => {
       const requestUrl = `${apiurl}${url}`;
-      return httpClient.post(requestUrl, objeto);
+      return api.post(requestUrl, objeto);
     },
     put: (url, objeto) => {
       const requestUrl = `${apiurl}${url}`;
-      return httpClient.put(requestUrl, objeto);
+      return api.put(requestUrl, objeto);
     },
     delete:(url) => {
       const requestUrl = `${apiurl}${url}`;
-      return httpClient.delete(requestUrl);
+      return api.delete(requestUrl);
     },
     get: (url) => {
       const requestUrl = `${apiurl}${url}`;
-      return httpClient.get(requestUrl);
+      return api.get(requestUrl);
     },
   }
 }
-export default ApiService;
+export default Apiservice;
 
