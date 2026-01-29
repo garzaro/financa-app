@@ -1,12 +1,14 @@
 import React from "react";
 import Rotas from "../main/rotas";
-import 'bootswatch/dist/flatly/bootstrap.min.css';
+/**sketchy , slate**/
+import 'bootswatch/dist/slate/bootstrap.min.css';
 import '../style/App.css'
 import '../style/custom.css'
 import 'toastr/build/toastr.css'
 import 'toastr/build/toastr.min.js'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
