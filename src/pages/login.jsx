@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import {useNavigate, Link, useLocation} from "react-router-dom";
 import axios from "axios";
 import Card from "../components/template/card.jsx";
 import FormGroup from "../components/template/formGroup.jsx";
@@ -14,6 +14,26 @@ import Button from "@mui/material/Button";
 import LoginIcon from '@mui/icons-material/Login';
 import {Backdrop, CircularProgress, IconButton} from "@mui/material";
 
+/**
+ * TO-LIST
+ * [] Isolar a pagina de login da aplicação
+ * [] Usar href no logoff para recarregar a pagina home, observar recarregamento da pagina, quando altera o componente
+ * [] Usando to (Link - react router dom a pagina nao recarrega ao trocar o componente como estav sendo com href)
+ * [] Faz árte da navegacao SPA
+ *
+ * Um toque de mestre: O redirecionamento inteligente
+ * Agora que sua rota protegida está sólida, você pode
+ * adicionar um detalhe que melhora muito a experiência do usuário.
+ * Sabe quando o login expira, o usuário tenta acessar /relatorios,
+ * é mandado para o /login, mas depois de logar ele quer voltar direto
+ * para /relatorios?
+ *
+ * No seu componente de Login, você pode capturar aquele
+ * state={{ from: location }} que enviamos no Maps.
+ *
+ * optional chaining ?
+ * **/
+
 function LoginForm () {
   const usuarioService = UsuarioService();
   const { register, handleSubmit, formState: { errors }} = useForm();
@@ -22,15 +42,9 @@ function LoginForm () {
   const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false)
   const storageUsuario = LocalStorageService();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-/**
- * TO-LIST
- * [] Isolar a pagina de login da aplicação
- * [] Usar href no logoff para recarregar a pagina home, observar recarregamento da pagina, quando altera o componente
- * [] Usando to (Link - react router dom a pagina nao recarrega ao trocar o componente como estav sendo com href)
- * [] Faz árte da navegacao SPA
- *
- * **/
+  const destination = location.state?.from?.pathname || '/home';
   const USUARIO_LOGADO = '_usuario_logado';
   /**
    * logar
@@ -41,6 +55,7 @@ function LoginForm () {
      * limpe a chave antiga
      * */
     storageUsuario.removerItem(USUARIO_LOGADO);
+
     usuarioService.autenticar({
       email:data.email,
       senha:data.senha,
@@ -50,7 +65,7 @@ function LoginForm () {
        * */
       storageUsuario.salvarItem(USUARIO_LOGADO, respondeAiManoBanco.data);
       setLoading(true);
-      setTimeout(() => navigate("/home"), 4500);
+      setTimeout(() => navigate(destination,{replace: true}, 4500));
 
     }).catch(err => {
       mensagemDeErro(
