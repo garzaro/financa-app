@@ -1,11 +1,11 @@
-import ApiService from '../api/apiservice.jsx';
+import Apiservice from '../api/apiservice.js';
 import {schemaLancamento} from "../../pages/lancamentos/schemaLancamento.jsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 
 /**Base path for lancamentos API**/
-const lancamentoApi = ApiService('/api/lancamento');
+const lancamentoApi = Apiservice('/api/lancamento');
 
 const ServiceLancamento = () => {
 
@@ -29,7 +29,7 @@ const ServiceLancamento = () => {
     alterarStatus: (id, statusLancamento) => {
       // const lancamentoDTO = {statusLancamento: statusLancamento};
       console.log("Payload enviado:", statusLancamento );
-      return lancamentoApi.put( `/${id}/atualizar-statusLancamento`, statusLancamento ); /** -> minificada**/  /**{lancamentoDTO}**/
+      return lancamentoApi.put( `/${id}/atualizar-statusLancamento`, { statusLancamento } ); /** -> minificada**/  /**{lancamentoDTO}**/
     },
 
     /**desestruturação**/
