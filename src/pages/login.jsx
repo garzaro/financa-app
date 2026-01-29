@@ -18,19 +18,6 @@ import {Backdrop, CircularProgress, IconButton} from "@mui/material";
  * TO-LIST
  * [] Isolar a pagina de login da aplicação
  * [] Usar href no logoff para recarregar a pagina home, observar recarregamento da pagina, quando altera o componente
- * [] Usando to (Link - react router dom a pagina nao recarrega ao trocar o componente como estav sendo com href)
- * [] Faz árte da navegacao SPA
- *
- * Um toque de mestre: O redirecionamento inteligente
- * Agora que sua rota protegida está sólida, você pode
- * adicionar um detalhe que melhora muito a experiência do usuário.
- * Sabe quando o login expira, o usuário tenta acessar /relatorios,
- * é mandado para o /login, mas depois de logar ele quer voltar direto
- * para /relatorios?
- *
- * No seu componente de Login, você pode capturar aquele
- * state={{ from: location }} que enviamos no Maps.
- *
  * optional chaining ?
  * **/
 
