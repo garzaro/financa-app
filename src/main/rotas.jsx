@@ -20,7 +20,6 @@ const AuthenticatedRoute = ProtectedRoute;
 const Rotas = () => {
   return (
     <>
-      {/*<Navbar />*/}
       {/*rotas publicas*/}
       <Routes>
         <Route path="/register" element={<Register />} />
