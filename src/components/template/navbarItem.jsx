@@ -1,7 +1,8 @@
 import React from "react";
 // import {Link} from "react-router-dom"; to={item.href}
 import {Link, Outlet} from 'react-router-dom';
-const NavbarItem = ({label, to, id, items}) => {
+
+const NavbarItem = ({label, to, id, items, onClick}) => {
 
   const hasChildren = items && items.length > 0;
 
@@ -12,11 +13,12 @@ const NavbarItem = ({label, to, id, items}) => {
           className="nav-link dropdown-toggle"
           to={to}
           id={id}
+          // onClick={onClick}
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           /**para evitar scroll ao top*/
-          onClick={(e) => e.preventDefault()}
+          // onClick={(e) => e.preventDefault()}
         >
           {label}
         </Link>
@@ -39,7 +41,10 @@ const NavbarItem = ({label, to, id, items}) => {
   return (
     <li className="navbar-item">
       <Link
-        className="nav-link aria-current text-decoration-none" to={to}>
+        className="nav-link aria-current text-decoration-none"
+        to={to}
+        onClick={onClick}
+      >
         {label}
       </Link>
     </li>

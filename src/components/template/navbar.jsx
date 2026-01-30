@@ -1,9 +1,21 @@
 import React from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet, useNavigate} from 'react-router-dom';
 import NavbarItem from "./navbarItem.jsx";
 import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamento.jsx';
-// NAVEGACAO SPA
+import {AuthService} from "../../app/service/authService.js";
+
+
+/**NAVEGACAO SPA**/
 const Navbar = () => {
+
+  const navigate = useNavigate();
+
+  const deslogar = () => {
+    const auth = AuthService();
+    auth.removeAuthenticatedUser();
+    navigate('/login');
+  }
+
   return (
   <>
     <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
@@ -46,9 +58,14 @@ const Navbar = () => {
               ]}
             />
             <NavbarItem
-              id="login"
+              id="sair"
               to="/login"
-              label="Login"
+              onClick={(e) => {
+                e.preventDefault();
+                deslogar();
+              }
+            }
+              label="Sair"
             />
           </ul>
         </div>
