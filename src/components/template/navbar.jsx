@@ -38,28 +38,14 @@ const Navbar = () => {
 
           <ul className="navbar-nav mx-5">
 
-            <NavbarItem
-              id="home"
-              label="Home"
-              to="/home"
-            />
-            <NavbarItem
-              id="lancamento"
-              label="Lançamento"
-              items={[
-                {
-                  label: "Cadastrar Lançamento",
-                  to: "/cadastrar-lancamento",
-                },
-                {
-                  label: "Consultar Lançamento",
-                  to: "/consultar-lancamento"
-                },
+            <NavbarItem id="home" label="Home" to="/home" />
+            <NavbarItem id="lancamento" label="Lançamento" items={
+              [
+                { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
+                { label: "Consultar Lançamento", to: "/consultar-lancamento"},
               ]}
             />
-            <NavbarItem
-              id="sair"
-              to="/login"
+            <NavbarItem id="sair" to="/login"
               onClick={(e) => {
                 e.preventDefault();
                 deslogar();
