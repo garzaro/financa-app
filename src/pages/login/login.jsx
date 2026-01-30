@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {useNavigate, Link, useLocation} from "react-router-dom";
 import axios from "axios";
-import Card from "../components/template/card.jsx";
-import FormGroup from "../components/template/formGroup.jsx";
-import {mensagemDeErro} from '../components/utils/toastr.jsx'
-import UsuarioService from "../app/service/usuarioService.js";
-import {LocalStorageService} from "../app/service/localStorageService.js";
-import DefinirSenha from "./cadastroUsuario/senha-redefinicao.jsx";
-import SenhaVisibilityToggle from "../components/utils/senhaVisibilityToggle.jsx";
-import PanoDeFundo from "../components/feedback/loader.jsx";
+import Card from "../../components/template/card.jsx";
+import FormGroup from "../../components/template/formGroup.jsx";
+import {mensagemDeErro} from '../../components/utils/toastr.jsx'
+import UsuarioService from "../../app/service/usuarioService.js";
+import {LocalStorageService} from "../../app/service/localStorageService.js";
+import DefinirSenha from "../cadastroUsuario/senha-redefinicao.jsx";
+import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle.jsx";
+import PanoDeFundo from "../../components/feedback/loader.jsx";
 import Button from "@mui/material/Button";
 import LoginIcon from '@mui/icons-material/Login';
 import {Backdrop, CircularProgress, IconButton} from "@mui/material";
@@ -75,12 +75,14 @@ function LoginForm () {
 //const togglePassword = () => setShowPassword((prev) => !prev);
 
   return (
-    <div className="container-fluid mt-2">
+    <div className="container-fluid d-flex justify-content-center align-items-center min-vh-100">
       <div className="row justify-content-center" >
         <div className="col-md-6">
           <div className="bs-docs-section">
             <Card title="Seja bem-vindo">
-              <h6 className="text-center text-body-primary">Faça login para acessar sua conta</h6>
+              <h6 className="text-center text-body-primary" style={{ color:'palegreen', fontFamily:'inherit', fontSize: '12px', letterSpacing: '2px' }}>
+                Faça login para acessar sua conta
+              </h6>
               <div className="row">
                 <div className="col-lg-12">
                   <div className="bs-component">
