@@ -1,17 +1,18 @@
 import React from 'react';
-import {Link, Outlet, useNavigate} from 'react-router-dom';
+import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import NavbarItem from "./navbarItem.jsx";
 import CadastrarLancamento from '../../pages/lancamentos/cadastrar-lancamento.jsx';
 import {AuthService} from "../../app/service/authService.js";
 
-
 /**NAVEGACAO SPA**/
 const Navbar = () => {
 
+  const auth = AuthService();
   const navigate = useNavigate();
+  /**detecta estado de mudanca**/
+  const location = useLocation();
 
   const deslogar = () => {
-    const auth = AuthService();
     auth.removeAuthenticatedUser();
     navigate('/login');
   }
@@ -38,21 +39,21 @@ const Navbar = () => {
 
           <ul className="navbar-nav mx-5">
 
-            <NavbarItem id="home" label="Home" to="/home" />
-            <NavbarItem id="lancamento" label="Lançamento" items={
-              [
-                { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
-                { label: "Consultar Lançamento", to: "/consultar-lancamento"},
-              ]}
-            />
-            <NavbarItem id="sair" to="/login"
-              onClick={(e) => {
+            <>
+              <NavbarItem id="home" label="Home" to="/home" />
+              <NavbarItem id="lancamento" label="Lançamento" items={
+                [
+                  { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
+                  { label: "Consultar Lançamento", to: "/consultar-lancamento"},
+                ]}
+              />
+              <NavbarItem id="sair" label="Sair" to="/login" onClick={(e) => {
                 e.preventDefault();
                 deslogar();
-              }
-            }
-              label="Sair"
-            />
+               }}
+              />
+            </>
+
           </ul>
         </div>
       </div>
@@ -62,3 +63,23 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+
+/**
+ *
+ * {isLogado ? (
+ *                 <>
+ *                   <NavbarItem id="home" label="Home" to="/home" />
+ *                   <NavbarItem id="lancamento" label="Lançamento" items={[...]} />
+ *                   <NavbarItem
+ *                     id="sair"
+ *                     label="Sair"
+ *                     to="/login"
+ *                     onClick={(e) => { e.preventDefault(); deslogar(); }}
+ *                   />
+ *                 </>
+ *               ) : (
+ *                 <NavbarItem id="login" label="Entrar" to="/login" />
+ *               )}
+ *
+ * **/
