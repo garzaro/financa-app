@@ -19,11 +19,11 @@ import * as messages from "../../components/utils/toastr.jsx";
 import LancamentoService from "../../app/service/lancamentoService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
 import PanoDeFundo from "../../components/feedback/loader.jsx";
-import {LancamentoFormField} from "./lancamentoFormField.jsx";
+import {LancamentoFormField} from "./LancamentoFormField.jsx";
 import SaveIcon from '@mui/icons-material/Save';
 import UpdateIcon from '@mui/icons-material/Update';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
-import {schemaLancamento} from "./schemaLancamento.jsx";
+import {schemaLancamento} from "./SchemaLancamento.jsx";
 
 function CadastrarLancamento() {
   const { register, control, handleSubmit, watch,

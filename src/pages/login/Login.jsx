@@ -7,7 +7,7 @@ import FormGroup from "../../components/template/formGroup.jsx";
 import {mensagemDeErro} from '../../components/utils/toastr.jsx'
 import UsuarioService from "../../app/service/usuarioService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
-import DefinirSenha from "../cadastroUsuario/senha-redefinicao.jsx";
+import DefinirSenha from "../cadastroUsuario/Senha-redefinicao.jsx";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle.jsx";
 import PanoDeFundo from "../../components/feedback/loader.jsx";
 import Button from "@mui/material/Button";

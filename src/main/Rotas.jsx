@@ -4,30 +4,27 @@ import React from 'react';
 import {Navigate, Route, Routes, Outlet} from 'react-router-dom';
 
 import Navbar from '../components/template/navbar.jsx';
-import Home from '../pages/home.jsx';
-import Login from '../pages/login/login.jsx';
-import CadastrarUsuario from '../pages/cadastroUsuario/cadastrar-usuario.jsx';
-import FormularioSenha from "../pages/cadastroUsuario/signupFormPassword.jsx";
-import CadastrarLancamento from "../pages/lancamentos/cadastrar-lancamento.jsx";
-import ConsultarLancamento from "../pages/lancamentos/consultar-lancamento.jsx";
-import AtualizarLancamento from "../pages/lancamentos/atualizar-lancamento.jsx";
-import {PageNotFound} from "../components/feedback/NotFound.jsx";
-import ProtectedRoute from "./protectedRoute.jsx";
-
-
-const AuthenticatedRoute = ProtectedRoute;
+import Home from '../pages/landingPage/Home.jsx';
+import Login from '../pages/login/Login.jsx';
+import CadastrarUsuario from '../pages/cadastroUsuario/Cadastrar-usuario.jsx';
+import FormularioSenha from "../pages/cadastroUsuario/SignupFormPassword.jsx";
+import CadastrarLancamento from "../pages/lancamentos/Cadastrar-lancamento.jsx";
+import ConsultarLancamento from "../pages/lancamentos/Consultar-lancamento.jsx";
+import AtualizarLancamento from "../pages/lancamentos/Atualizar-lancamento.jsx";
+import {PageNotFound} from "../components/feedback/notFound.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const Rotas = () => {
   return (
     <>
-      {/*rotas publicas*/}
       <Routes>
+        <Route element={<Navbar />}>
+        {/*rotas publicas*/}
         <Route path="/register" element={<CadastrarUsuario />} />
         <Route path="/login" element={<Login />} />
 
         {/*rotas protegidas - só mostra layout se tiver autenticado (Navbar)*/}
-          <Route element={<AuthenticatedRoute/>}>
-            <Route element={<Navbar />}>
+          <Route element={<ProtectedRoute/>}>
               <Route path="/home" element={<Home />} />
               <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />
               <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />

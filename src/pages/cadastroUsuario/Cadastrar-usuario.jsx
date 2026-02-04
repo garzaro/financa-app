@@ -10,9 +10,9 @@ import {mensagemDeAlerta, mensagemDeSucesso} from "../../components/utils/toastr
 import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
 import {CircularProgress} from "@mui/material";
-import {PasswordStrengthMeter} from "../../components/feedback/forcaSenha";
+import {PasswordStrengthMeter} from "../../components/feedback/forcaSenha.jsx";
 
-const Register = () => {
+const CadastrarUsuario = () => {
   const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
     defaultValues: {
       nome: '', cpf: '', usuario: '', email: '',senha: '',
@@ -291,4 +291,4 @@ const Register = () => {
     </div>
   );
 }
-export default Register;
+export default CadastrarUsuario;

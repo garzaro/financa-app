@@ -7,8 +7,8 @@ import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 import { PrimeIcons } from 'primereact/api';
 
-import UsuarioService from "../app/service/usuarioService.js";
-import {LocalStorageService} from "../app/service/localStorageService.js";
+import UsuarioService from "../../app/service/usuarioService.js";
+import {LocalStorageService} from "../../app/service/localStorageService.js";
 import {Link, useNavigate} from "react-router-dom";
 
 /**
