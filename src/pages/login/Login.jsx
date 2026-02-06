@@ -156,9 +156,9 @@ function LoginForm () {
                        cadastre-se
                        **/}
                       <div className="d-flex mb-0 mt-1 align-items-center my-3">
-                        <div className="flex-grow-1 border-top border-secondary"></div>
+                        <div className="grow border-top border-secondary"></div>
                         <span className="px-2 text-secondary text-nowrap">Ou Cadastre-se</span>
-                        <div className="flex-grow-1 border-top border-secondary"></div>
+                        <div className="grow border-top border-secondary"></div>
                       </div>
 
                       <div className="p-0">
