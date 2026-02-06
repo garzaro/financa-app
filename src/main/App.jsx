@@ -1,5 +1,5 @@
 import React from "react";
-import Rotas from "../main/rotas";
+import Rotas from "./Rotas.jsx";
 /**sketchy , slate**/
 import 'bootswatch/dist/slate/bootstrap.min.css';
 import '../style/App.css'

@@ -60,7 +60,7 @@ function LoginForm () {
         err.response.data.message,
         err.response.data.code,
         err.response.status )
-        // "Erro inesperado ao fazer login. Tente novamente mais tarde.");
+      // "Erro inesperado ao fazer login. Tente novamente mais tarde.");
     });
   };
   function handleCancelar() {
@@ -147,7 +147,7 @@ function LoginForm () {
                         </div>
                         <div>
                           <button
-                            type="submit" className="btn btn-danger btn-sm mt-3">
+                            type="button" className="btn btn-danger btn-sm mt-3">
                             <i className="pi pi-times"></i> <span>CANCELAR</span>
                           </button>
                         </div>

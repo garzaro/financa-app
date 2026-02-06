@@ -1,5 +1,5 @@
 import Apiservice from '../api/apiservice.js';
-import {schemaLancamento} from "../../pages/lancamentos/schemaLancamento.jsx";
+import {schemaLancamento} from "../../pages/lancamentos/SchemaLancamento.jsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 
