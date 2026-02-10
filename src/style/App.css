@@ -465,7 +465,7 @@ fieldset:disabled
     --bs-nav-link-font-weight: ;
     --bs-nav-link-color:var(--bs-link-color);
     --bs-nav-link-hover-color:var(--bs-link-hover-color);
-    --bs-nav-link-disabled-color:#95a5a6;
+    --bs-nav-link-disabled-color: #04d9e6;
     display:flex;
     flex-wrap:wrap;
     padding-left:0;
