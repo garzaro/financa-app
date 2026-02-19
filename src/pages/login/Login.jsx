@@ -20,7 +20,7 @@ import {Backdrop, CircularProgress, IconButton} from "@mui/material";
  * [] Usar href no logoff para recarregar a pagina home, observar recarregamento da pagina, quando altera o componente
  * optional chaining ?
  * **/
-
+// A PORRA PAROU DE LOGAR MANO NEM FAZ MAIS CADASATRO VER O QUE É OU DAR SEQUENCIA DEPPIS A GENTE ESTA PORRA
 function LoginForm () {
   const usuarioService = UsuarioService();
   const { register, handleSubmit, formState: { errors }} = useForm();
@@ -31,7 +31,7 @@ function LoginForm () {
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const destinationBack = location.state?.from?.pathname || '/home';
+  const destinationBack = location.state?.from?.pathname || '/desv-hp'; //home
   const USUARIO_LOGADO = '_usuario_logado';
   /**
    * logar
@@ -63,8 +63,8 @@ function LoginForm () {
       // "Erro inesperado ao fazer login. Tente novamente mais tarde.");
     });
   };
-  function handleCancelar() {
-    navigate('/login');
+  function handleCancelarLogin() {
+    navigate('/');
   }
   function handleAvancar() {
     navigate('/Definirsenha');
@@ -147,7 +147,9 @@ function LoginForm () {
                         </div>
                         <div>
                           <button
-                            type="button" className="btn btn-danger btn-sm mt-3">
+                            type="button" className="btn btn-danger btn-sm mt-3"
+                            onClick={handleCancelarLogin}
+                          >
                             <i className="pi pi-times"></i> <span>CANCELAR</span>
                           </button>
                         </div>
