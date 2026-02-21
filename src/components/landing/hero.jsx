@@ -35,7 +35,7 @@ export default function Hero () {
           </p>
 
           {/** subheading **/}
-          <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
             Gerencie suas finanças com inteligência. Segurança de ponta para controlar sua finança pessoal.
           </p>
 
@@ -47,7 +47,8 @@ export default function Hero () {
                           duration-300 flex items-center gap-2 group rounded"
               onClick={handleCreateAccount}
             >
-              Começar agora <i className="bi bi-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              Começar agora
+              <i className="bi bi-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
             </Button>
 
             <Button
@@ -57,36 +58,37 @@ export default function Hero () {
             >
               Ver Demonstração
             </Button>
-
           </div>
 
           {/** indicadores confiaveis **/}
-          <div>
-            <p> Confiado por mais de 1 milhão de usuários </p>
-            <div>
+          <div className="mt-16 pt-8 border-t border-gray-600">
 
-              <div>
-                <div></div>
-                <span> Segurança Certificada </span>
+            <p className="text-sm text-gray-300 ">
+              Confiado por mais de 1 milhão de usuários ( por enquanto é só eu mesmo )
+            </p>
+
+            <div className="flex-row flex-wrap gap-8">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full "></div>
+                <span className="text-sm text-gray-300 "> Controle Garantido </span>
               </div>
 
-              <div>
-                <div></div>
-                <span> Suporte 24/7 </span>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full "></div>
+                <span className="text-sm text-gray-300 "> Cadastre Lançamento Com Facilidade </span>
               </div>
 
-              <div>
-                <div></div>
-                <span> Sem taxas ocultas </span>
-              </div>
-
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full "></div>
+                <span className="text-sm text-gray-300 "> Sem taxas ocultas </span>
               </div>
             </div>
           </div>
         </div>
-
-        {/** elementos decorativos **/}
-        <div></div>
+      </div>
+CONTINUAR COM A LANDINGPAGE - DAR INICIO service
+      {/** elementos decorativos **/}
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient0to-tl from-blue-50 to-transparent rounded-full opacity-40 -z-10"></div>
 
     </section>
 
