@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {useNavigate, Link, useLocation} from "react-router-dom";
+import {useNavigate, useLocation, Link} from "react-router-dom";
 import axios from "axios";
 import Card from "../../components/template/card.jsx";
 import FormGroup from "../../components/template/formGroup.jsx";
@@ -171,9 +171,9 @@ function LoginForm () {
                         </p>
 
                         <div className="text-center mt-2">
-                          <a href="/register" className="btn btn-sm btn-secondary"
+                          <Link to="/register" className="btn btn-sm btn-secondary"
                              title="Não tem uma conta? Clique aqui!"> <i className="pi pi-plus"></i>
-                            <span> Criar conta</span></a>
+                            Criar conta</Link>
                         </div>
 
                       </div>
