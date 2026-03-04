@@ -11,8 +11,8 @@ export default function Footer (){
           {/** brand **/}
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-20 h-8 bg-linear-to-br from-pink-800 to-pink-500 rounded flex items-center
-              justify-center"
+              <div className="w-10 h-10 bg-linear-to-br from-pink-900 to-pink-500 rounded-lg flex items-center
+               justify-center"
               >
                 <span className="text-zinc-300 font-bold"> FP </span>
               </div>
@@ -37,11 +37,6 @@ export default function Footer (){
               </li>
               <li className="">
                 <a href="#" className="hover:text-zinc-800 transition-colors">
-                  Preços
-                </a>
-              </li>
-              <li className="">
-                <a href="#" className="hover:text-zinc-800 transition-colors">
                   Blog
                 </a>
               </li>
@@ -53,22 +48,12 @@ export default function Footer (){
             <h4 className="font-bold text-zinc-300 mb-4"> Empresa </h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
-                  <a href="" className="hover:text-zinc-800 transition-colors">
+                  <a href="#" className="hover:text-zinc-800 transition-colors">
                     Sobre nós
                   </a>
                 </li>
                 <li>
-                  <a href="" className="hover:text-zinc-800 transition-colors">
-                    Carreiras
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="hover:text-zinc-800 transition-colors">
-                    Imprensa
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="hover:text-zinc-800 transition-colors">
+                  <a href="#" className="hover:text-zinc-800 transition-colors">
                     Contato
                   </a>
                 </li>
@@ -107,7 +92,7 @@ export default function Footer (){
         <div className="border-t border-gray-400 pt-8">
           {/** bottom section **/}
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-300 ">
-            <p>&copy; { anoAtual } Finanças Pessoais. Todos os direitos reservados.</p>
+            <p>&copy; { anoAtual } Finanças Pessoais. Todos os direitos tortos.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-zinc-800 transition-colors">
                 Facebook
