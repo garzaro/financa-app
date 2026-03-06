@@ -1,94 +1,293 @@
 import React, {useEffect, useState} from 'react';
 import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
-import NavbarItem from "./navbarItem.jsx";
-import CadastrarLancamento from '../../pages/lancamentos/Cadastrar-lancamento.jsx';
-import {AuthService} from "../../app/service/authService.js";
+// import { Menu, X } from 'lucide-react';
+import NavbarItem from "@/components/template/navbarItem.jsx";
+import {Button} from "@/components/ui/button.jsx";
+import {AuthService} from "@/app/service/authService.js";
+import {LocalStorageService} from "@/app/service/localStorageService.js";
 
 /**
  * TO-DO List
- * [] Landing page
+ * [x] Landing page
  * [] Justify between no botao Entrar
+ * [] Botão "Entrar" no canto superior direito
+ * [] Menu responsivo para mobile
+ * [] Tipografia Poppins para logo
+ * [] Text decoration none nos link
+ *
+ * Botao Logout com outras funcionalidades
+ * [] Perfil
+ * [] configurações
  * []
  * **/
 
-/**NAVEGACAO SPA**/
-const Navbar = () => {
-  // manus
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+/** NAVEGACAO SPA - HEADER **/
+function Navbar () {
 
   const auth = AuthService();
-
-  // manus
-  // const {user, isAuthenticated, logout} = auth;
-
   const navigate = useNavigate();
-  /**detecta estado de mudanca - Hook que detecta mudança de URL**/
+  /** detecta estado de mudanca - Hook que detecta mudança de URL **/
   const location = useLocation();
-  const [isLogged, setIsLogged] = React.useState(auth.isAuthenticated());
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //auth.isAuthenticated()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  /**a cada mudanca de rota o navbar checa o storage**/
+  const [loggedUser, setLoggedUser] = useState(null);
+  const storageLocal = LocalStorageService();
+
+  const navItems = [
+    { label: 'Serviços', href: "#service" },
+    { label: 'Sobre', href: "#about" },
+    { label: 'Contato', href: "#contact" },
+  ];
+
   useEffect(() => {
-    setIsLogged(auth.isAuthenticated());
+    const user = storageLocal.obterItem( '_usuario_logado' );
+    setLoggedUser( user )
+  }, []);
+
+  /** se houver mudanca de rota o navbar checa o storage**/
+  useEffect(() => {
+    setIsLoggedIn(auth.isAuthenticated());
+    setIsMenuOpen(false) // fecha menu imediatamente
   }, [ location ]);
 
-  const deslogar = () => {
+  const logout = () => {
     auth.removeAuthenticatedUser();
-    setIsLogged( false ); /**atualiza o estado na hora**/
-    navigate('/login');
+    setIsLoggedIn( false ); /**atualiza o estado na hora**/
+    navigate('/#fp');
   }
 
-  return (
-  <>
-    <div className="fixed top-0 left-0 right-0 navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
-      <div className="container-fluid ">
+  return(
+    <>
+      {/*bootstrap fixed-top*/}
+      <header className="fixed top-0 left-0 right-0 bg-zinc-900 border-b border-gray-500 z-50 ">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          {/** Logo **/}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-pink-900 to-pink-500 rounded-lg flex
+            items-center justify-center "
+            >
+              <span className="text-zinc-200 font-bold text-lg " style={{ fontFamily: "Poppins" }}> FP </span>
+            </div>
+            <span className="text-zinc-400 font-bold text-xl " style={{ fontFamily: "Poppins" }}>
+              Finança Pessoal
+            </span>
+          </div>
 
-        <Link className="navbar-brand" to="/">Financas</Link>
+         {/** Desktop navigation **/}
+          <nav className="hidden md:flex item-center gap-8 " style={{ fontFamily: "Poppins" }}>
+            { !isLoggedIn && navItems.map((item) =>(
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-gray-600 hover:text-zinc-900 transition-colors duration-300 text-lg font-medium "
+              >
+                {item.label}
+              </a>
+            ))}
 
-        <button className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+          </nav>
 
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          {/** Desktop Login Button **/}
+          <div className="hidden md:block">
+            {isLoggedIn ? (
+              <div className="flex items-center gap-4">
+
+                {/** usuario logado **/}
+                <div className="flex items-center gap-2">
+                  <div className="w-52 h-10 bg-linear-to-br from-zinc-900 to-pink-600 rounded-lg flex
+                  items-center justify-center "
+                  >
+                    <span className="text-zinc-200 font-bold text-lg " style={{ fontFamily: "Poppins" }}>
+                      { loggedUser && (
+                        <p className="flex items-center justify-center gap-1 text-sm mt-3">
+                          Ola, seja bem-vindo(a) <span className="capitalize"> { loggedUser.nome }</span>
+                        </p>
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  className="border-gray-800 rounded text-gray-900 hover:bg-gray-500 " style={{ fontFamily: "Poppins" }}
+                  onClick={() => logout()}
+                >
+                  Sair
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="bg-zinc-100 hover:bg-zinc-300 rounded text-gray-900 transiton-colors duration-300 "
+                style={{ fontFamily: "Poppins" }}
+                onClick={() => navigate('/login')}
+              >
+                Entrar
+              </Button>
+            )}
+          </div>
+
+          {/** Mobile Menu Button **/}
+          <div className="md:hidden flex items-center">
+            <button
+              className="text=gray-700 focus:outline-none"
+              onClick={() => setMobileMenuOpen( !mobileMenuOpen )}
+            >
+              { mobileMenuOpen ? (
+                <span  className="text-4xl w-6 h-6 text-pink-700 ">&times;</span>
+              ) : (
+                <span className="text-2xl w-6 h-6 text-zinc-300 ">&#9776;</span>
+                )}
+            </button>
+          </div>
+
+        </div>
+
+        {/** Mobile Navigation **/}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t  border-gray-500 bg-zinc-800">
+            <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              { !isLoggedIn && navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-gray-600 hover:text-blue-900 transition-colors py-2 text-lg font-medium "
+                  onClick={() => setMobileMenuOpen( false )}
+                >
+                  {item.label}
+                </a>
+              ))}
+              { isLoggedIn ? (
+                <Button
+                  variant="outline"
+                  className="w-full border-gray-900 rounded text-gray-900 hover:bg-gray-500 mt-2 "
+                  style={{ fontFamily: "Poppins" }}
+                  onClick={() => {logout();
+                    setMobileMenuOpen( false );
+                  }}
+                >
+                  Sair
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  className="w-full border-gray-900 rounded text-gray-900 hover:bg-gray-500 mt-2 "
+                  style={{ fontFamily: "Poppins" }}
+                  onClick={() => {
+                    // window.location.toString.href = getLoginUrl();
+                    navigate('/login');
+                    setMobileMenuOpen( false );
+                }}
+                >
+                  Entrar
+                </Button>
+              )}
+            </nav>
+          </div>
+        )}
 
         <div className="collapse navbar-collapse " id="navbarNav">
-
-          <ul className="navbar-nav mx-5">
-
-            { isLogged ? (
+          <ul className="navbar-nav mx-5 ">
+            { isLoggedIn && (
               <>
-                <NavbarItem id="home" label="Home" to="/home" />
-                <NavbarItem id="lancamento" label="Lançamento" items={
-                  [
-                    { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
-                    { label: "Consultar Lançamento", to: "/consultar-lancamento"},
-                  ]}
-                />
-                <NavbarItem id="sair" label="Sair" to="/login" onClick={(e) => {
-                  e.preventDefault();
-                  deslogar();
-                 }}
-                />
+                <NavbarItem id="lancamento" label="Lancamento" items={[
+                  { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
+                ]} />
+                <NavbarItem id="login" to="/login" label="Entrar" />
+                <NavbarItem/>
               </>
-              ) : <NavbarItem id="login" label="Entrar" to="/login" onClick={(e) => {}} />
-            }
-
+            )}
           </ul>
         </div>
-      </div>
-    </div>
-    <Outlet/>
-  </>
+
+      </header>
+    </>
   );
+
+  // return (
+  //   <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
+  //     <div className="container-fluid ">
+  //
+  //       <Link className="navbar-brand" to="/">Financas</Link>
+  //
+  //       {/*Em telas menores, a navbar geralmente se "contrai"
+  //                para um botão de filter (o "toggler", filter de hamburger)
+  //                */}
+  //       <button className="navbar-toggler"
+  //               type="button"
+  //               data-bs-toggle="collapse"
+  //               data-bs-target="#navbarNav"
+  //               aria-controls="navbarNav"
+  //               aria-expanded="false"
+  //               aria-label="Toggle navigation">
+  //
+  //         <span className="navbar-toggler-icon"></span>
+  //       </button> {/*aria-control = navbarSupportedContent*/}
+  //
+  //       <div className="collapse navbar-collapse " id="navbarNav">
+  //
+  //         <ul className="navbar-nav mx-5 "> {/*navbar-nav mx-5 me-5 mb-2 mb-lg-0 me-auto mb-2 mb-lg-0*/}
+  //
+  //           <NavbarItem
+  //             id="home"
+  //             href="/home"
+  //             label="Home"
+  //           />
+  //           <NavbarItem
+  //             id="lancamento"
+  //             label="Lançamento"
+  //             items={[
+  //               {
+  //                 label: "Cadastrar Lançamento",
+  //                 href: "/cadastrar-lancamento"
+  //               },
+  //               {
+  //                 label: "Consultar Lançamento",
+  //                 href: "/consultar-lancamento"
+  //               },
+  //             ]}
+  //           />
+  //           <NavbarItem
+  //             id="login"
+  //             href="/login"
+  //             label="Login"
+  //           />
+  //
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 export default Navbar;
 
-
 /**
+ *  <div className="collapse navbar-collapse " id="navbarNav">
+ *
+ *           <ul className="navbar-nav mx-5">
+ *
+ *             { isLogged ? (
+ *               <>
+ *                 <NavbarItem id="home" label="Home" to="/home" />
+ *                 <NavbarItem id="lancamento" label="Lançamento" items={
+ *                   [
+ *                     { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
+ *                     { label: "Consultar Lançamento", to: "/consultar-lancamento"},
+ *                   ]}
+ *                 />
+ *
+ *                 <NavbarItem id="sair" label="Sair" to="/login" onClick={(e) => {
+ *                   e.preventDefault();
+ *                   deslogar();
+ *                  }}
+ *                 />
+ *               </>
+ *               ) : <NavbarItem id="login" label="Entrar" to="/login" onClick={(e) => {}} />
+ *             }
+ *
+ *           </ul>
+ *         </div>
+ *
  *
  * {isLogado ? (
  *                 <>
@@ -106,3 +305,22 @@ export default Navbar;
  *               )}
  *
  * **/
+
+
+/**
+ * MENU DE HAMBURGUER
+ * <Button className="navbar-toggler"
+ *                   type="button"
+ *                   data-bs-toggle="collapse"
+ *                   data-bs-target="#navbarNav"
+ *                   aria-controls="navbarNav"
+ *                   aria-expanded="false"
+ *                   aria-label="Toggle navigation">
+ *                 <span className="navbar-toggler-icon"></span>
+ *
+ *               </Button>
+ *
+ *
+ * **/
+
+
