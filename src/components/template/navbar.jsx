@@ -102,7 +102,9 @@ function Navbar () {
                     <span className="text-zinc-200 font-bold text-lg " style={{ fontFamily: "Poppins" }}>
                       { loggedUser && (
                         <p className="flex items-center justify-center gap-1 text-sm mt-3">
+
                           Ola, seja bem-vindo(a) <span className="capitalize"> { loggedUser.nome }</span>
+
                         </p>
                       )}
                     </span>
