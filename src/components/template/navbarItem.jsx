@@ -8,7 +8,7 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
 
   if (hasChildren) {
     return (
-      <li className="dropdown list-group">
+      <li className="dropdown list-none">
         <Link
           //nav-link
           className="nav-link dropdown-toggle"
@@ -23,7 +23,7 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
         >
           {label}
         </Link>
-        <ul className="dropdown-menu bg-primary border-primary-subtle" aria-labelledby={id}>
+        <ul className="dropdown-menu bg-primary border-primary-subtle " aria-labelledby={id}>
 
           {items.map((item, i) => (
             <li key={i}>
@@ -40,7 +40,7 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
     );
   }
   return (
-    <li className="navbar-item list-group-item">
+    <li className="navbar-item list-none ">
       <Link
         className="nav-link aria-current text-decoration-none"
         to={to}
