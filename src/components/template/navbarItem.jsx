@@ -8,7 +8,7 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
 
   if (hasChildren) {
     return (
-      <li className="dropdown list-none">
+      <li className="dropdown ">
         <Link
           //nav-link
           className="nav-link dropdown-toggle"
@@ -23,7 +23,7 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
         >
           {label}
         </Link>
-        <ul className="dropdown-menu bg-primary border-primary-subtle " aria-labelledby={id}>
+        <ul className="dropdown-menu bg-primary border-primary-subtle" aria-labelledby={id}>
 
           {items.map((item, i) => (
             <li key={i}>
@@ -52,6 +52,24 @@ const NavbarItem = ({label, to, id, items, onClick}) => {
   );
 }
 export default NavbarItem;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

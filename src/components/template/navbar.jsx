@@ -28,7 +28,7 @@ function Navbar () {
   const navigate = useNavigate();
   /** detecta estado de mudanca - Hook que detecta mudança de URL **/
   const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); //auth.isAuthenticated()
+  const [isLoggedIn, setIsLoggedIn] = useState(auth.isAuthenticated()); //auth.isAuthenticated(), false
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -55,7 +55,7 @@ function Navbar () {
   const logout = () => {
     auth.removeAuthenticatedUser();
     setIsLoggedIn( false ); /**atualiza o estado na hora**/
-    navigate('/#fp');
+    navigate('/');
   }
 
   return(
@@ -75,18 +75,35 @@ function Navbar () {
             </span>
           </div>
 
-         {/** Desktop navigation **/}
+          {/** Desktop navigation **/}
           <nav className="hidden md:flex item-center gap-8 " style={{ fontFamily: "Poppins" }}>
-            { !isLoggedIn && navItems.map((item) =>(
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-gray-600 hover:text-zinc-900 transition-colors duration-300 text-lg font-medium "
-              >
-                {item.label}
-              </a>
-            ))}
-
+            {/*mr-64*/}
+            <ul className="flex items-center  px-4 mt-4 gap-12">
+              {isLoggedIn ? (
+                <>
+                <NavbarItem id="home" label="Home" to="/home" />
+                <NavbarItem
+                  id="lancamento"
+                  label="Lancamento"
+                  items={[
+                    { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
+                    { label: "Consultar Lançamento", to: "/consultar-lancamento" },
+                    ]}
+                  />
+                </>
+                ) : (
+                  navItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="text-gray-600 hover:text-zinc-900 transition-colors duration-300
+                      text-lg font-medium "
+                    >
+                      {item.label}
+                    </a>
+                ))
+              )}
+            </ul>
           </nav>
 
           {/** Desktop Login Button **/}
@@ -96,15 +113,14 @@ function Navbar () {
 
                 {/** usuario logado **/}
                 <div className="flex items-center gap-2">
-                  <div className="w-52 h-10 bg-linear-to-br from-zinc-900 to-pink-600 rounded-lg flex
+                  <div className="w-32 h-6 text-sm bg-linear-to-br from-zinc-900 to-pink-600 rounded-lg flex
                   items-center justify-center "
                   >
-                    <span className="text-zinc-200 font-bold text-lg " style={{ fontFamily: "Poppins" }}>
+                    <span className="text-zinc-200 font-bold text-sm " style={{ fontFamily: "Poppins" }}>
                       { loggedUser && (
                         <p className="flex items-center justify-center gap-1 text-sm mt-3">
-
-                          Ola, seja bem-vindo(a) <span className="capitalize"> { loggedUser.nome }</span>
-
+                          {/*Olá, <span className="capitalize"> { loggedUser.email }</span>*/}
+                          <span className="text-sm text-zinc-300"> { loggedUser.email }</span>
                         </p>
                       )}
                     </span>
@@ -112,7 +128,8 @@ function Navbar () {
                 </div>
                 <Button
                   variant="outline"
-                  className="border-gray-800 rounded text-gray-900 hover:bg-gray-500 " style={{ fontFamily: "Poppins" }}
+                  className="border-gray-800 rounded text-gray-900 hover:bg-gray-500 "
+                  style={{ fontFamily: "Poppins" }}
                   onClick={() => logout()}
                 >
                   Sair
@@ -149,16 +166,44 @@ function Navbar () {
         {mobileMenuOpen && (
           <div className="md:hidden border-t  border-gray-500 bg-zinc-800">
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              { !isLoggedIn && navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-gray-600 hover:text-blue-900 transition-colors py-2 text-lg font-medium "
-                  onClick={() => setMobileMenuOpen( false )}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {/*{ !isLoggedIn && navItems.map((item) => (*/}
+              {/*  <a*/}
+              {/*    key={item.label}*/}
+              {/*    href={item.href}*/}
+              {/*    className="text-gray-600 hover:text-blue-900 transition-colors py-2 text-lg font-medium "*/}
+              {/*    onClick={() => setMobileMenuOpen( false )}*/}
+              {/*  >*/}
+              {/*    {item.label}*/}
+              {/*  </a>*/}
+              {/*))}*/}
+
+              <ul className="flex items-center  px-4 mt-4 gap-12">
+                {isLoggedIn ? (
+                  <>
+                    <NavbarItem id="home" label="Home" to="/home" />
+                    <NavbarItem
+                      id="lancamento"
+                      label="Lancamento"
+                      items={[
+                        { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
+                        { label: "Consultar Lançamento", to: "/consultar-lancamento" },
+                      ]}
+                    />
+                  </>
+                ) : (
+                  navItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="text-gray-600 hover:text-zinc-900 transition-colors duration-300
+                      text-lg font-medium "
+                    >
+                      {item.label}
+                    </a>
+                  ))
+                )}
+              </ul>
+
               { isLoggedIn ? (
                 <Button
                   variant="outline"
@@ -188,19 +233,19 @@ function Navbar () {
           </div>
         )}
 
-        <div className="collapse navbar-collapse " id="navbarNav">
-          <ul className="navbar-nav mx-5 ">
-            { isLoggedIn && (
-              <>
-                <NavbarItem id="lancamento" label="Lancamento" items={[
-                  { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
-                ]} />
-                <NavbarItem id="login" to="/login" label="Entrar" />
-                <NavbarItem/>
-              </>
-            )}
-          </ul>
-        </div>
+        {/*<div className="collapse navbar-collapse " id="navbarNav">*/}
+        {/*  <ul className="navbar-nav mx-5 ">*/}
+        {/*    { isLoggedIn && (*/}
+        {/*      <>*/}
+        {/*        <NavbarItem id="lancamento" label="Lancamento" items={[*/}
+        {/*          { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },*/}
+        {/*        ]} />*/}
+        {/*        <NavbarItem id="login" to="/login" label="Entrar" />*/}
+        {/*        <NavbarItem/>*/}
+        {/*      </>*/}
+        {/*    )}*/}
+        {/*  </ul>*/}
+        {/*</div>*/}
 
       </header>
     </>
