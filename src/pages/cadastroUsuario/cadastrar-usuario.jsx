@@ -80,7 +80,7 @@ const CadastrarUsuario = () => {
    * cancelar cadastro de usuario
    * */
   function handleCancelar() {
-    navigate('/Login');
+    navigate('/');
   };
   return (
     <div className="container mt-0">
