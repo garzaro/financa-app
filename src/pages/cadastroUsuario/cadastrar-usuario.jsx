@@ -294,8 +294,8 @@ const CadastrarUsuario = () => {
                        */}
                       <div className="md:col-span-2 flex flex-row gap-2">
                         <button
-                          className="w-full p-2 rounded btn btn-success btn-sm mt-2 "
                           type="submit"
+                          className="w-full p-2 rounded btn btn-success btn-sm mt-2 "
                           // disabled={!isValid}
                         >
                           <i className="bi bi-floppy"></i> Cadastrar
@@ -304,6 +304,7 @@ const CadastrarUsuario = () => {
                          Botão para Login
                          */}
                         <button
+                          type="button"
                           className="w-full p-2 rounded btn btn-danger btn-sm mt-2"
                           onClick={handleCancelar}
                         >
