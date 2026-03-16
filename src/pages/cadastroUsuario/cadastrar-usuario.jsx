@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
 import Card from "../../components/template/card";
@@ -83,15 +83,42 @@ const CadastrarUsuario = () => {
     navigate('/');
   };
   return (
-    <div className="container mt-0">
-      <div className="row justify-content-center w-100">
-        <div className="col-md-6">
+    // container-fluid left-0 right-0 bg-zinc-900 border-b border-gray-500 z-50 justify-content-center align-items-center
+  <div className="container-fluid mb-12 justify-content-center align-items-center">
+      <div className="row justify-content-center w-full ">
+
+        {/* Header */}
+        <header className="bg-zinc-900 shadow-sm border-b border-gray-600 mb-2 py-4 px-4 flex
+                            justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div className="bg-emerald-600 p-2 rounded-lg animate-pulse"></div>
+            <span className="text-xl font-bold text-gray-300 tracking-tight">
+            Finanças Pessoais
+          </span>
+          </div>
+
+          <nav>
+            <span className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-all ">
+             Já possui uma conta?
+           </span>
+            <Link
+              to="/login"
+              className="text-sm min-h-screen font-semibold hover:text-emerald-700 transition-all"
+            >
+              <span className="underline"> Entre </span>
+            </Link>
+          </nav>
+        </header>
+
+        <div className="col-md-6 ">
           <div className="bs-docs-section">
             <Card title="Cadastro de Usuário">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="bs-component">
-                    <form onSubmit={handleSubmit(cadastrarUsuario)}>
+                    <form onSubmit={handleSubmit(cadastrarUsuario)}
+                          className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4"
+                    >
                       {/**
                        campo nome completo
                        */}
@@ -261,25 +288,28 @@ const CadastrarUsuario = () => {
                           onChange={(isValid) => setIsValid(isValid)}
                         />
                       )}
+
                       {/**
                        Botão de cadastro
                        */}
-                      <button
-                        className="btn btn-success btn-sm mt-2"
-                        type="submit"
-                        // disabled={!isValid}
-                      >
-                        <i className="bi bi-floppy"></i> Cadastrar
-                      </button>
-                      {/**
-                       Botão para Login
-                       */}
-                      <button
-                        className="btn btn-danger btn-sm mt-2"
-                        onClick={handleCancelar}
-                      >
-                        <i className="bi bi-x-lg"></i> Cancelar
-                      </button>
+                      <div className="md:col-span-2 flex flex-row gap-2">
+                        <button
+                          className="w-full p-2 rounded btn btn-success btn-sm mt-2 "
+                          type="submit"
+                          // disabled={!isValid}
+                        >
+                          <i className="bi bi-floppy"></i> Cadastrar
+                        </button>
+                        {/**
+                         Botão para Login
+                         */}
+                        <button
+                          className="w-full p-2 rounded btn btn-danger btn-sm mt-2"
+                          onClick={handleCancelar}
+                        >
+                          <i className="bi bi-x-lg"></i> Cancelar
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
