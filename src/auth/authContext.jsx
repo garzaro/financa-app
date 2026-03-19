@@ -1,35 +1,12 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import {LocalStorageService} from "@/app/service/localStorageService.js";
+import {createContext} from "react";
 
-// AuthContext ( centro da autenticação )
-
-const storageLocal = LocalStorageService();
-export const AuthContext = createContext();
-
-export function AuthProvider({ children }) {
-
-  const USER_TOKEN = "_usuario_logado";
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = storageLocal.obterItem( USER_TOKEN );
-    if ( USER_TOKEN ) {
-      setIsAuthenticated(true);
-    }
-  }, [])
-
-  function login( token ) { //recebe um token
-    storageLocal.salvarItem( USER_TOKEN, token);
-    setIsAuthenticated(true);
-  }
-
-  function logout() {
-    storageLocal.removerItem( USER_TOKEN );
-    setIsAuthenticated(false);
-  }
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout  }}>
-      { children }
-    </AuthContext.Provider>
-  );
-}
+/**
+ * Contexto de autenticação global.
+ * Mantém o estado do usuário logado e se ele está autenticado.
+ * **/
+export const AuthContext = createContext({
+  isAuthenticated: false,
+  loggedUser: null,
+  login: async (token, user) => {},
+  logout: () => {},
+});

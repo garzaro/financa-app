@@ -24,8 +24,10 @@ import SaveIcon from '@mui/icons-material/Save';
 import UpdateIcon from '@mui/icons-material/Update';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import {schemaLancamento} from "./schemaLancamento.js";
+import {useAuth} from "@/auth/useAuth.js";
 
 function CadastrarLancamento() {
+  const { loggedUser } = useAuth();
   const { register, control, handleSubmit, watch,
     formState: { errors, isSubmitting }, reset} =
     useForm({
@@ -43,7 +45,6 @@ function CadastrarLancamento() {
     mode: 'onBlur',
   });
   const servicoLancamento = LancamentoService();
-  const usuarioLogado = LocalStorageService();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [lancamentoAtual, setLancamentoAtual] = useState(null);
@@ -77,13 +78,12 @@ function CadastrarLancamento() {
         })
     }
     /**se nao houver id, os valores padrao dos campos permanecem vazios (criacao)**/
-  }, [params.id, reset]);
+  }, [params.id, reset, servicoLancamento, navigate]);
 
   /** submit - usar (data) que da certo tambem para valores iniciais **/
   const createLancamento = ({ descricao, valor, mes, ano, tipoLancamento  }) => {
     setLoading(true);
-    const usuario = usuarioLogado.obterItem( '_usuario_logado' )
-    const lancamento = { descricao, valor, mes, ano, tipoLancamento, usuario: usuario.id }
+    const lancamento = { descricao, valor, mes, ano, tipoLancamento, usuario: loggedUser.id }
     // servicoLancamento.validarLancamento(lancamento)
     servicoLancamento.salvarLancamento(lancamento)
       .then(response => {
@@ -109,8 +109,6 @@ function CadastrarLancamento() {
         messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
         return;
       }
-      // garantir usuario correto do contexto de sessão
-      const usuarioSessao = usuarioLogado.obterItem('_usuario_logado');
       // normalizar/garantir status sempre preenchido
       const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
       const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
@@ -125,7 +123,7 @@ function CadastrarLancamento() {
         // enviar status garantindo valor não-nulo
         statusLancamento: statusFinal,
         // se vier no form usa-o como fallback; prioridade para sessão
-        usuario: usuarioSessao?.id ?? usuario,
+        usuario: loggedUser?.id ?? usuario,
       };
       console.log('Atualizando lançamento', { id: mergedId, payload });
       servicoLancamento.atualizarLancamento(mergedId, payload)

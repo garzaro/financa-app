@@ -41,4 +41,25 @@ export const LocalStorageService = () => {
   }
 }
 
+/**
+ * class LocalStorageService {
+ *
+ *   salvarUsuario(usuario) {
+ *     localStorage.setItem("_usuario_logado", JSON.stringify(usuario));
+ *   }
+ *
+ *   obterUsuario() {
+ *     const usuario = localStorage.getItem("_usuario_logado");
+ *     return usuario ? JSON.parse(usuario) : null;
+ *   }
+ *
+ *   removerUsuario() {
+ *     localStorage.removeItem("_usuario_logado");
+ *   }
+ *
+ * }
+ *
+ * export default new LocalStorageService();
+ * **/
+
 

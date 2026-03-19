@@ -1,39 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 // import { Menu, X } from 'lucide-react';
 import NavbarItem from "@/components/template/navbarItem.jsx";
 import {Button} from "@/components/ui/button.jsx";
-import {AuthService} from "@/app/service/authService.js";
-import {LocalStorageService} from "@/app/service/localStorageService.js";
-
-/**
- * TO-DO List
- * [x] Landing page
- * [] Justify between no botao Entrar
- * [] Botão "Entrar" no canto superior direito
- * [] Menu responsivo para mobile
- * [] Tipografia Poppins para logo
- * [] Text decoration none nos link
- *
- * Botao Logout com outras funcionalidades
- * [] Perfil
- * [] configurações
- * []
- * **/
+import {useAuth} from "@/auth/useAuth.js";
 
 /** NAVEGACAO SPA - HEADER **/
 function Navbar () {
-
-  const auth = AuthService();
   const navigate = useNavigate();
-  /** detecta estado de mudanca - Hook que detecta mudança de URL **/
-  const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(auth.isAuthenticated()); //auth.isAuthenticated(), false
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, loggedUser, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const [loggedUser, setLoggedUser] = useState(null);
-  const storageLocal = LocalStorageService();
 
   const navItems = [
     { label: 'Serviços', href: "#service" },
@@ -41,20 +17,9 @@ function Navbar () {
     { label: 'Contato', href: "#contact" },
   ];
 
-  useEffect(() => {
-    const user = storageLocal.obterItem( '_usuario_logado' );
-    setLoggedUser( user )
-  }, []);
-
-  /** se houver mudanca de rota o navbar checa o storage**/
-  useEffect(() => {
-    setIsLoggedIn(auth.isAuthenticated());
-    setIsMenuOpen(false) // fecha menu imediatamente
-  }, [ location ]);
-
-  const logout = () => {
-    auth.removeAuthenticatedUser();
-    setIsLoggedIn( false ); /**atualiza o estado na hora**/
+  const handleLogout = () => {
+    logout();
+    setMobileMenuOpen(false);
     navigate('/');
   }
 
@@ -79,7 +44,8 @@ function Navbar () {
           <nav className="hidden md:flex item-center gap-8 " style={{ fontFamily: "Poppins" }}>
             {/*mr-64*/}
             <ul className="flex items-center  px-4 mt-4 gap-12">
-              {isLoggedIn ? (
+              {/*isLoggedIn*/}
+              { isAuthenticated ? ( // está?
                 <>
                 <NavbarItem id="home" label="Home" to="/home" />
                 <NavbarItem
@@ -91,16 +57,16 @@ function Navbar () {
                     ]}
                   />
                 </>
-                ) : (
-                  navItems.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="text-gray-600 hover:text-zinc-900 transition-colors duration-300
-                      text-lg font-medium "
-                    >
-                      {item.label}
-                    </a>
+              ) : ( // senao está
+                navItems.map(( item ) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-gray-600 hover:text-zinc-900 transition-colors duration-300
+                    text-lg font-medium "
+                  >
+                    { item.label }
+                  </a>
                 ))
               )}
             </ul>
@@ -108,29 +74,38 @@ function Navbar () {
 
           {/** Desktop Login Button **/}
           <div className="hidden md:block">
-            {isLoggedIn ? (
+            {/*isLoggedIn*/}
+            { isAuthenticated ? (
               <div className="flex items-center gap-4">
 
-                {/** usuario logado **/}
+                {/** USUARIO  LOGADO **/}
                 <div className="flex items-center gap-2">
-                  <div className="w-32 h-6 text-sm bg-linear-to-br from-zinc-900 to-pink-600 rounded-lg flex
+                  <div className="w-36 h-6 text-sm bg-linear-to-br from-zinc-900 to-pink-600 rounded-lg flex
                   items-center justify-center "
                   >
-                    <span className="text-zinc-200 font-bold text-sm " style={{ fontFamily: "Poppins" }}>
-                      { loggedUser && (
-                        <p className="flex items-center justify-center gap-1 text-sm mt-3">
-                          {/*Olá, <span className="capitalize"> { loggedUser.email }</span>*/}
-                          <span className="text-sm text-zinc-300"> { loggedUser.email }</span>
-                        </p>
-                      )}
-                    </span>
+                    {/*<span className="text-zinc-200 font-bold text-sm " style={{ fontFamily: "Poppins" }}>*/}
+                    {/*  { loggedUser && (*/}
+                    {/*    <p className="flex items-center justify-center gap-1 text-sm mt-3">*/}
+                    {/*      /!*Olá, <span className="capitalize"> { loggedUser.email }</span>*!/*/}
+                    {/*      <span className="text-sm text-zinc-300"> { loggedUser.email }</span>*/}
+                    {/*    </p>*/}
+                    {/*  )}*/}
+                    {/*</span>*/}
+                    { loggedUser?.nome && (
+                      <div>
+                        <span>
+                          { loggedUser.email }
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
+
                 <Button
                   variant="outline"
                   className="border-gray-800 rounded text-gray-900 hover:bg-gray-500 "
                   style={{ fontFamily: "Poppins" }}
-                  onClick={() => logout()}
+                  onClick={ handleLogout }
                 >
                   Sair
                 </Button>
@@ -163,7 +138,7 @@ function Navbar () {
         </div>
 
         {/** Mobile Navigation **/}
-        {mobileMenuOpen && (
+        { mobileMenuOpen && (
           <div className="md:hidden border-t  border-gray-500 bg-zinc-800">
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
               {/*{ !isLoggedIn && navItems.map((item) => (*/}
@@ -178,7 +153,8 @@ function Navbar () {
               {/*))}*/}
 
               <ul className="flex items-center  px-4 mt-4 gap-12">
-                {isLoggedIn ? (
+                {/*isLoggedIn*/}
+                { isAuthenticated ? (
                   <>
                     <NavbarItem id="home" label="Home" to="/home" />
                     <NavbarItem
@@ -203,13 +179,14 @@ function Navbar () {
                   ))
                 )}
               </ul>
-
-              { isLoggedIn ? (
+              {/*isLoggedIn*/}
+              { isAuthenticated ? (
                 <Button
                   variant="outline"
                   className="w-full border-gray-900 rounded text-gray-900 hover:bg-gray-500 mt-2 "
                   style={{ fontFamily: "Poppins" }}
-                  onClick={() => {logout();
+                  onClick={() => {
+                    handleLogout;
                     setMobileMenuOpen( false );
                   }}
                 >
@@ -232,142 +209,33 @@ function Navbar () {
             </nav>
           </div>
         )}
-
-        {/*<div className="collapse navbar-collapse " id="navbarNav">*/}
-        {/*  <ul className="navbar-nav mx-5 ">*/}
-        {/*    { isLoggedIn && (*/}
-        {/*      <>*/}
-        {/*        <NavbarItem id="lancamento" label="Lancamento" items={[*/}
-        {/*          { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },*/}
-        {/*        ]} />*/}
-        {/*        <NavbarItem id="login" to="/login" label="Entrar" />*/}
-        {/*        <NavbarItem/>*/}
-        {/*      </>*/}
-        {/*    )}*/}
-        {/*  </ul>*/}
-        {/*</div>*/}
-
       </header>
     </>
   );
-
-  // return (
-  //   <div className="navbar navbar-expand-lg navbar-dark bg-primary">{/*fixed-top*/}
-  //     <div className="container-fluid ">
-  //
-  //       <Link className="navbar-brand" to="/">Financas</Link>
-  //
-  //       {/*Em telas menores, a navbar geralmente se "contrai"
-  //                para um botão de filter (o "toggler", filter de hamburger)
-  //                */}
-  //       <button className="navbar-toggler"
-  //               type="button"
-  //               data-bs-toggle="collapse"
-  //               data-bs-target="#navbarNav"
-  //               aria-controls="navbarNav"
-  //               aria-expanded="false"
-  //               aria-label="Toggle navigation">
-  //
-  //         <span className="navbar-toggler-icon"></span>
-  //       </button> {/*aria-control = navbarSupportedContent*/}
-  //
-  //       <div className="collapse navbar-collapse " id="navbarNav">
-  //
-  //         <ul className="navbar-nav mx-5 "> {/*navbar-nav mx-5 me-5 mb-2 mb-lg-0 me-auto mb-2 mb-lg-0*/}
-  //
-  //           <NavbarItem
-  //             id="home"
-  //             href="/home"
-  //             label="Home"
-  //           />
-  //           <NavbarItem
-  //             id="lancamento"
-  //             label="Lançamento"
-  //             items={[
-  //               {
-  //                 label: "Cadastrar Lançamento",
-  //                 href: "/cadastrar-lancamento"
-  //               },
-  //               {
-  //                 label: "Consultar Lançamento",
-  //                 href: "/consultar-lancamento"
-  //               },
-  //             ]}
-  //           />
-  //           <NavbarItem
-  //             id="login"
-  //             href="/login"
-  //             label="Login"
-  //           />
-  //
-  //         </ul>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 export default Navbar;
 
-/**
- *  <div className="collapse navbar-collapse " id="navbarNav">
- *
- *           <ul className="navbar-nav mx-5">
- *
- *             { isLogged ? (
- *               <>
- *                 <NavbarItem id="home" label="Home" to="/home" />
- *                 <NavbarItem id="lancamento" label="Lançamento" items={
- *                   [
- *                     { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento",},
- *                     { label: "Consultar Lançamento", to: "/consultar-lancamento"},
- *                   ]}
- *                 />
- *
- *                 <NavbarItem id="sair" label="Sair" to="/login" onClick={(e) => {
- *                   e.preventDefault();
- *                   deslogar();
- *                  }}
- *                 />
- *               </>
- *               ) : <NavbarItem id="login" label="Entrar" to="/login" onClick={(e) => {}} />
- *             }
- *
- *           </ul>
- *         </div>
- *
- *
- * {isLogado ? (
- *                 <>
- *                   <NavbarItem id="home" label="Home" to="/home" />
- *                   <NavbarItem id="lancamento" label="Lançamento" items={[...]} />
- *                   <NavbarItem
- *                     id="sair"
- *                     label="Sair"
- *                     to="/login"
- *                     onClick={(e) => { e.preventDefault(); deslogar(); }}
- *                   />
- *                 </>
- *               ) : (
- *                 <NavbarItem id="login" label="Entrar" to="/login" />
- *               )}
- *
- * **/
-
-
-/**
- * MENU DE HAMBURGUER
- * <Button className="navbar-toggler"
- *                   type="button"
- *                   data-bs-toggle="collapse"
- *                   data-bs-target="#navbarNav"
- *                   aria-controls="navbarNav"
- *                   aria-expanded="false"
- *                   aria-label="Toggle navigation">
- *                 <span className="navbar-toggler-icon"></span>
- *
- *               </Button>
- *
- *
- * **/
-
-
+// {isLoggedIn && (
+//   <div className="collapse navbar-collapse" id="navbarNav">
+//     <ul className="navbar-nav mx-5">
+//       <NavbarItem
+//         id="lancamento"
+//         label="Lancamento"
+//         items={[
+//           { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
+//         ]}
+//       />
+//     </ul>
+//   </div>
+// )}
+//
+// {!isLoggedIn &&
+// navItems.map((item) => (
+//   <a
+//     key={item.label}
+//     href={item.href}
+//     className="text-gray-600 hover:text-zinc-900 transition-colors duration-300 text-lg font-medium"
+//   >
+//     {item.label}
+//   </a>
+// ))}

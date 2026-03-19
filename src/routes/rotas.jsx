@@ -6,13 +6,14 @@ import LandingPage from "@/pages/home/landingPage.jsx";
 import Login from "@/pages/login/login.jsx";
 import CadastrarUsuario from "@/pages/cadastroUsuario/cadastrar-usuario.jsx";
 import ProtectedRoute from "@/routes/protectedRoute.jsx";
-import {AuthProvider} from "@/auth/authContext.jsx";
 import Home from "@/pages/home/home.jsx";
 import ConsultarLancamento from "@/pages/lancamentos/consultar-lancamento.jsx";
 import CadastrarLancamento from "@/pages/lancamentos/cadastrar-lancamento.jsx";
 import {PageNotFound} from "@/components/feedback/notFound.jsx";
 import Dashboard from "@/pages/home/dashboard.jsx";
 import PrivateLayout from "@/layout/privateLayout.jsx";
+import {AuthProvider} from "@/auth/authProvider.jsx";
+import Navbar from "@/components/template/navbar.jsx";
 
 
 /**
@@ -33,13 +34,13 @@ import PrivateLayout from "@/layout/privateLayout.jsx";
 
 const Rotas = () => {
   return (
-    <>
+    <AuthProvider>
       <Router>
-        <AuthProvider>
-          <Routes>
-            {/* rotas públicas */}
-            <Route
-              path="/"
+        <Navbar />
+        <Routes>
+          {/* rotas públicas */}
+          <Route
+            path="/"
               element={
                 <PublicLayout>
                   <LandingPage />
@@ -50,59 +51,31 @@ const Rotas = () => {
             <Route path="/register" element={ <CadastrarUsuario /> } />
 
           {/* rotas privadas */}
-          <Route element={<PrivateLayout />}>
+          <Route
+            path="/home"
+            element={
+            <ProtectedRoute >
+              <PrivateLayout>
+                <Home />
+              </PrivateLayout>
+            </ProtectedRoute>
+          }>
 
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/*<Route path="/dashboard" element={<Dashboard />} />*/}
 
           </Route>
-          {/*/!** ROTA PUBLICA **!/*/}
-          {/*<Route path="/" element={*/}
-          {/*  <PublicLayout>*/}
-          {/*    <LandingPage />*/}
-          {/*  </PublicLayout>*/}
-          {/*  }*/}
-          {/*/>*/}
-          {/*<Route path="/login" element={ <Login /> } />*/}
 
-          {/*/!** ROTA PROTEGIDA **!/*/}
-          {/*<Route path="/dashboard" element={*/}
-          {/*  <ProtectedRoute>*/}
-          {/*    <Dashboard />*/}
-          {/*  </ProtectedRoute>*/}
-          {/*}*/}
-          {/*/>*/}
-
-          {/*  <Route path="/home" element={<Home />} />*/}
-          {/*  <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />*/}
-          {/*  <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />*/}
+            <Route path="/home" element={<Home />} />
+            <Route path="/consultar-lancamento" element={<ConsultarLancamento />} />
+            <Route path="/cadastrar-lancamento/:id?" element={<CadastrarLancamento />} />
 
 
           {/*/!* 404 *!/*/}
-          {/*<Route path="*" element={<PageNotFound />} />*/}
-
-
-         {/******************************************************/}
-         {/* /!* rotas públicas *!/*/}
-         {/* <Route element={<PublicLayout />}>*/}
-
-         {/*   <Route path="/" element={<LandingPage />} />*/}
-         {/*   <Route path="/login" element={<Login />} />*/}
-
-         {/* </Route>*/}
-
-         {/* /!* rotas privadas *!/*/}
-         {/* <Route element={<PrivateLayout />}>*/}
-
-         {/*   <Route path="/dashboard" element={<Dashboard />} />*/}
-
-         {/* </Route>*/}
-
-
-
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
-        </AuthProvider>
       </Router>
-    </>
+        </AuthProvider>
+
   );
 };
 export default Rotas;

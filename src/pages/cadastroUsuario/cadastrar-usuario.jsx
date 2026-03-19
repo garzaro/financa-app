@@ -139,7 +139,7 @@ const CadastrarUsuario = () => {
                        */}
                       <FormGroup label={
                         <span>
-                          Cadastro Pessoa Física: <Astered>*</Astered>
+                          CPF: <Astered>*</Astered>
                         </span>
                       }>
                         <input type="text"

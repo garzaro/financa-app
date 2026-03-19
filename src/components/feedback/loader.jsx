@@ -13,9 +13,15 @@ export default function PanoDeFundo({open= false, color, titulo, mensagem,}){
       >
         <div style={{ textAlign: "center" }}>
           <CircularProgress color={color}/>
-          <Typography variant="body2" color="white" component="div">
+          <Typography
+            variant="body2"
+            // opacity-25
+            className="text-slate-300 rounded py-14 from:bg-zinc-300 bg-linear-to-br " component="div"
+          >
             <h1>{titulo}</h1>
-            <p>{mensagem}</p>
+            <p className=" text-red-100 px-2 py-2 rounded opacity-75 bg-zinc-800 ">
+              {mensagem}
+            </p>
           </Typography>
         </div>
       </Backdrop>
