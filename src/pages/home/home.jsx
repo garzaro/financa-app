@@ -63,11 +63,14 @@ function Home () {
     navigate("/dashboard");
   };
 
+  const anoAtual = new Date().getFullYear();
+
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-32 relative bg-zinc-900 overflow-hidden ">
+    <>
+    <section className="relative pt-32 pb-20 md:pt-32 md:pb-44 bg-zinc-900 overflow-hidden ">
 
       {/** linha decorativa **/}
-      <div className="absolute top-2 left-10 w-1 h-64 bg-blue-900 opacity-50 "></div>
+      <div className="absolute top-2 left-1 w-1 h-64 bg-blue-900 opacity-50 "></div>
 
       <div className="container mx-auto px-4">
         <div className="max-w-3xl ">
@@ -106,36 +109,66 @@ function Home () {
             </Button>
           </div>
 
+          {/*<div className="absolute center w-full h-1 opacity-25 right-32  bg-emerald-500"></div>*/}
+
           {/** indicadores confiaveis **/}
-          <div>
-            <p>
-              Confiado por você mais de [ x ] de usuários.
+          <div className="mt-2 pt-24 ">
+            <p className="text-sm text-gray-300 mb-4">
+              Confiado por você e mais de [ x ] de usuários.
             </p>
 
-            <div className="">
-               <div>
-                 <div></div>
-                 <span className="capitalize"> controle garantido. </span>
-               </div>
-               <div>
-                 <div></div>
-                 <span className=""> Cadastre lançamentos e acompanhe o progresso de seu patrimônio. </span>
-               </div>
-               <div>
-                 <div></div>
-                 <span className="capitalize"> sem complicação. </span>
-               </div>
+            <div className="flex-row flex-wrap gap-8">
+
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm text-gray-300"> Controle garantido. </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm text-gray-300"> Cadastre lançamentos e acompanhe o progresso de seu patrimônio. </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-sm text-gray-300"> Sem complicação. </span>
+              </div>
              </div>
           </div>
         </div>
       </div>
+      </section>
 
-      {/** elementos decorativos **/}
-      <div className=""></div>
-    </section>
+      {/** FOOTER **/}
+      <footer className="absolute w-full py-6 bg-zinc-800 border-t border-gray-600 left-0 right-0
+      text-center"
+      >
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center
+        text-sm text-gray-300"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-4 md:mb-0">
+              <p className="text-sm text-zinc-300">
+                &copy; {new Date().getFullYear()} Controle Financeiro. Todos os direitos reservados.
+                Desenvolvido por
+                <Link to="https://github.com/garzaro" className="hover:text-zinc-800 text-decoration-none
+                 transition-colors" target="_blank"
+                >
+                  &nbsp; Cleber Garzaro.
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 };
 export default Home;
+
+
+
+
 
 /**
  * <div className="jumbotron ">
