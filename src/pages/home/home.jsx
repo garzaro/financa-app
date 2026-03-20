@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useAuth} from "@/auth/useAuth.js";
-
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 import { PrimeIcons } from 'primereact/api';
-
+import {Button} from "@/components/ui/button.jsx";
 import UsuarioService from "../../app/service/usuarioService.js";
 import {Link, useNavigate} from "react-router-dom";
 import Hero from "@/components/landing/hero.jsx";
@@ -57,48 +55,86 @@ function Home () {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  const handleCreatelancamento = () => {
+    navigate("/cadastrar-lancamento");
+  };
+
+  const handleDashboard = () => {
+    navigate("/dashboard");
+  };
+
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden ">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-32 relative bg-zinc-900 overflow-hidden ">
 
       {/** linha decorativa **/}
-      <div className="absolute top-20 letf-0 w-1 h-32 bg-blue-900 opacity-50 "></div>
+      <div className="absolute top-2 left-10 w-1 h-64 bg-blue-900 opacity-50 "></div>
 
-      <div className="container justify-center items-center mx-auto px-4">
+      <div className="container mx-auto px-4">
         <div className="max-w-3xl ">
 
           {/** main heading **/}
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 leading-tight">
-            PAGINA EM DESENVOLVIMENTO
-            src
-            ├── auth
-            │    ├── AuthContext.jsx
-            │    ├── AuthProvider.jsx
-            │    └── ProtectedRoute.jsx
-            │
-            ├── services
-            │    └── authService.js
-            │
-            ├── pages
-            │    ├── Login.jsx
-            │    ├── Home.jsx
-            │    └── Dashboard.jsx
-            │
-            ├── components
-            │    └── Navbar.jsx
-            │
-            └── App.jsx
-            <a href="https://chatgpt.com/c/69ad9629-6e38-8330-96a6-cad83bb7cab2">Autenticação</a>
-          </h1>
+          <p className="text-2xl md:text-3xl font-bold text-gray-300 mb-6 leading-tight">
+            Seu controle financeiro começou!
+            {/*<a href="https://chatgpt.com/c/69ad9629-6e38-8330-96a6-cad83bb7cab2">Autenticação</a>*/}
+          </p>
+
+          {/** subheading **/}
+          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
+            Comece gerenciando seus lançamentos co inteligência. Segurança de ponta para controlar sua finança pessoal.
+          </p>
+
+          {/** CTA **/}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              size="lg"
+              className="bg-blue-950 border-zinc-600 border-r-2 hover:border-r-orange-400 hover:bg-blue-900
+               text-zinc-100 transition-all duration-300 flex items-center gap-2 group rounded"
+              onClick={ handleCreatelancamento }
+            >
+              Começar Agora
+              <i className="bi bi-arrow-right w-4 h-4 group-hover:translate-x-6 transition-transform"></i>
+            </Button>
+
+            <Button
+              size="lg"
+              className="roundedbg-blue-950 border-zinc-600 border-r-2 hover:border-r-emerald-200 hover:bg-blue-900
+               text-zinc-100 transition-all duration-300 flex items-center gap-2 group rounded"
+              onClick={ handleDashboard }
+            >
+              Ver Demonstração
+              <i className="bi bi-bar-chart w-4 h-4 group-hover:translate-x-6 transition-transform"></i>
+            </Button>
+          </div>
+
+          {/** indicadores confiaveis **/}
+          <div>
+            <p>
+              Confiado por você mais de [ x ] de usuários.
+            </p>
+
+            <div className="">
+               <div>
+                 <div></div>
+                 <span className="capitalize"> controle garantido. </span>
+               </div>
+               <div>
+                 <div></div>
+                 <span className=""> Cadastre lançamentos e acompanhe o progresso de seu patrimônio. </span>
+               </div>
+               <div>
+                 <div></div>
+                 <span className="capitalize"> sem complicação. </span>
+               </div>
+             </div>
+          </div>
         </div>
       </div>
 
       {/** elementos decorativos **/}
-      <div></div>
-
+      <div className=""></div>
     </section>
   );
 };
-
 export default Home;
 
 /**
