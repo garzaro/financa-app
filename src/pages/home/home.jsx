@@ -9,51 +9,9 @@ import UsuarioService from "../../app/service/usuarioService.js";
 import {Link, useNavigate} from "react-router-dom";
 import Hero from "@/components/landing/hero.jsx";
 
-/**
- * to-do list
- * [] Trazer saldo
- * [] Trazer outros servicos para dashboard - buscar outras informações
- *
- * **/
-
 /*pagina inicial*/
 function Home () {
-
-  /**
-   * @param saldoServico é a composicao - em componente de classe
-   * seria feito um extends do servico e depois o construtor para
-   * instanciar o servico.
-   * @param service = new UsuarioService();
-   * */
-    //const { saldo, loading, erro } = useSaldo();
-  const { loggedUser } = useAuth();
-  const saldoServico = UsuarioService();
-  const [saldo, setSaldo] = useState(0);
-  const [saldoPendente, setSaldoPendente] = useState(0);
   const navigate = useNavigate();
-
-  /**
-   * retornar o saldo do usuario logado
-   * */
-  useEffect(() => {
-    const buscarSaldo = () => {
-      if (!loggedUser || !loggedUser.id) return;
-
-      console.log('Usuario recuperado do contexto', loggedUser);
-      saldoServico.buscarSaldoPorUsuario(loggedUser.id)
-        .then(respondeAiManoBanco => {
-          setSaldo(respondeAiManoBanco.data);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    }
-    buscarSaldo();
-  }, [loggedUser, saldoServico]);
-
-  function capitalizar(string){
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
 
   const handleCreatelancamento = () => {
     navigate("/cadastrar-lancamento");
