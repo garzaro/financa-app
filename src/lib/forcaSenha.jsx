@@ -37,7 +37,7 @@ export const PasswordStrengthMeter = ({ senha }) => {
   if (!senha) return null;
 
   return (
-    <div style={{ maxWidth: 900, marginTop: 8 }}>
+    <div style={{ maxWidth: 900, marginTop: 2 }}>
       <div
         aria-label={`Força da senha: ${strength}`}
         role="progressbar"
@@ -45,11 +45,11 @@ export const PasswordStrengthMeter = ({ senha }) => {
         aria-valuemin={1}
         aria-valuemax={4}
         style={{
-          height: 8,
+          height: 3,
           borderRadius: 4,
           backgroundColor: '#eee',
           overflow: 'hidden',
-          marginBottom: 8,
+          marginBottom: 2,
         }}
       >
         <div
@@ -61,7 +61,7 @@ export const PasswordStrengthMeter = ({ senha }) => {
           }}
         />
       </div>
-      <p style={{ color: strengthColorMap[strength], fontWeight: 10, margin: 0 }}>
+      <p className="text-sm" style={{ color: strengthColorMap[strength], fontWeight: 2, margin: 0 }}>
         Força da senha: {strength}
       </p>
     </div>
