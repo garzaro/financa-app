@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Footer (){
 
@@ -92,14 +93,30 @@ export default function Footer (){
         <div className="border-t border-gray-400 pt-8">
           {/** bottom section **/}
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-300 ">
-            <p>&copy; { anoAtual } Finanças Pessoais. Todos os direitos tortos.</p>
+            <p>
+              &copy; { anoAtual } Finanças Pessoais. Todos os direitos tortos.
+              Desenvolvido por
+              <code>
+                <i className="capitalize"> cleber garzaro </i>
+                <Link
+                  to="https://github.com/garzaro"
+                  className="hover:text-zinc-800 transition-colors text-decoration-none"
+                  target="_blank"
+                >
+                  Github
+                </Link>
+              </code>
+            </p>
+
             <div className="flex gap-6 mt-4 md:mt-0">
               <a href="#" className="hover:text-zinc-800 transition-colors">
                 Facebook
               </a>
+
               <a href="#" className="hover:text-zinc-800 transition-colors">
                 Instagram
               </a>
+
               <a href="#" className="hover:text-zinc-800 transition-colors">
                 Linkedin
               </a>

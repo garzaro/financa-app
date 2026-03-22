@@ -7,7 +7,7 @@ import FormGroup from "../../components/template/formGroup.jsx";
 import {mensagemDeErro} from '../../components/utils/toastr.jsx'
 import UsuarioService from "../../app/service/usuarioService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
-import DefinirSenha from "../cadastroUsuario/senha-redefinicao.jsx";
+import DefinirSenha from "./redefinir-senha.jsx";
 import {useAuth} from "../../auth/useAuth.js";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle.jsx";
 import PanoDeFundo from "../../components/feedback/loader.jsx";
@@ -65,9 +65,9 @@ function LoginForm () {
 //const togglePassword = () => setShowPassword((prev) => !prev);
 
 return (
-  <div className="container-fluid mb-12 justify-content-center align-items-center "
+  <div className="container-fluid  justify-content-center align-items-center "
   > {/**min-vh-100**/}
-    <div className="row justify-content-center">
+    <div className="row justify-content-center ">
       {/* Header */}
       <header className="bg-zinc-900 shadow-sm border-b border-gray-600 py-4 px-6 flex
         justify-between items-center"
@@ -99,6 +99,7 @@ return (
           </Link>
           </nav>
         </header>
+
       <div className="col-md-6 ">
         <div className="bs-docs-section">
           <Card title="Seja bem-vindo">
@@ -107,10 +108,10 @@ return (
             >
               Faça login para acessar sua conta
             </h6>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="bs-component">
-                  <form onSubmit={handleSubmit(fazerLogin)}>
+            <div className="row ">
+              <div className="col-lg-12  ">
+                <div className="bs-component  ">
+                  <form onSubmit={handleSubmit(fazerLogin)} className="px-4  ">
                     <FormGroup label={
                       <span className="text-white">
                         Email:<span className="asterisco-vermelho">*</span>
@@ -154,13 +155,14 @@ return (
                      **/
                     }
                     <div className="nav-signin-tooltip-footer">Esqueceu a senha?
-                      <a
-                        href="/cadastroUsuario/signupFormPassword"
-                        className="nav-a"
+                      <Link
+                        to="/redefinir-senha"
+                        className="nav-a text-decoration-none"
                         aria-label="Esqueceu a senha? Clique aqui para criar uma nova."
                       >&nbsp;
-                        Clique aqui.</a>
-                      </div>
+                        Clique aqui.
+                      </Link>
+                    </div>
                     {/**
                      Botão de Login
                      **/
