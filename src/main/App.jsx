@@ -1,8 +1,14 @@
 import React from "react";
-import Rotas from "./Rotas.jsx";
+import Rotas from "../routes/rotas.jsx";
 /**sketchy , slate**/
 import 'bootswatch/dist/slate/bootstrap.min.css';
+import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import DevErrorBoundary from "@/main/errorBoundary.tsx";
 import '../style/App.css'
+
+/**VERIFICAR SE ISTO AQUI NAO VAI FUDER OSITEMS DO NAVBAR NO COLAPSO**/
+import '../style/globals.css'
+
 import '../style/custom.css'
 import 'toastr/build/toastr.css'
 import 'toastr/build/toastr.min.js'
@@ -13,9 +19,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'primereact/resources/themes/nova/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
-
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-
 
 const darkTheme = createTheme({
   palette: {
@@ -60,7 +63,10 @@ function App() {
     <>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Rotas/>
+        {/* No modo development, o React sempre mostrará o "overlay" de erro vermelho, mesmo com o Error Boundary */}
+        <DevErrorBoundary>
+          <Rotas/>
+        </DevErrorBoundary>
       </ThemeProvider>
     </>
   );

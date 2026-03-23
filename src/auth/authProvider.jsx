@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
   }), [isAuthenticated, loggedUser]);
 
   return (
-    <AuthContext.Provider value={contextValue}>
+    <AuthContext.Provider value={ contextValue }>
       {children}
     </AuthContext.Provider>
   );

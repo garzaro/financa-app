@@ -14,6 +14,7 @@ import PanoDeFundo from "../../components/feedback/loader.jsx";
 import Button from "@mui/material/Button";
 import LoginIcon from '@mui/icons-material/Login';
 import {Backdrop, CircularProgress, IconButton} from "@mui/material";
+import {Input} from "@/components/ui/input.jsx";
 
 function LoginForm () {
   const { login } = useAuth();
@@ -111,7 +112,7 @@ return (
             <div className="row ">
               <div className="col-lg-12  ">
                 <div className="bs-component  ">
-                  <form onSubmit={handleSubmit(fazerLogin)} className="px-4  ">
+                  <form onSubmit={handleSubmit(fazerLogin)} className="px-4">
                     <FormGroup label={
                       <span className="text-white">
                         Email:<span className="asterisco-vermelho">*</span>
@@ -121,7 +122,7 @@ return (
                       <input
                         type="email"
                         {...register("email", {required: "E-mail é obrigatório"})}
-                        className="form-control form-control-lg inputPlaceholder"
+                        className="form-control form-control-lg text-white inputPlaceholder"
                         placeholder="Digite seu email"
                         id="email"
                       />
@@ -139,7 +140,7 @@ return (
                           <input
                             type={mostrarSenhaLogin ? "text" : "password"}
                             {...register("senha", {required: "Senha é obrigatória"})}
-                            className="form-control form-control-lg inputPlaceholder"
+                            className="form-control form-control-lg text-white inputPlaceholder"
                             placeholder="Digite sua senha"
                           />
                           <SenhaVisibilityToggle

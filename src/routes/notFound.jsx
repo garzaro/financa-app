@@ -1,6 +1,6 @@
 import React from 'react';
 // import bookMedieval from '../../assets/bookMedieval.png';
-import livrovelho from '../../assets/livrovelho.png';
+import livrovelho from '../assets/livrovelho.png';
 // // Se você colocou na pasta 'public', mantenha a variável abaixo como string do caminho:
 // const medievalImageSrc = "/medieval-404.png"; // Ou use a variável importada acima
 

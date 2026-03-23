@@ -1,4 +1,6 @@
-import React from "react";
+import {useEffect, useState} from "react";
+import {useAuth} from "@/auth/useAuth.js";
+import UsuarioService from "@/app/service/usuarioService.js";
 
 /**
  * to-do list
@@ -44,6 +46,10 @@ export default function Dashboard () {
   }
 
   return (
-    <h1>Painel do usuário</h1>
+    <>
+    <h1>Saldo atual </h1>
+      R$ { saldo }
+    </>
+
   )
 }

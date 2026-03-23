@@ -5,9 +5,12 @@ import Astered from "@/components/utils/astered.jsx";
 import {useForm} from "react-hook-form";
 import {Input} from "@/components/ui/input.jsx";
 import FormGroup from "@/components/template/formGroup.jsx";
+import SenhaVisibilityToggle from "@/components/utils/senhaVisibilityToggle.jsx";
 import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.jsx";
 import Button from "@mui/material/Button";
 import passwordValidator from 'password-validator';
+import {mensagemDeAlerta, mensagemDeSucesso} from "@/components/utils/toastr.jsx";
+import ServiceUsuario from "@/app/service/usuarioService.js";
 
 
 const INITIAL_CRITERIA = {
@@ -32,6 +35,7 @@ const resetForm = () => ({
 
 
 export default function RedefinirSenha() {
+  const usuarioService = ServiceUsuario();
   const {register, handleSubmit, formState:{errors}} = useForm({
     defaultValues: {
       senha: '',
@@ -53,6 +57,27 @@ export default function RedefinirSenha() {
 
   const handleReturnLogin = () => {
     navigate('/login');
+  }
+
+  // banco
+  const handleNewPassword = ( data ) => {
+    console.log(data);
+    const senha = {
+      senha: data.senha,
+    }
+    usuarioService.salvar( senha )
+      .then(response => {
+        mensagemDeSucesso("Senha alterada com sucesso! Faça o login para continuar")
+        if (mensagemDeSucesso){
+          return <CircularProgress />
+         }
+        setTimeout(navigate('/login'), 2000);
+      }).catch(err => {
+      mensagemDeAlerta(
+        err.response.data?.message ||
+        err.response.data ||
+        "Erro inesperdo ao alterar a senha. Tente novamente mais tarde.")
+    });
   }
 
   const onSubmit = (data) => {
@@ -90,7 +115,7 @@ export default function RedefinirSenha() {
       </header>
 
       <div className="flex-1 flex items-center justify-center p-4 pt-24 pb-12">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-4xl">
+        <form onSubmit={handleSubmit( handleNewPassword )} className="w-full max-w-4xl">
           <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden">
             {/*p-6 md:p-12*/}
             <CardHeader className="w-full flex flex-col items-center justify-center  ">
@@ -115,10 +140,18 @@ export default function RedefinirSenha() {
                   Senha: <Astered>*</Astered>
                 </span>
               }>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  {...register("senha", {required: "Nova senha é obrigatória"})}
-                  placeholder="Digite a nova senha"/>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    {...register("senha", {required: "Nova senha é obrigatória"})}
+                    placeholder="Digite a nova senha"/>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400">
+                    <SenhaVisibilityToggle
+                      mostrarSenha={showPassword}
+                      onClick={togglePasswordVisibility}
+                    />
+                  </div>
+                </div>
                 {errors.senha &&
                   <span className="error text-red-500" style={{ fontSize: '10px'}}>
                     {errors.senha.message}
@@ -131,13 +164,21 @@ export default function RedefinirSenha() {
                   Confirmar nova senha: <Astered>*</Astered>
                 </span>
               }>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  {...register("confirmarSenha", {
-                    required: "Confirmação de senha é obrigatória",
-                    validate: (value, formValues) => value === formValues.senha || "As senhas não coincidem"
-                  })}
-                  placeholder="Confirme a nova senha"/>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    {...register("confirmarSenha", {
+                      required: "Confirmação de senha é obrigatória",
+                      validate: (value, formValues) => value === formValues.senha || "As senhas não coincidem"
+                    })}
+                    placeholder="Confirme a nova senha"/>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400">
+                    <SenhaVisibilityToggle
+                      mostrarSenha={showPassword}
+                      onClick={togglePasswordVisibility}
+                    />
+                  </div>
+                </div>
                 {errors.confirmarSenha &&
                   <span className="error text-red-500" style={{ fontSize: '10px'}}>
                     {errors.confirmarSenha.message}
@@ -145,8 +186,11 @@ export default function RedefinirSenha() {
               </FormGroup>
 
               <div className="grid gap-3 text-sm mt-4">
-                <button type="submit" className="btn btn-primary w-full py-2">
-                  Finalizar
+                <button
+                  type="submit"
+                  className="btn btn-primary w-full py-2"
+                >
+                  Alterar
                 </button>
                 {/*<Link to="/login" className="w-full">*/}
                   <button

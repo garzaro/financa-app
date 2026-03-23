@@ -35,7 +35,9 @@ function Home () {
 
           {/** main heading **/}
           <p className="text-2xl md:text-3xl font-bold text-gray-300 mb-6 leading-tight">
-            Seu controle financeiro começou!
+            Seu controle <span className="text-emerald-600 gap-2 hover:text-yellow-600 animate-pulse">
+            financeiro
+            </span> começou!
             {/*<a href="https://chatgpt.com/c/69ad9629-6e38-8330-96a6-cad83bb7cab2">Autenticação</a>*/}
           </p>
 
@@ -107,7 +109,7 @@ function Home () {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-sm text-zinc-300">
-                &copy; {new Date().getFullYear()} Controle Financeiro. Todos os direitos reservados.
+                &copy; {new Date().getFullYear()} -  Finanças Pessoais. Todos os direitos reservados.
                 Desenvolvido por
                 <Link to="https://github.com/garzaro" className="hover:text-zinc-800 text-decoration-none
                  transition-colors" target="_blank"

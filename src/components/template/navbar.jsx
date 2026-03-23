@@ -17,10 +17,15 @@ function Navbar () {
     { label: 'Contato', href: "#contact" },
   ];
 
+  const handleLogin = () => {
+    setMobileMenuOpen(false);
+    navigate("/login");
+  }
+
   const handleLogout = () => {
+    navigate("/landig-page", { replace: true });
     logout();
     setMobileMenuOpen(false);
-    navigate('/');
   }
 
   return(
@@ -114,7 +119,7 @@ function Navbar () {
               <Button
                 className="bg-zinc-100 hover:bg-zinc-300 rounded text-gray-900 transiton-colors duration-300 "
                 style={{ fontFamily: "Poppins" }}
-                onClick={() => navigate('/login')}
+                onClick={ handleLogin }
               >
                 Entrar
               </Button>
@@ -186,7 +191,7 @@ function Navbar () {
                   className="w-full border-gray-900 rounded text-gray-900 hover:bg-gray-500 mt-2 "
                   style={{ fontFamily: "Poppins" }}
                   onClick={() => {
-                    handleLogout;
+                    handleLogout();
                     setMobileMenuOpen( false );
                   }}
                 >
