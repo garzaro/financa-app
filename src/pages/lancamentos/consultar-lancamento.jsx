@@ -26,6 +26,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SellSharp from '@mui/icons-material/SellSharp';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import FiltroLancamento from "../../components/template/selectMenu.jsx";
 import ServiceLancamento from "../../app/service/lancamentoService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
@@ -46,7 +47,6 @@ function ConsultarLancamento(props) {
   const [tipoLancamento, setTipoLancamento] = useState('');
   const [limparFiltro, setLimparFiltro] = useState('');
   const [lancamento, setLancamento] = useState([]); //rows
-  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -56,6 +56,22 @@ function ConsultarLancamento(props) {
   const usuarioLogado = LocalStorageService();
 
   const lancamentoService = useMemo(() => ServiceLancamento(), []);
+
+  // Carregar filtros e resultados do localStorage ao montar o componente
+  useEffect(() => {
+    const filtrosSalvos = usuarioLogado.obterItem('_filtros_consulta');
+    const resultadosSalvos = usuarioLogado.obterItem('_resultados_consulta');
+
+    if (filtrosSalvos) {
+      setAno(filtrosSalvos.ano || '');
+      setMes(filtrosSalvos.mes || '');
+      setTipoLancamento(filtrosSalvos.tipoLancamento || '');
+    }
+
+    if (resultadosSalvos) {
+      setLancamento(resultadosSalvos);
+    }
+  }, []);
 
   /**
    * realizar a busca de lancamentos usando filtro
@@ -99,6 +115,11 @@ function ConsultarLancamento(props) {
        * Isso re-renderiza a tabela com os novos dados.
        */
       setLancamento(dadosNormalizados);
+      
+      // Persistir filtros e resultados
+      usuarioLogado.salvarItem('_filtros_consulta', { ano, mes, tipoLancamento });
+      usuarioLogado.salvarItem('_resultados_consulta', dadosNormalizados);
+
     } catch (e) {
       messages.mensagemDeErro('Falha ao buscar lançamentos')
       /**
@@ -106,11 +127,12 @@ function ConsultarLancamento(props) {
        * evita dados antigos em caso de dar algum erro.
        * **/
       setLancamento([]);
+      usuarioLogado.removerItem('_resultados_consulta');
     } finally {
       /**cleanup**/
       setLoading(false);
     }
-  }, [ano, mes, tipoLancamento, lancamentoService]);
+  }, [ano, mes, tipoLancamento, lancamentoService, usuarioLogado]);
 
   /**disparar no botao**/
   const handleAlterarStatusLancamento = useCallback((id) => {
@@ -160,7 +182,19 @@ function ConsultarLancamento(props) {
     setAno('');
     setMes('');
     setTipoLancamento('');
-  })
+    usuarioLogado.removerItem('_filtros_consulta');
+    usuarioLogado.removerItem('_resultados_consulta');
+    setLancamento([]);
+  }, [usuarioLogado]);
+
+  /**
+   * atualizar o cache de resultados após alteração de status
+   */
+  useEffect(() => {
+    if (lancamento.length > 0) {
+      usuarioLogado.salvarItem('_resultados_consulta', lancamento);
+    }
+  }, [lancamento, usuarioLogado]);
 
   /**
    * deletar lançamento pelo id
@@ -317,6 +351,12 @@ function ConsultarLancamento(props) {
               startIcon={!loading && <CloseIcon size="small" />}
             >
               {loading ? <CircularProgress size={20} /> : 'Cancelar' }
+            </Button>
+
+            <Button variant="outlined" size={"small"} onClick={handleLimparFiltro}
+              startIcon={!loading && <CleaningServicesIcon size="small" />}
+            >
+              Limpar
             </Button>
 
             <Button variant="outlined" size={"small"} onClick={handleCandastrarLancamento}

@@ -44,7 +44,7 @@ function CadastrarLancamento() {
     },
     mode: 'onBlur',
   });
-  const servicoLancamento = LancamentoService();
+  const servicoLancamento = React.useMemo(() => LancamentoService(), []);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [lancamentoAtual, setLancamentoAtual] = useState(null);
@@ -80,7 +80,6 @@ function CadastrarLancamento() {
     /**se nao houver id, os valores padrao dos campos permanecem vazios (criacao)**/
   }, [params.id, reset, servicoLancamento, navigate]);
 
-  /** submit - usar (data) que da certo tambem para valores iniciais **/
   const createLancamento = ({ descricao, valor, mes, ano, tipoLancamento  }) => {
     setLoading(true);
     const lancamento = { descricao, valor, mes, ano, tipoLancamento, usuario: loggedUser.id }
@@ -91,59 +90,53 @@ function CadastrarLancamento() {
         messages.mensagemDeSucesso("Lancamento cadastrado com sucesso");
       }).catch(error => {
         messages.mensagemDeErro( error.response.data?.message || error.response.data )
-      }
-    );
-    setLoading(false);
+      })
+      .finally(() => setLoading(false));
   }
 
-  /**atualizar - LER**/
   const updateLancamento = (
     { descricao, valor, mes, ano, tipoLancamento, statusLancamento, id, usuario }) => {
     setLoading(true);
-    try {
-      // prioriza id da rota; fallback para id do formulário
-      const routeId = params?.id;
-      const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
+    // prioriza id da rota; fallback para id do formulário
+    const routeId = params?.id;
+    const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
 
-      if (!mergedId) {
-        messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
-        return;
-      }
-      // normalizar/garantir status sempre preenchido
-      const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
-      const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
-        ? statusTrimmed
-        : (lancamentoAtual?.statusLancamento ?? 'PENDENTE');
-      const payload = {
-        descricao,
-        valor,
-        mes,
-        ano,
-        tipoLancamento,
-        // enviar status garantindo valor não-nulo
-        statusLancamento: statusFinal,
-        // se vier no form usa-o como fallback; prioridade para sessão
-        usuario: loggedUser?.id ?? usuario,
-      };
-      console.log('Atualizando lançamento', { id: mergedId, payload });
-      servicoLancamento.atualizarLancamento(mergedId, payload)
-        .then(() => {
-          setTimeout(() => navigate('/consultar-lancamento'), 2000);
-          messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
-        })
-        .catch(error => {
-          messages.mensagemDeErro(
-            error.response?.data?.message ||
-            error.response?.data ||
-            error.message ||
-            'Erro ao atualizar lançamento.'
-          );
-        })
-        .finally(() => setLoading(false));
-    } catch (e) {
-      messages.mensagemDeErro(e?.message || 'Falha inesperada ao atualizar.');
+    if (!mergedId) {
+      messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
       setLoading(false);
+      return;
     }
+    // normalizar/garantir status sempre preenchido
+    const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
+    const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
+      ? statusTrimmed
+      : (lancamentoAtual?.statusLancamento ?? 'PENDENTE');
+    const payload = {
+      descricao,
+      valor,
+      mes,
+      ano,
+      tipoLancamento,
+      // enviar status garantindo valor não-nulo
+      statusLancamento: statusFinal,
+      // se vier no form usa-o como fallback; prioridade para sessão
+      usuario: loggedUser?.id ?? usuario,
+    };
+    console.log('Atualizando lançamento', { id: mergedId, payload });
+    servicoLancamento.atualizarLancamento(mergedId, payload)
+      .then(() => {
+        setTimeout(() => navigate('/consultar-lancamento'), 2000);
+        messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
+      })
+      .catch(error => {
+        messages.mensagemDeErro(
+          error.response?.data?.message ||
+          error.response?.data ||
+          error.message ||
+          'Erro ao atualizar lançamento.'
+        );
+      })
+      .finally(() => setLoading(false));
   }
 
   const handleLimpar = () => {
@@ -177,7 +170,7 @@ function CadastrarLancamento() {
           }
         }
       >
-        <div className="text-white-100 border-5 ">
+        <div className="text-white-100">
           {/* Ícone no canto superior esquerdo */}
           <Tooltip title="Voltar">
             <IconButton onClick={handleCancelar} sx={
@@ -195,7 +188,7 @@ function CadastrarLancamento() {
             sx={
             {
               textAlign: 'center',
-              color: 'rgba(248,244,244,0.89)'
+              color: 'rgba(248,244,244,0.89)',
             }}
           >
             {/*Cadastro de lançamentos*!*/}
@@ -288,18 +281,18 @@ function CadastrarLancamento() {
             {/*  {isSubmitting ? 'Redirecionando...' : 'Atualizar'}*/}
             {/*</Button>*/}
 
-            <Button
-              type="button"
-              variant="outlined"
-              onClick={handleLimpar}
-              disabled={ isSubmitting }
-              startIcon={ <CleaningServicesIcon size={20} color="inherit" /> }
-            >
-              {
-                isSubmitting ?
-                  'Limpando...' : 'Limpar'
-              }
-            </Button>
+            {/*<Button*/}
+            {/*  type="button"*/}
+            {/*  variant="outlined"*/}
+            {/*  onClick={handleLimpar}*/}
+            {/*  disabled={ isSubmitting }*/}
+            {/*  startIcon={ <CleaningServicesIcon size={20} color="inherit" /> }*/}
+            {/*>*/}
+            {/*  {*/}
+            {/*    isSubmitting ?*/}
+            {/*      'Limpando...' : 'Limpar'*/}
+            {/*  }*/}
+            {/*</Button>*/}
 
           </Box>
           <PanoDeFundo
