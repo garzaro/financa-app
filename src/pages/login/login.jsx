@@ -1,20 +1,13 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import {useNavigate, useLocation, Link} from "react-router-dom";
-import axios from "axios";
-import Card from "../../components/template/card.jsx";
-import FormGroup from "../../components/template/formGroup.jsx";
-import {mensagemDeErro} from '../../components/utils/toastr.jsx'
-import UsuarioService from "../../app/service/usuarioService.js";
-import {LocalStorageService} from "../../app/service/localStorageService.js";
-import DefinirSenha from "./redefinir-senha.jsx";
-import {useAuth} from "../../auth/useAuth.js";
-import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle.jsx";
-import PanoDeFundo from "../../components/feedback/loader.jsx";
-import Button from "@mui/material/Button";
-import LoginIcon from '@mui/icons-material/Login';
-import {Backdrop, CircularProgress, IconButton} from "@mui/material";
-import {Input} from "@/components/ui/input.jsx";
+import {useAuth} from "@/auth/useAuth.js";
+import UsuarioService from "@/app/service/usuarioService.js";
+import {useForm} from "react-hook-form";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Button, Grid, Tooltip} from "@mui/material";
+import Card from "@/components/template/card.jsx";
+import FormGroup from "@/components/template/formGroup.jsx";
+import SenhaVisibilityToggle from "@/components/utils/senhaVisibilityToggle.jsx";
+import PanoDeFundo from "@/components/feedback/loader.jsx";
 
 function LoginForm () {
   const { login } = useAuth();
@@ -74,23 +67,23 @@ return (
         justify-between items-center"
       >
         <div className="flex items-center gap-2">
-          <div className="bg-emerald-600 p-2 rounded-lg animate-pulse">
-            {/*<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"*/}
-            {/*     stroke="currentColor">*/}
-            {/*  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2*/}
-            {/*   3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11*/}
-            {/*   0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />*/}
-            {/*</svg>*/}
-          </div>
-
+          <div className="bg-emerald-600 p-2 rounded-lg animate-pulse"></div>
           <span className="text-xl font-bold text-gray-300 tracking-tight">
-            Finanças Pessoais
+            <Link to="/" className="text-decoration-none">
+              Finanças Pessoais
+            </Link>
           </span>
         </div>
 
         <nav>
           <span className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-all ">
-            Ainda não tem conta?
+            <Tooltip
+              title="Se ainda não possui acesso, clique no botão abaixo,
+              crie sua conta e obtenha acesso ao Financas Pessoais."
+              placement="right-end"
+            >
+                Ainda não tem conta?
+            </Tooltip>
           </span>
           <Link
             to="/register"
@@ -200,23 +193,13 @@ return (
 
                     <div className="p-0">
                       <h4 className="text-center mt-0 mb-1">
-                        Primeiro acesso?
+                        Continue acessando.
                       </h4>
                       <p className="text-center mb-0"
                          style={{ fontSize: '10px', letterSpacing: '2px' }}
                       >
-                        Se ainda não possui acesso, clique no botão abaixo,
-                        crie sua conta e obtenha acesso ao Financas Pessoais.
+                       AQUI VAI SER IMPLEMENTADO LOGIN SOCIAL
                       </p>
-
-                      <div className="text-center mt-2">
-                        <Link
-                          to="/register"
-                          className="btn btn-sm btn-secondary"
-                          title="Não tem uma conta? Clique aqui!"> <i className="pi pi-plus"></i>
-                          Criar conta
-                        </Link>
-                      </div>
                     </div>
                   </form>
                 </div>

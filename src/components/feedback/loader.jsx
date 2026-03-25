@@ -3,7 +3,13 @@ import Button from "@mui/material/Button";
 import {Backdrop, CircularProgress, Typography} from "@mui/material";
 
 
-export default function PanoDeFundo({open= false, color, titulo, mensagem,}){
+export default function PanoDeFundo(
+  {
+    open= false,
+    color,
+    titulo, mensagem,
+  })
+{
 
   return (
     <div>

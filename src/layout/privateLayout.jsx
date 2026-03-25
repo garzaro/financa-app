@@ -4,8 +4,7 @@ import {useContext} from "react";
 import {AuthContext} from "@/auth/authContext.jsx";
 import {Navigate, Outlet} from "react-router-dom";
 
-/**Arquivo de verificação de autenticação
- *
+/**
  * Rota Privada
  * **/
 

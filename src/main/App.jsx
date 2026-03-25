@@ -6,7 +6,7 @@ import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import DevErrorBoundary from "@/main/errorBoundary.tsx";
 import '../style/App.css'
 
-/**VERIFICAR SE ISTO AQUI NAO VAI FUDER OSITEMS DO NAVBAR NO COLAPSO**/
+/**VERIFICAR SE ISTO AQUI NAO VAI FUDER O SISTEMA NO NAVBAR NO COLAPSO**/
 import '../style/globals.css'
 
 import '../style/custom.css'
