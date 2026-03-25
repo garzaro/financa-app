@@ -11,7 +11,7 @@ import {Outlet} from "react-router-dom";
  * [x] Usuário logado	Hero
  * [x] Navbar e Footer continuam fora da lógica.
  * [x] Usuário não logado - Hero + Service + About + Contact
- * [] Ver no navbar, quando for fazer login nao aprece Navbar e nem Footer
+ * [] Ver no navbar, quando for fazer login nao aparece Navbar e nem Footer
  * **/
 
 export default function PublicLayout ({ children }) {

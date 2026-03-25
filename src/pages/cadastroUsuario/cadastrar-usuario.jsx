@@ -93,10 +93,10 @@ const CadastrarUsuario = () => {
           <div className="flex items-center gap-2">
             <div className="bg-emerald-600 p-2 rounded-lg animate-pulse"></div>
             <span className="text-xl font-bold text-gray-300 tracking-tight">
-
-              Finanças Pessoais
-
-          </span>
+              <Link to="/" className="text-decoration-none">
+                Finanças Pessoais
+              </Link>
+            </span>
           </div>
 
           <nav>
