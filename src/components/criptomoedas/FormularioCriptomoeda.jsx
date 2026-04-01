@@ -282,7 +282,9 @@ export default function FormularioCriptomoeda({ onSucesso }) {
                 isSubmitting || loading
                   ? ( isUpdating ? 'Atualizando...' : 'Salvando...')
                   :
-                  (isUpdating ? 'Atualizar' : 'Salvar - O VALOR DE FRACAO SERÁ COLOCADO AUTOMATICO - OPERACAO ENTRE ENTRADA E FIAT')
+                  (isUpdating ? 'Atualizar' : 'Salvar - ' +
+                    'O VALOR DE FRACAO SERÁ COLOCADO AUTOMATICO - OPERACAO ENTRE ENTRADA E FIAT'
+                  )
               }
             </Button>
 
