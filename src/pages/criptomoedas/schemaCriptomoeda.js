@@ -7,35 +7,47 @@ function mesNaData(iso) {
   return Number(m[2]);
 }
 
-export const schemaCriptomoeda = z
-  .object({
-    dataEntrada: z.string().min(1, 'Informe a data de entrada'),
+export const schemaCriptomoeda = z.object({
+  dataEntrada: z
+    .string()
+    .nonempty('Informe a data de entrada'),
 
-    mes: z
-      .any()
-      .transform((valor) => {
-        if (valor === '' || valor === null || valor === undefined) return NaN;
-        const numero = Number(valor);
-        return numero;
-      })
-      .refine((numero1) => !Number.isNaN(numero1) && numero1 >= 1 && numero1 <= 12, { message: 'Selecione o mês' }),
+  mes: z
+    .any()
+    .transform((valor) => {
+      if (valor === '' || valor === null || valor === undefined) return NaN;
+      const numero = Number(valor);
+      return numero;
+    })
+    .refine((numero1) => !Number.isNaN(numero1) && numero1 >= 1 && numero1 <= 12, { message: 'Selecione o mês' }),
 
-    corretora: z.string().min(1, 'Selecione a corretora'),
+  corretora: z.string().min(1, 'Selecione a corretora'),
 
-    moeda: z
+  ativo: z.coerce
+    .string()
+    .nonempty('Selecione o ativo'),
+
+  valorAtualAtivo: z.coerce
+    .number({ invalid_type_error: 'Valor atual inválido' })
+    .min(0.00000001, 'Valor maior que zero'),
+
+  // dinheiro fiat
+  valorInvestido: z.coerce
+    .number({ invalid_type_error: 'Valor investido inválido' })
+    .positive('Valor acima de R$ 0,01'),
+
+  fracaoAtivo: z.coerce
+    .string()
+    .nonempty('campo obrigatório'),
+
+  statusTransacao: z
+    .string().optional().refine(val => !!val, {
+      message: 'Selecione o status',
+    }),
+
+  tipoTransacao: z.coerce
       .string()
-      .min(1, 'Informe a moeda')
-      .max(32, 'Moeda muito longa')
-      .transform((moeda) => moeda.trim()),
-      // .transform((s) => s.trim()),
-
-    valorAtualMoeda: z.coerce
-      .number({ invalid_type_error: 'Valor atual inválido' })
-      .min(0.00000001, 'Valor atual deve ser maior que zero'),
-
-    valorInvestido: z.coerce
-      .number({ invalid_type_error: 'Valor investido inválido' })
-      .min(0.01, 'Valor investido deve ser pelo menos R$ 0,01'),
+      .nonempty('Selecione a posição'),
   })
   .refine((data) => mesNaData(data.dataEntrada) === data.mes, {
     message: 'O mês deve ser a mesma data de entrada',

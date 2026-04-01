@@ -1,8 +1,8 @@
 import {
   ALAVANCAGEM,
+  ATIVOS,
   CORRETORAS,
-  CRIPTOMOEDA,
-  MESES_NOME,
+  MESES_NOME, POSICAO,
   STATUS_TRANSACAO,
 } from "@/components/criptomoedas/corretoras.js";
 
@@ -18,26 +18,33 @@ export const FORM_FIELDS = [
     },
   },
   { name: 'mes', label: 'Mês - nao sei porque  mas coloquei', type: "select",
-    options: MESES_NOME
+    options: MESES_NOME,
   },
   { name: 'corretora', label: 'Corretora', type: "select",
-    options: CORRETORAS
+    options: CORRETORAS,
   },
-  { name: 'criptomoeda', label: 'Criptomoeda', type: "select",
-    options: CRIPTOMOEDA
+
+  { name: 'ativo', label: 'Ativo', type: 'select',
+    options: ATIVOS,
   },
+
   { name: 'alavancagem', label: 'Alavancagem', type: 'select',
     options: ALAVANCAGEM,
   },
 
-  { name: 'valor-atual-cripto', label: 'Valor Atual - Entrada' },
-  { name: 'valor-compra', label: 'FIAT' },
+  // valor da cripto - valor de entrada
+  { id: 'valorInvestido', name: 'valorInvestido', label: 'FIAT', },
+  { id: 'valorAtualAtivo', name: 'valorAtualAtivo', label: 'Valor Atual Cripto', },
 
-  { name: 'fracao-moeda', label: 'Fração - Moeda' },
+  // resultado divisao = valorInvestido / valorAtualAtivo disabled: true,
+  { id: 'fracaoAtivo', name: 'fracaoAtivo', label: 'Fração - Ativo', readOnly: true, },
 
-  { name: 'status_transacao', label: 'Status Transação', type: 'select',
+  { name: 'statusTransacao', label: 'Status', type: 'select',
     options: STATUS_TRANSACAO,
   },
-
 ];
+
+// { name: 'posicao', label: 'Tipo Transanção', type: 'select',
+//   options: POSICAO,
+// },
 

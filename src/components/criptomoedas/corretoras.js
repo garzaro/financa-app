@@ -1,13 +1,12 @@
 /** Valores enviados à API — ajuste se o backend usar outros códigos */
 export const CORRETORAS = [
-  { value: 'BINANCE', label: 'Binance' },
-  { value: 'MERCADO_BITCOIN', label: 'Mercado Bitcoin' },
-  { value: 'FOXBIT', label: 'Foxbit' },
-  { value: 'COINBASE', label: 'Coinbase' },
-  { value: 'KRAKEN', label: 'Kraken' },
-  { value: 'OKX', label: 'OKX' },
-  { value: 'BYBIT', label: 'Bybit' },
-  { value: 'OUTRA', label: 'Outra' },
+  { value: 'binance', label: 'Binance' },
+  { value: 'MercadoBitcoin', label: 'Mercado Bitcoin' },
+  { value: 'Foxbit', label: 'Foxbit' },
+  { value: 'coinbase', label: 'Coinbase' },
+  { value: 'kraken', label: 'Kraken' },
+  { value: 'okx', label: 'OKX' },
+  { value: 'bybit', label: 'Bybit' },
 ];
 
 export const MESES_NOME = [
@@ -26,25 +25,28 @@ export const MESES_NOME = [
 ];
 
 export const STATUS_TRANSACAO = [
-  { value: 1, label: '---' }, //COLOCAR UM X NOS CAMPOS
-  { value: 2, label: 'SELLING' },
-  { value: 3, label: 'BUYING' },
-  { value: 4, label: 'ABERTA' },
-  { value: 5, label: 'PARCIAL' },
-  { value: 6, label: 'HOLD' },
-  { value: 7, label: 'LOSS' },
-  { value: 8, label: 'GAIN' },
-  { value: 9, label: '0X0' },
+  { value: 'null', label: '---' }, //COLOCAR UM X NOS CAMPOS
+  { value: 'selling', label: 'SELLING' },
+  { value: 'buying', label: 'BUYING' },
+  { value: 'aberta', label: 'ABERTA' },
+  { value: 'parcial', label: 'PARCIAL' },
+  { value: 'hold', label: 'HOLD' },
+  { value: 'loss', label: 'LOSS' },
+  { value: 'gain', label: 'GAIN' },
+  { value: '0x0', label: '0X0' },
 ];
 
-export const CRIPTOMOEDA = [
-  { value: 1, label: '---' },
-  { value: 2, label: 'BTC' },
-  { value: 3, label: 'ETH' },
+export const ATIVOS = [
+  { value: 'btc', label: 'BTC' },
+  { value: 'eth', label: 'ETH' },
 ];
 
 export const ALAVANCAGEM = [
-  { value: 1, label: '---' },
-  { value: 2, label: '5x' },
-  { value: 3, label: '10x' },
+  { value: 1, label: '5x' },
+  { value: 2, label: '10x' },
+];
+
+export const POSICAO = [
+  { value: 'compra', label: 'COMPRA' },
+  { value: 'venda', label: 'VENDA' },
 ];

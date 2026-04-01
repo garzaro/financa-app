@@ -47,12 +47,15 @@ export default function FormularioCriptomoeda({ onSucesso }) {
     defaultValues: {
       id: null,
       dataEntrada: '',
-      dataSaida: '',
       mes: '',
       corretora: '',
-      moeda: '',
-      valorAtualMoeda: '',
-      valorInvestido: '',
+      ativo: '',
+      alavancagem: '',
+      valorAtualAtivo: '',
+      valorInvestido: '', //fiat
+      fracaoAtivo: '',
+      dataSaida: '',
+      statusTransacao: '',
       tipoTransacao: '',
       usuario: null,
       atualizando: false,
@@ -282,8 +285,7 @@ export default function FormularioCriptomoeda({ onSucesso }) {
                 isSubmitting || loading
                   ? ( isUpdating ? 'Atualizando...' : 'Salvando...')
                   :
-                  (isUpdating ? 'Atualizar' : 'Salvar - ' +
-                    'O VALOR DE FRACAO SERÁ COLOCADO AUTOMATICO - OPERACAO ENTRE ENTRADA E FIAT'
+                  (isUpdating ? 'Atualizar' : 'Salvar'
                   )
               }
             </Button>

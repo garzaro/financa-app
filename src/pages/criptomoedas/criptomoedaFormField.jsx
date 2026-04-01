@@ -1,21 +1,39 @@
-import {Controller} from "react-hook-form";
-import {Button, CircularProgress, Grid, MenuItem, Select, TextField} from "@mui/material";
-import {CORRETORAS, MESES_NOME} from "@/components/criptomoedas/corretoras.js";
-import UpdateIcon from "@mui/icons-material/Update";
-import SaveIcon from "@mui/icons-material/Save";
-import * as React from "react";
+import {useEffect} from "react";
+import {Controller,useWatch} from "react-hook-form";
 import {FORM_FIELDS} from "@/components/criptomoedas/formField.js";
+import {Grid, MenuItem, TextField} from "@mui/material";
 
 
 export default function CriptomoedaFormField(
   {control, register, setValue, reset,  errors, id}
 ) {
+  // monitorar os valores tempo real
+  const valorCripto = useWatch({ control, name: "valorAtualAtivo" }); // nome no FORM_FIELDS
+  const valorInvestido = useWatch({ control, name: "valorInvestido" });
+
+  // fracionar
+  const resultado = ( valorCripto > 0 && valorInvestido > 0 )
+    ? (
+      parseFloat( valorInvestido) / parseFloat( valorCripto)).toFixed(8)
+      : "0,00";
+
+  // Sincroniza o valor calculado com o estado do RHF para o campo ReadOnly
+  // Isso garante que se submeter o formulário, o valor do Campo 3 vá junto
+  useEffect (() => {
+    setValue("fracaoAtivo", resultado); //da divisao
+  }, [resultado, setValue]);
+
+  // const handleChange = (id, value) => {
+  //   setValorCripto(prev => ({ ...prev, [id]: value }));
+  // };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {FORM_FIELDS.map((item) => {
         // ** PARA NAO TER QUE COLOCAR mode MANUALMENTE NO array **
         const isControlled = item.type === 'select';
+        // Ajuste aqui: verifique se é 'readOnly' ou 'isReadOnly' conforme seu array
+        const isReadOnly = item.readOnly || item.isReadOnly;
 
         // 🔹 REGISTER
         if ( !isControlled ) {
@@ -25,12 +43,18 @@ export default function CriptomoedaFormField(
             // item xs={12} sm={6} md={4}
             <Grid   key={item.name}>
               <TextField
-                {...registerField}
+                // id={item.name}
+                {...registerField} //(item.name,)
+                type={item.type} // || 'text'
                 label={item.label}
-                type={item.type || 'text'}
                 fullWidth
                 required
-                slotProps={{ inputLabel: { shrink: true }}}
+                // disabled={item.isReadOnly}
+                variant={ isReadOnly ? "filled" : "outlined" }
+                // Força o valor apenas se for ReadOnly, caso contrário deixa o RHF cuidar
+                value={item.name === "fracaoAtivo" ? resultado : undefined }
+                InputProps={{ readOnly: isReadOnly }}
+                slotProps={{ inputLabel: { shrink: true } }}
                 onChange={(e) => {
                   registerField.onChange(e);
                   item.onChange?.(e, { setValue });
@@ -51,6 +75,7 @@ export default function CriptomoedaFormField(
           // item xs={12} sm={6} md={4}
           <Grid   key={item.name}>
             <Controller
+              id={item.name}
               name={item.name}
               control={control}
               render={({ field: controlledField }) => (
@@ -58,9 +83,11 @@ export default function CriptomoedaFormField(
                   {...controlledField}
                   select={item.type === 'select'}
                   label={item.label}
+                  variant="outlined"
+                  id={item.name}
                   fullWidth
                   required
-                  value={controlledField.value ?? ''}
+                  value={controlledField.value} // ?? ''
                   error={!!errors[item.name]}
                   helperText={errors[item.name]?.message}
                   sx={{
