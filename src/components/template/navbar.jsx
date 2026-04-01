@@ -61,6 +61,15 @@ function Navbar () {
                     { label: "Consultar Lançamento", to: "/consultar-lancamento" },
                     ]}
                   />
+                <NavbarItem
+                  id="criptomoedas"
+                  label="Criptomoedas"
+                  to="/consultar-criptomoedas"
+                  items={[
+                    { label: 'Cadastrar moedas', to: '/cadastrar-criptomoedas' },
+                    { label: 'Consultar moedas', to: '/consultar-criptomoedas' },
+                  ]}
+                />
                 </>
               ) : ( // senao está
                 navItems.map(( item ) => (
@@ -168,6 +177,15 @@ function Navbar () {
                       items={[
                         { label: "Cadastrar Lançamento", to: "/cadastrar-lancamento" },
                         { label: "Consultar Lançamento", to: "/consultar-lancamento" },
+                      ]}
+                    />
+                    <NavbarItem
+                      id="criptomoedas"
+                      label="Criptomoedas"
+                      to="/consultar-criptomoedas"
+                      items={[
+                        { label: 'Cadastrar moedas', to: '/cadastrar-criptomoedas' },
+                        { label: 'Consultar moedas', to: '/consultar-criptomoedas' },
                       ]}
                     />
                   </>

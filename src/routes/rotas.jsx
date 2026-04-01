@@ -1,6 +1,6 @@
 import React from 'react';
 // context manager
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 import PublicLayout from "@/layout/publicLayout.jsx";
 import LandingPage from "@/pages/home/landing-page.jsx";
 import Login from "@/pages/login/login.jsx";
@@ -11,6 +11,8 @@ import ConsultarLancamento from "@/pages/lancamentos/consultar-lancamento.jsx";
 import CadastrarLancamento from "@/pages/lancamentos/cadastrar-lancamento.jsx";
 import {PageNotFound} from "@/routes/notFound.jsx";
 import Dashboard from "@/pages/home/dashboard.jsx";
+import CadastrarMoedas from "@/pages/criptomoedas/CadastrarMoedas.jsx";
+import ConsultarCriptomoedas from "@/pages/criptomoedas/consultar-criptomoedas.jsx";
 import PrivateLayout from "@/layout/privateLayout.jsx";
 import {AuthProvider} from "@/auth/authProvider.jsx";
 import Navbar from "@/components/template/navbar.jsx";
@@ -86,6 +88,31 @@ const Rotas = () => {
             <ProtectedRoute>
               <PrivateLayout>
                 <Dashboard />
+              </PrivateLayout>
+            </ProtectedRoute>
+          } />
+
+          <Route
+            path="/criptomoedas"
+            element={<Navigate to="/consultar-criptomoedas" replace />}
+          />
+
+          <Route
+            path="/cadastrar-criptomoedas"
+            element={
+            <ProtectedRoute>
+              <PrivateLayout>
+                <CadastrarMoedas />
+              </PrivateLayout>
+            </ProtectedRoute>
+          } />
+
+          <Route
+            path="/consultar-criptomoedas"
+            element={
+            <ProtectedRoute>
+              <PrivateLayout>
+                <ConsultarCriptomoedas />
               </PrivateLayout>
             </ProtectedRoute>
           } />

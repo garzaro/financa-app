@@ -1,10 +1,10 @@
 import Apiservice from '../api/apiservice.js';
-import {schemaLancamento} from "../../pages/lancamentos/schemaLancamento.js";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
+// import {schemaLancamento} from "../../pages/lancamentos/schemaLancamento.js";
+// import {useForm} from "react-hook-form";
+// import {zodResolver} from "@hookform/resolvers/zod";
 
 
-/**Base path for lancamentos API**/
+/**Base path para lancamentos API**/
 const lancamentoApi = Apiservice('/api/lancamento');
 
 const ServiceLancamento = () => {

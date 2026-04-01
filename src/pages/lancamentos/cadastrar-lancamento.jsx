@@ -63,7 +63,7 @@ function CadastrarLancamento() {
       navigate('/cadastrar-lancamento');
       return;
     }
-    if (params.id){
+    if (params?.id){
       /**se houver um id (edição) carrega os dados do lancamento**/
       servicoLancamento.obterLancamentoPorId(params.id)
         .then(response => {
@@ -80,14 +80,21 @@ function CadastrarLancamento() {
     /**se nao houver id, os valores padrao dos campos permanecem vazios (criacao)**/
   }, [params.id, reset, servicoLancamento, navigate]);
 
-  const createLancamento = ({ descricao, valor, mes, ano, tipoLancamento  }) => {
+  const createLancamento = async ({ descricao, valor, mes, ano, tipoLancamento  }) => {
     setLoading(true);
+
+    if (!loggedUser?.id) {
+      messages.mensagemDeErro('Sessão inválida. Faça login novamente.');
+      return;
+    }
+
     const lancamento = { descricao, valor, mes, ano, tipoLancamento, usuario: loggedUser.id }
     // servicoLancamento.validarLancamento(lancamento)
-    servicoLancamento.salvarLancamento(lancamento)
+    await servicoLancamento.salvarLancamento(lancamento)
       .then(response => {
         setTimeout(() => navigate("/consultar-lancamento"), 1500);
         messages.mensagemDeSucesso("Lancamento cadastrado com sucesso");
+        reset(); //pode ser colocado o valor dos fields como parametro
       }).catch(error => {
         messages.mensagemDeErro( error.response.data?.message || error.response.data )
       })
@@ -98,45 +105,44 @@ function CadastrarLancamento() {
     { descricao, valor, mes, ano, tipoLancamento, statusLancamento, id, usuario }) => {
     setLoading(true);
     // prioriza id da rota; fallback para id do formulário
-    const routeId = params?.id;
-    const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
+  const routeId = params?.id;
+  const mergedId = (routeId && routeId !== 'undefined' && routeId !== 'null') ? routeId : id;
 
-    if (!mergedId) {
-      messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
-      setLoading(false);
-      return;
-    }
-    // normalizar/garantir status sempre preenchido
-    const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
-    const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
-      ? statusTrimmed
-      : (lancamentoAtual?.statusLancamento ?? 'PENDENTE');
-    const payload = {
-      descricao,
-      valor,
-      mes,
-      ano,
-      tipoLancamento,
-      // enviar status garantindo valor não-nulo
-      statusLancamento: statusFinal,
-      // se vier no form usa-o como fallback; prioridade para sessão
-      usuario: loggedUser?.id ?? usuario,
-    };
-    console.log('Atualizando lançamento', { id: mergedId, payload });
-    servicoLancamento.atualizarLancamento(mergedId, payload)
-      .then(() => {
-        setTimeout(() => navigate('/consultar-lancamento'), 2000);
-        messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
-      })
-      .catch(error => {
-        messages.mensagemDeErro(
-          error.response?.data?.message ||
-          error.response?.data ||
-          error.message ||
-          'Erro ao atualizar lançamento.'
-        );
-      })
-      .finally(() => setLoading(false));
+  if (!mergedId) {
+    messages.mensagemDeErro('ID do lançamento ausente ou inválido. Não foi possível atualizar.');
+    setLoading(false);
+    return;
+  }
+  // normalizar/garantir status sempre preenchido
+  const statusTrimmed = typeof statusLancamento === 'string' ? statusLancamento.trim() : statusLancamento;
+  const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
+    ? statusTrimmed : (lancamentoAtual?.statusLancamento ?? 'PENDENTE');
+  const payload = {
+    descricao,
+    valor,
+    mes,
+    ano,
+    tipoLancamento,
+    // enviar status garantindo valor não-nulo
+    statusLancamento: statusFinal,
+    // se vier no form usa-o como fallback; prioridade para sessão
+    usuario: loggedUser?.id ?? usuario,
+  };
+  console.log('Atualizando lançamento', { id: mergedId, payload });
+  servicoLancamento.atualizarLancamento(mergedId, payload)
+    .then(() => {
+      setTimeout(() => navigate('/consultar-lancamento'), 2000);
+      messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
+    })
+    .catch(error => {
+      messages.mensagemDeErro(
+        error.response?.data?.message ||
+        error.response?.data ||
+        error.message ||
+        'Erro ao atualizar lançamento.'
+      );
+    })
+    .finally(() => setLoading(false));
   }
 
   const handleLimpar = () => {
@@ -191,7 +197,7 @@ function CadastrarLancamento() {
               color: 'rgba(248,244,244,0.89)',
             }}
           >
-            {/*Cadastro de lançamentos*!*/}
+            {/**Cadastro de lançamentos**/}
             {  isUpdating ?
               'Atualização de lançamentos' : 'Cadastro de lançamento'
             }
