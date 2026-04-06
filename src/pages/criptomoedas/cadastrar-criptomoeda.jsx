@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import FormularioCriptomoeda from '@/components/criptomoedas/FormularioCriptomoeda.jsx';
 
-export default function CadastrarMoedas() {
+export default function CadastrarCriptomoeda() {
   const navigate = useNavigate();
 
   return (

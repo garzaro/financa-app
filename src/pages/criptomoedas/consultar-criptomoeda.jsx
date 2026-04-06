@@ -135,7 +135,7 @@ function montarLinha(row, index) {
 /**
  * Consulta criptomoedas — o DataGrid é renderizado apenas aqui.
  */
-export default function ConsultarCriptomoedas() {
+export default function ConsultarCriptomoeda() {
   const { isAuthenticated, loggedUser } = useAuth();
   const servico = useMemo(() => ServiceCriptomoeda(), []);
   const [dados, setDados] = useState([]);

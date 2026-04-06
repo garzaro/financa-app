@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {Controller,useWatch} from "react-hook-form";
-import {FORM_FIELDS} from "@/components/criptomoedas/formField.js";
-import {Grid, MenuItem, TextField} from "@mui/material";
+import {DISABLED_FIELDS, FORM_FIELDS} from "@/components/criptomoedas/formField.js";
+import {FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 
 
 export default function CriptomoedaFormField(
@@ -29,86 +29,89 @@ export default function CriptomoedaFormField(
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {FORM_FIELDS.map((item) => {
+      {FORM_FIELDS.map(( field ) => {
         // ** PARA NAO TER QUE COLOCAR mode MANUALMENTE NO array **
-        const isControlled = item.type === 'select';
-        // Ajuste aqui: verifique se é 'readOnly' ou 'isReadOnly' conforme seu array
-        const isReadOnly = item.readOnly || item.isReadOnly;
-
+        const isControlled = field.type === 'select';
+        const isDisabled = DISABLED_FIELDS.includes(field.name) || field.isReadOnly;
+        const registerField = register(field.name);
+        // const isReadOnly = field.readOnly || field.isReadOnly;
         // 🔹 REGISTER
         if ( !isControlled ) {
-          const registerField = register(item.name);
-
           return(
-            // item xs={12} sm={6} md={4}
-            <Grid   key={item.name}>
+            <TextField
+              key={field.id}
+              {...field}
+              {...registerField}
+              id={field.id}
+              type={field.type}
+              label={field.label}
+              fullWidth
+              required
+              disabled={isDisabled} //field.isReadOnly
+              variant={ isDisabled ? "filled" : "outlined" } //isReadOnly
+              // Força o valor apenas se for ReadOnly, caso contrário deixa o RHF cuidar*/}
+              value={field.name === isDisabled ? resultado : undefined && field.value }
+              // value={field.value}
+              InputProps={{ readOnly: isDisabled }}
+              slotProps={{ inputLabel: { shrink: true } }}
+              onChange={(e) => {
+                registerField.onChange(e);
+                field.onChange?.(e, { setValue });
+              }}
+              error={!!errors[field.name]}
+              helperText={errors[field.name]?.message}
+              sx={{
+                '& .MuiOutlinedInput-root': { color: 'grey.200' },
+                '& .MuiInputLabel-root': { color: 'grey.400' },
+              }}
+            />
+          );
+        }
+        // 🔹 CONTROLLER -🔹 CAMPOS CONTROLADOS RHF
+        return(
+          <Controller
+            key={field.id}
+            name={field.name}
+            control={control}
+            render={({ field: controlledField }) => (
               <TextField
-                // id={item.name}
-                {...registerField} //(item.name,)
-                type={item.type} // || 'text'
-                label={item.label}
+                {...controlledField}
+                id={field.id}
+                select={field.type === 'select'}
+                label={field.label}
+                disabled={isDisabled}
+                variant={isDisabled ? "filled" : "outlined"}
                 fullWidth
                 required
-                // disabled={item.isReadOnly}
-                variant={ isReadOnly ? "filled" : "outlined" }
-                // Força o valor apenas se for ReadOnly, caso contrário deixa o RHF cuidar
-                value={item.name === "fracaoAtivo" ? resultado : undefined }
-                InputProps={{ readOnly: isReadOnly }}
-                slotProps={{ inputLabel: { shrink: true } }}
-                onChange={(e) => {
-                  registerField.onChange(e);
-                  item.onChange?.(e, { setValue });
-                }}
-                error={!!errors[item.name]}
-                helperText={errors[item.name]?.message}
+                value={controlledField.value ?? ''} // operador (nullish coalescing) ?? '' - garante o uso de '' for null or undef
+                error={!!errors[field.name]}
+                helperText={errors[field.name]?.message}
                 sx={{
                   '& .MuiOutlinedInput-root': { color: 'grey.200' },
                   '& .MuiInputLabel-root': { color: 'grey.400' },
                 }}
-              />
-            </Grid>
-          );
-        }
-
-        // 🔹 CONTROLLER -🔹 CAMPOS CONTROLADOS RHF
-        return(
-          // item xs={12} sm={6} md={4}
-          <Grid   key={item.name}>
-            <Controller
-              id={item.name}
-              name={item.name}
-              control={control}
-              render={({ field: controlledField }) => (
-                <TextField
-                  {...controlledField}
-                  select={item.type === 'select'}
-                  label={item.label}
-                  variant="outlined"
-                  id={item.name}
-                  fullWidth
-                  required
-                  value={controlledField.value} // ?? ''
-                  error={!!errors[item.name]}
-                  helperText={errors[item.name]?.message}
-                  sx={{
-                    '& .MuiOutlinedInput-root': { color: 'grey.200' },
-                    '& .MuiInputLabel-root': { color: 'grey.400' },
-                  }}
-                >
-                  {item.options?.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            />
-        </Grid>
-      );
-    })}
-  </div>
+              >
+                {field.options?.map(( option ) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+        );
+      })}
+    </div>
   );
 }
+
+
+
+
+
+
+
+
 //
 // // 🔹 CONTROLLER -🔹 CAMPOS CONTROLADOS RHF
 // if (item.mode === 'controller') {

@@ -37,47 +37,44 @@ function mesAPartirDaDataISO(iso) {
  * @param {() => void} props.onSucesso — chamado após gravar (ex.: atualizar lista)
  */
 export default function FormularioCriptomoeda({ onSucesso }) {
-
   const {loggedUser} = useAuth ();
-  const {
-    register, control, handleSubmit, watch, setValue, reset,
-    formState: {errors, isSubmitting},
-  } = useForm ({
-    resolver: zodResolver (schemaCriptomoeda),
-    defaultValues: {
-      id: null,
-      dataEntrada: '',
-      mes: '',
-      corretora: '',
-      ativo: '',
-      alavancagem: '',
-      valorAtualAtivo: '',
-      valorInvestido: '', //fiat
-      fracaoAtivo: '',
-      dataSaida: '',
-      statusTransacao: '',
-      tipoTransacao: '',
-      usuario: null,
-      atualizando: false,
-    },
-    mode: 'onBlur',
-  });
-  const servicoCriptoMoeda = useMemo (() => ServiceCriptomoeda(), []);
+  const { register, control, handleSubmit, watch, setValue,
+    formState: {errors, isSubmitting},  reset } =
+    useForm ({
+      resolver: zodResolver (schemaCriptomoeda),
+      defaultValues: {
+        id: null,
+        dataEntrada: '',
+        mes: '',
+        corretora: '',
+        ativo: '',
+        alavancagem: '',
+        valorAtualAtivo: '',
+        valorInvestido: '', //fiat
+        fracaoAtivo: '',
+        dataSaida: '',
+        statusTransacao: '',
+        tipoTransacao: '',
+        usuario: null,
+        atualizando: false,
+      },
+      mode: 'onBlur',
+  } );
+  const servicoCriptoMoeda = useMemo(() => ServiceCriptomoeda(), []);
   const navigate = useNavigate ();
   const [loading, setLoading] = useState (false);
   const [criptoMoedaAtual, setCriptoMoedaAtual] = useState (null);
   const isUpdating = watch ('atualizando');
+  const dataEntrada = watch ('dataEntrada');
   /**recebendo os parametros da url da rota**/
   const params = useParams ();
 
-  const dataEntrada = watch ('dataEntrada');
-
   useEffect (() => {
-    const mes = mesAPartirDaDataISO (dataEntrada);
+    const mes = mesAPartirDaDataISO ( dataEntrada );
     if (mes !== '') {
       setValue ('mes', mes, {shouldValidate: true});
     }
-  }, [dataEntrada, setValue]);
+  }, [ dataEntrada, setValue ]);
   // values - quando tem controlled
 
   /** redirecionamento de rota, carregar os dados da cripto salva**/
@@ -90,64 +87,47 @@ export default function FormularioCriptomoeda({ onSucesso }) {
     }
     /** se houver um id (edição) carrega os dados da cripto **/
     if (params?.id) {
-      servicoCriptoMoeda.obterCriptoMoedaPorId (params.id)
+      servicoCriptoMoeda.obterCriptoMoedaPorId( params.id )
         .then (response => {
           console.log ('Id retornado como resposta', response);
-          setCriptoMoedaAtual (response.data);
-          reset ({...response.data, atualizando: true});
+          setCriptoMoedaAtual(response.data);
+          reset ({ ...response.data, atualizando: true });
         })
         .catch (err => {
-            messages.mensagemDeErro (
-              err.response?.data?.message || err.response.data
-            )
-          }
-        )
+          messages.mensagemDeErro (err.response?.data?.message || err.response.data)
+      } )
     }
-  }, [params.id, reset, servicoCriptoMoeda, navigate]);
+    /**se nao houver id, os valores padrao dos campos permanecem vazios (criacao)**/
+  }, [ params.id, reset, servicoCriptoMoeda, navigate ]);
 
   // ** values **
-  const createCriptoMoeda = async (values) => {
+  const createCriptoMoeda = async (
+    { dataEntrada, dataSaida, mes, corretora, moeda, valorAtualMoeda, valorInvestido }) => {
+
     setLoading (true);
     console.log ('mostre os values', values);
+
     if ( ! loggedUser?.id) {
       messages.mensagemDeErro ('Sessão inválida. Faça login novamente.');
       return;
     }
     /**payload**/
-    const criptoMoeda = {
-      dataEntrada: values.dataEntrada,
-      dataSaida: values.dataSaida,
-      mes: values.mes,
-      corretora: values.corretora,
-      moeda: values.moeda,
-      valorAtualMoeda: values.valorAtualMoeda,
-      valorInvestido: values.valorInvestido,
-      usuario: loggedUser.id,
-    }
-    await servicoCriptoMoeda.salvarCriptoMoeda (criptoMoeda)
+    const criptoMoeda = { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualMoeda, valorInvestido,
+      usuario: loggedUser.id, }
+
+    console.log ('criando criptomoeda', criptoMoeda);
+    await servicoCriptoMoeda.salvarCriptoMoeda( criptoMoeda )
       .then (response => {
         console.log ('resposta', response);
-        setTimeout (() => navigate ("consultar-moeda"), 1500);
+        setTimeout (() => navigate ("consultar-criptomoeda"), 1500);
         setLoading (false);
         messages.mensagemDeSucesso ('Criptomoeda registrada com sucesso.');
-        reset ({
-          dataEntrada: '', //nao precisa disso tudo, masssss...
-          dataSaida: '',
-          mes: '',
-          corretora: '',
-          moeda: '',
-          valorAtualMoeda: '',
-          valorInvestido: '',
-          tipoTransacao: '',
-        })
-        onSucesso?. ();
+        reset ();
+        onSucesso?.();
       })
       .catch (error => {
         console.log ('erro', error);
-        const msg = error.response?.data?.message ||
-          (typeof error.response?.data === 'string' ? error.response.data : null) ||
-          'Não foi possível salvar.';
-        messages.mensagemDeErro (msg);
+        messages.mensagemDeErro( error.response.data?.message || error.response.data )
       })
       .finally (() => setLoading (false));
   }
@@ -179,7 +159,7 @@ export default function FormularioCriptomoeda({ onSucesso }) {
     // se vier no form usa-o como fallback; prioridade para sessão
     usuario: loggedUser?.id ?? usuario,
   };
-  console.log ('atulaizando Lancamento, payload', {id: mergedId, payload});
+  console.log ('atualizando Criptomoeda, payload', {id: mergedId, payload});
   servicoCriptoMoeda.atualizarCriptoMoeda (mergedId, payload)
     .then (() => {
       setTimeout(() => navigate ('/consultar-moeda'), 1500);

@@ -11,8 +11,8 @@ import ConsultarLancamento from "@/pages/lancamentos/consultar-lancamento.jsx";
 import CadastrarLancamento from "@/pages/lancamentos/cadastrar-lancamento.jsx";
 import {PageNotFound} from "@/routes/notFound.jsx";
 import Dashboard from "@/pages/home/dashboard.jsx";
-import CadastrarMoedas from "@/pages/criptomoedas/CadastrarMoedas.jsx";
-import ConsultarCriptomoedas from "@/pages/criptomoedas/consultar-criptomoedas.jsx";
+import CadastrarCriptomoeda from "@/pages/criptomoedas/cadastrar-criptomoeda.jsx";
+import ConsultarCriptomoeda from "@/pages/criptomoedas/consultar-criptomoeda.jsx";
 import PrivateLayout from "@/layout/privateLayout.jsx";
 import {AuthProvider} from "@/auth/authProvider.jsx";
 import Navbar from "@/components/template/navbar.jsx";
@@ -102,7 +102,7 @@ const Rotas = () => {
             element={
             <ProtectedRoute>
               <PrivateLayout>
-                <CadastrarMoedas />
+                <CadastrarCriptomoeda />
               </PrivateLayout>
             </ProtectedRoute>
           } />
@@ -112,7 +112,7 @@ const Rotas = () => {
             element={
             <ProtectedRoute>
               <PrivateLayout>
-                <ConsultarCriptomoedas />
+                <ConsultarCriptomoeda />
               </PrivateLayout>
             </ProtectedRoute>
           } />

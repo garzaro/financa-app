@@ -26,6 +26,7 @@ export const MESES_NOME = [
 
 export const STATUS_TRANSACAO = [
   { value: 'null', label: '---' }, //COLOCAR UM X NOS CAMPOS
+  { value: 'analisar', label: 'ANALISAR' },
   { value: 'selling', label: 'SELLING' },
   { value: 'buying', label: 'BUYING' },
   { value: 'aberta', label: 'ABERTA' },
@@ -46,7 +47,14 @@ export const ALAVANCAGEM = [
   { value: 2, label: '10x' },
 ];
 
+export const CURRENCY = [
+  { value: 'brl', label: 'BRL' },
+  { value: 'usd', label: 'USD' },
+];
+
+
 export const POSICAO = [
   { value: 'compra', label: 'COMPRA' },
   { value: 'venda', label: 'VENDA' },
 ];
+

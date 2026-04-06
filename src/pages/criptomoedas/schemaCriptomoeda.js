@@ -27,6 +27,10 @@ export const schemaCriptomoeda = z.object({
     .string()
     .nonempty('Selecione o ativo'),
 
+  moedaCorrente: z.coerce
+    .string()
+    .nonempty('Selecione a moeda corrente'),
+
   valorAtualAtivo: z.coerce
     .number({ invalid_type_error: 'Valor atual inválido' })
     .min(0.00000001, 'Valor maior que zero'),
@@ -40,10 +44,10 @@ export const schemaCriptomoeda = z.object({
     .string()
     .nonempty('campo obrigatório'),
 
-  statusTransacao: z
-    .string().optional().refine(val => !!val, {
-      message: 'Selecione o status',
-    }),
+  // statusTransacao: z
+  //   .string().optional().refine(val => !!val, {
+  //     message: 'Selecione o status',
+  //   }),
 
   tipoTransacao: z.coerce
       .string()

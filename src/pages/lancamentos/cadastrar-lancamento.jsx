@@ -19,7 +19,7 @@ import * as messages from "../../components/utils/toastr.jsx";
 import LancamentoService from "../../app/service/lancamentoService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
 import PanoDeFundo from "../../components/feedback/loader.jsx";
-import {LancamentoFormField} from "./lancamentoFormField.jsx";
+import {LancamentoFormField} from "../../components/lancamento/lancamentoFormField.jsx";
 import SaveIcon from '@mui/icons-material/Save';
 import UpdateIcon from '@mui/icons-material/Update';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
@@ -70,7 +70,7 @@ function CadastrarLancamento() {
           console.log("ID retornado ", response);
            // guarda objeto atual para fallback e popula formulário
           setLancamentoAtual(response.data);
-          reset( { ...response.data, atualizando: true } );
+          reset({ ...response.data, atualizando: true });
         })
         .catch(error => {
           messages.mensagemDeErro(
