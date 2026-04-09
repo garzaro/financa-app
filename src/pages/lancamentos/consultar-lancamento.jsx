@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
+import React, {useState, useEffect, useMemo, useCallback, useRef} from 'react';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {
   Container,
@@ -14,7 +14,7 @@ import {
   DialogContentText,
   DialogActions,
   IconButton,
-  Fade, TextField, Modal, TableCell, Tooltip, RadioGroup, FormControlLabel, Radio,
+  Fade, TextField, Modal, TableCell, Tooltip, RadioGroup, FormControlLabel, Radio, Chip,
 } from "@mui/material";
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { DataGrid, GridDeleteIcon, } from '@mui/x-data-grid';
@@ -32,12 +32,11 @@ import ServiceLancamento from "../../app/service/lancamentoService.js";
 import {LocalStorageService} from "../../app/service/localStorageService.js";
 import * as messages from "../../components/utils/toastr.jsx";
 import Slide from "@mui/material/Slide";
+import {useForm} from "react-hook-form";
 
 /**
  * TODO-LIST
- * [] Deixar o campo status truncado mesmo quando for consulta - atualizar status no botao
- * [] Manter o filtro nao limpar apos atualizacao
- * [] Esquema de cores na situação - status
+ * [] Melhoria no filtro de lancamento evitar rolar para o lado direito pra buscar os icones - ver card
  * **/
 
 function ConsultarLancamento(props) {
@@ -52,26 +51,31 @@ function ConsultarLancamento(props) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [openStatusModal, setOpenStatusModal] = useState(false);
-  const navigate = useNavigate();
   const usuarioLogado = LocalStorageService();
+  const { reset } = useForm();
+
+  const navigate = useNavigate();
+  /** para distinguir a saída **/
+  const location = useLocation();
+  /**Ref para rastrear se saiu para editar (única exceção permitida)**/
+  const saiuParaEdicaoRef = useRef(false);
 
   const lancamentoService = useMemo(() => ServiceLancamento(), []);
 
-  // Carregar filtros e resultados do localStorage ao montar o componente
+  // SPEC-02 — useEffect de montagem: restaurar estado
   useEffect(() => {
-    const filtrosSalvos = usuarioLogado.obterItem('_filtros_consulta');
+    const filtroSalvo = usuarioLogado.obterItem('_filtros_consulta');
     const resultadosSalvos = usuarioLogado.obterItem('_resultados_consulta');
 
-    if (filtrosSalvos) {
-      setAno(filtrosSalvos.ano || '');
-      setMes(filtrosSalvos.mes || '');
-      setTipoLancamento(filtrosSalvos.tipoLancamento || '');
+    if ( filtroSalvo ) {
+      setAno(filtroSalvo.ano || '');
+      setMes(filtroSalvo.mes || '');
+      setTipoLancamento(filtroSalvo.tipoLancamento || '');
     }
-
-    if (resultadosSalvos) {
+    if ( resultadosSalvos ) {
       setLancamento(resultadosSalvos);
     }
-  }, []);
+  }, []); // executa só na montagem
 
   /**
    * realizar a busca de lancamentos usando filtro
@@ -107,7 +111,7 @@ function ConsultarLancamento(props) {
         mes: lancamentos.mes ?? '-',
         ano: lancamentos.ano ?? '-',
         statusLancamento: lancamentos.statusLancamento ?? '-',
-        // lancamentos: [],
+        lancamentos: [],
         usuario: lancamentos.id,
       }));
       /**
@@ -115,8 +119,8 @@ function ConsultarLancamento(props) {
        * Isso re-renderiza a tabela com os novos dados.
        */
       setLancamento(dadosNormalizados);
-      
-      // Persistir filtros e resultados
+
+      // SPEC-04 — handleBuscar: persistir após busca bem-sucedida
       usuarioLogado.salvarItem('_filtros_consulta', { ano, mes, tipoLancamento });
       usuarioLogado.salvarItem('_resultados_consulta', dadosNormalizados);
 
@@ -163,6 +167,8 @@ function ConsultarLancamento(props) {
   }, [selectedId, lancamento]);
 
   const handleCancelar = useCallback(() => {
+    // SPEC-07 — handleCancelar e handleCandastrarLancamento: caminhos de limpeza
+    saiuParaEdicaoRef.current = false;
     setLoading(true);
     setTimeout(() => navigate('/home'), 1000);
   }, [navigate]);
@@ -171,9 +177,12 @@ function ConsultarLancamento(props) {
    * preparar o fomulario para cadastrar lançamento
    * **/
   const handleCandastrarLancamento = useCallback(() => {
+    // SPEC-07 — handleCancelar e handleCandastrarLancamento: caminhos de limpeza
+    saiuParaEdicaoRef.current = false; // não é edicao, limpa o filtro ao sair da tela
     setLoading(true);
+    reset();
     setTimeout(() => navigate('/cadastrar-lancamento'), 1000);
-  }, [navigate]);
+  }, [navigate, reset]);
 
   /**
    * limpar o filtro - filtro pequeno por enqaunto mas é so pra existir a limpeza
@@ -188,22 +197,31 @@ function ConsultarLancamento(props) {
   }, [usuarioLogado]);
 
   /**
-   * atualizar o cache de resultados após alteração de status
+   * SPEC-05 — useEffect de sincronização pós-alteração de lista
    */
   useEffect(() => {
     if (lancamento.length > 0) {
       usuarioLogado.salvarItem('_resultados_consulta', lancamento);
     }
-  }, [lancamento, usuarioLogado]);
+  }, [lancamento]);
 
   /**
-   * deletar lançamento pelo id
-   * via exclusão otimista - rollback se falhar
+   * SPEC-03 — useEffect de desmontagem: cleanup (fonte de verdade)
+   * **/
+  useEffect(() => {
+    return () => {
+      if (!saiuParaEdicaoRef.current){
+        usuarioLogado.removerItem('_filtros_consulta');
+        usuarioLogado.removerItem('_resultados_consulta');
+      }
+      saiuParaEdicaoRef.current = false; // reset para o próximo ciclo
+    }
+  }, []) // [] garante que o cleanup só roda na desmontagem real
+
+  /**
+   * SPEC-08 — Correção de dependências: deletarLancamento
    * **/
   const deletarLancamento = useCallback((id) => {
-    /**
-     * remover imediatemanente da lista (otimista)
-     * **/
     setLancamento((prevRows) => prevRows.filter((row) => row.id !== id));
     lancamentoService.deletarLancamento( id )
       .then(() => {
@@ -212,7 +230,7 @@ function ConsultarLancamento(props) {
       .catch((err) => {
         messages.mensagemDeErro("Erro ao excluir o lançamento");
       });
-  }, [ lancamentoService, lancamento ]);
+  }, [ lancamentoService ]);
 
   /**
    * abrir confirmação (Dialog) com id selecionado
@@ -239,12 +257,13 @@ function ConsultarLancamento(props) {
   }, [deletarLancamento, selectedId, handleClickCloseDialog]);
 
   /**
-   * editar lançamento EM ANDAMENTO
+   * SPEC-06 — handleEditarLancamento: única exceção
    * **/
   const handleEditarLancamento = useCallback((id) => {
-    console.log('Editar o lançamento de ID', id);
+    /**marca como exceção**/
+    saiuParaEdicaoRef.current = true;
     navigate(`/cadastrar-lancamento/${id}`);
-  },[])
+  },[navigate])
 
   const moneyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -264,9 +283,24 @@ function ConsultarLancamento(props) {
       }
     },
     { field: 'tipoLancamento', headerName: 'Tipo', width: 120 },
-    { field: 'mes', headerName: 'Mês', width: 120 },
+    { field: 'mes', headerName: 'Mês', width: 120,
+      valueFormatter: (value) => {
+        if (!value) return '-';
+        const date = new Date(2000, value - 1);
+        const mesNome = date.toLocaleDateString('pt-BR', { month: 'long' });
+        return mesNome.charAt(0).toUpperCase() + mesNome.slice(1);
+      }
+    },
     { field: 'ano', headerName: 'Ano', width: 100, },
-    { field: 'statusLancamento', headerName: 'Situação', width: 120 },
+    { field: 'statusLancamento', headerName: 'Situação', width: 120,
+      renderCell: (params) => {
+        let color = 'default';
+        if (params.value === 'EFETIVADO') color = 'success';
+        else if (params.value === 'CANCELADO') color = 'error';
+        else if (params.value === 'PENDENTE') color = 'warning';
+        return <Chip label={params.value} color={color} size="small" variant="outlined" />;
+      }
+    },
     { field: 'actions', headerName: 'Ações', width: 130, disableColumnResize: true, minWidth: 130,
       maxWidth: 150, sortable: false,
       renderCell: ( params ) => ( /**so pra saber que poder ser outro nome aqui**/
@@ -301,7 +335,7 @@ function ConsultarLancamento(props) {
         </React.Fragment>
       )
     },
-  ], [ handleEditarLancamento, handleAlterarStatusAtual, handleClickOpenDialog ]);
+  ], [ handleEditarLancamento, handleAlterarStatusLancamento, handleClickOpenDialog ]);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 0.5, mb: 3 }}>
@@ -383,7 +417,7 @@ function ConsultarLancamento(props) {
               sx={{
                 /**Reduz o tamanho da fonte apenas das células de dados**/
                 '& .MuiDataGrid-cell': {
-                  fontSize: '0.7rem',
+                  fontSize: '0.9rem',
                 },
                 /**Reduz o tamanho da fonte apenas dos cabeçalhos das colunas**/
                 '& .MuiDataGrid-columnHeaderTitle': {
@@ -427,7 +461,7 @@ function ConsultarLancamento(props) {
                 >
                   <FormControlLabel value="EFETIVADO" control={<Radio color="success" />} label="Efetivado" />
                   <FormControlLabel value="CANCELADO" control={<Radio color="error" />} label="Cancelado" />
-                  <FormControlLabel value="PENDENTE" control={<Radio />} label="Pendente" />
+                  <FormControlLabel value="PENDENTE" control={<Radio color="warning" />} label="Pendente" />
                 </RadioGroup>
               )}
             </DialogContent>
