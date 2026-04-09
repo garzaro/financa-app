@@ -92,7 +92,7 @@ function CadastrarLancamento() {
     // servicoLancamento.validarLancamento(lancamento)
     await servicoLancamento.salvarLancamento(lancamento)
       .then(response => {
-        setTimeout(() => navigate("/consultar-lancamento"), 1500);
+        setTimeout(() => navigate("/consultar-lancamento"), 700);
         messages.mensagemDeSucesso("Lancamento cadastrado com sucesso");
         reset(); //pode ser colocado o valor dos fields como parametro
       }).catch(error => {
@@ -131,7 +131,7 @@ function CadastrarLancamento() {
   console.log('Atualizando lançamento', { id: mergedId, payload });
   servicoLancamento.atualizarLancamento(mergedId, payload)
     .then(() => {
-      setTimeout(() => navigate('/consultar-lancamento'), 2000);
+      setTimeout(() => navigate('/consultar-lancamento'), 700);
       messages.mensagemDeSucesso('Lançamento atualizado com sucesso');
     })
     .catch(error => {
