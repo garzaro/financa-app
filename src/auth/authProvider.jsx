@@ -21,6 +21,7 @@ export function AuthProvider({ children }) {
     setLoggedUser(auth.getLoggedUser());
   }, [auth]);
 
+  // iniciar sessão
   const login = (token, user = null) => {
     auth.login(token);
 
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(true);
   };
 
+  // encerrar sessão
   const logout = () => {
     auth.logout();
     setLoggedUser(null);

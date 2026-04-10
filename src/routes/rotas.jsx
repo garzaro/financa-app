@@ -92,13 +92,13 @@ const Rotas = () => {
             </ProtectedRoute>
           } />
 
-          <Route
-            path="/criptomoedas"
-            element={<Navigate to="/consultar-criptomoedas" replace />}
-          />
+          {/*<Route*/}
+          {/*  path="/criptomoedas"*/}
+          {/*  element={<Navigate to="/consultar-criptomoedas" replace />}*/}
+          {/*/>*/}
 
           <Route
-            path="/cadastrar-criptomoedas"
+            path="/cadastrar-criptomoedas/:id?"
             element={
             <ProtectedRoute>
               <PrivateLayout>
