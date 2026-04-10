@@ -23,7 +23,7 @@ import * as React from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import UpdateIcon from "@mui/icons-material/Update";
 import PanoDeFundo from "@/components/feedback/loader.jsx";
-import CriptomoedaFormField from "@/pages/criptomoedas/criptomoedaFormField.jsx";
+import CriptomoedaFormField from "@/components/criptomoedas/criptomoedaFormField.jsx";
 
 
 function mesAPartirDaDataISO(iso) {
@@ -98,22 +98,26 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       } )
     }
     /**se nao houver id, os valores padrao dos campos permanecem vazios (criacao)**/
-  }, [ params.id, reset, servicoCriptoMoeda, navigate ]);
+  }, [ params.id, reset, servicoCriptoMoeda, navigate, params ]);
 
   // ** values **
-  const createCriptoMoeda = async (
-    { dataEntrada, dataSaida, mes, corretora, moeda, valorAtualMoeda, valorInvestido }) => {
+  const createCriptoMoeda = async (data) => {
+    const { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo } = data;
 
     setLoading (true);
-    console.log ('mostre os values', values);
+    console.log ('mostre os values', { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo });
 
     if ( ! loggedUser?.id) {
       messages.mensagemDeErro ('Sessão inválida. Faça login novamente.');
       return;
     }
     /**payload**/
-    const criptoMoeda = { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualMoeda, valorInvestido,
+    const criptoMoeda = { dataEntrada, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo,
       usuario: loggedUser.id, }
+
+    console.log ('criando criptomoeda', criptoMoeda);
+
+    console.log ('criando criptomoeda', criptoMoeda);
 
     console.log ('criando criptomoeda', criptoMoeda);
     await servicoCriptoMoeda.salvarCriptoMoeda( criptoMoeda )
@@ -132,8 +136,8 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       .finally (() => setLoading (false));
   }
 
-  const updateCriptoMoeda = async (
-    { dataSaida, mes, valorAtualMoeda, valorInvestido, tipoTransacao, statusCriptoMoeda, id, usuario}) => {
+  const updateCriptoMoeda = async (data) => {
+    const { dataSaida, mes, valorAtualAtivo, valorInvestido, tipoTransacao, statusCriptoMoeda, id, usuario } = data;
     setLoading (true);
     // prioriza id da rota; fallback para id do formulário
     const routeId = params?.id;
@@ -145,13 +149,13 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       return;
     }
   // normalizar/garantir status sempre preenchido
-  const statuTrimmed = typeof statusCriptoMoeda === 'string' ? statusCriptoMoeda.trim () : statusCriptoMoeda;
-  const statusFinal = (statuTrimmed !== undefined && statuTrimmed !== null && statuTrimmed !== '')
+  const statusTrimmed = typeof statusCriptoMoeda === 'string' ? statusCriptoMoeda.trim () : statusCriptoMoeda;
+  const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
     ? statusTrimmed : (criptoMoedaAtual?.statusCriptoMoeda ?? 'PENDENTE');
   const payload = {
     dataSaida,
     mes,
-    valorAtualMoeda,
+    valorAtualAtivo,
     valorInvestido,
     tipoTransacao,
     // enviar status garantindo valor não-nulo
@@ -228,6 +232,7 @@ export default function FormularioCriptomoeda({ onSucesso }) {
         </Box>
 
         <Box component="form" onSubmit={handleSubmit(( data ) => {
+          console.log('Form submitted with data:', data);
           /** decide entre criar ou atualizar conforme contexto **/
           if (data?.atualizando || params?.id) {
             updateCriptoMoeda( data );

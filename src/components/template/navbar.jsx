@@ -23,7 +23,7 @@ function Navbar () {
   }
 
   const handleLogout = () => {
-    navigate("/landig-page", { replace: true });
+    setTimeout(() => navigate("/", { replace: true }), 1000);
     logout();
     setMobileMenuOpen(false);
   }

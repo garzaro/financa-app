@@ -17,7 +17,7 @@ import {mensagemDeErro} from "../utils/toastr.jsx";
 export function LancamentoFormField({control, register, reset,  errors, id}) {
 
   const meses = [
-    { value: '1', label: 'Janeiro' },
+    { value: '1', label: 'JANEIRO' },
     { value: '2', label: 'Fevereiro' },
     { value: '3', label: 'Março' },
     { value: '4', label: 'Abril' },
@@ -84,7 +84,7 @@ export function LancamentoFormField({control, register, reset,  errors, id}) {
               <MenuItem><em>Selecione</em></MenuItem>
               {meses.map((mes, index) => (
                 <MenuItem key={mes.value} value={mes.value}>
-                  {mes.label}
+                  {mes.label.toUpperCase()}
                 </MenuItem>
               ))}
             </Select>
@@ -170,7 +170,7 @@ export function LancamentoFormField({control, register, reset,  errors, id}) {
         {/*  Status: <Astered> *</Astered>*/}
         {/*</InputLabel>*/}
         <OutlinedInput
-          disabled={!id}
+          disabled={true}//{!id}
           id="status_lancamento"
           color="success"
           startAdornment={
