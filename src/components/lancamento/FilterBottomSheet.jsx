@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import {LiaBroomSolid} from "react-icons/lia";
 
 const FilterBottomSheet = ({ 
   open, 
@@ -134,14 +135,14 @@ const FilterBottomSheet = ({
               ADICIONAR
             </Button>
           </Stack>
-          
+          {/*<DeleteSweepIcon />*/}
           <Stack direction="row" spacing={1.5}>
             <Button 
               fullWidth 
               variant="outlined" 
               color="secondary" 
               size="large"
-              startIcon={<DeleteSweepIcon />}
+              startIcon={<LiaBroomSolid/>}
               onClick={() => { onLimpar(); onClose(); }}
               sx={{ minHeight: 48 }}
             >

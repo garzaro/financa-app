@@ -34,6 +34,7 @@ import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import Chip from "@mui/material/Chip";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {LiaBroomSolid} from "react-icons/lia";
 
 /**
  * TODO-LIST
@@ -473,7 +474,7 @@ function ConsultarLancamento(props) {
             >
               {loading ? <CircularProgress size={20} /> : 'Cancelar' }
             </Button>
-
+            {/*<LiaBroomSolid />*/}
             <Button variant="outlined" size={"small"} onClick={handleLimparFiltro}
               startIcon={!loading && <CleaningServicesIcon size="small" />}
             >

@@ -17,7 +17,7 @@ import {mensagemDeErro} from "../utils/toastr.jsx";
 export function LancamentoFormField({control, register, reset,  errors, id}) {
 
   const meses = [
-    { value: '1', label: 'JANEIRO' },
+    { value: '1', label: 'Janeiro' },
     { value: '2', label: 'Fevereiro' },
     { value: '3', label: 'Março' },
     { value: '4', label: 'Abril' },

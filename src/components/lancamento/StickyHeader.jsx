@@ -4,6 +4,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import CloseIcon from '@mui/icons-material/Close';
+import {LiaBroomSolid} from "react-icons/lia";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 
 const StickyHeader = ({ 
   filtersLabel, 
@@ -54,7 +56,9 @@ const StickyHeader = ({
           <SearchIcon />
         </IconButton>
         <IconButton onClick={onClearClick} color="secondary" aria-label="LIMPAR" sx={{ minWidth: 44, minHeight: 44 }}>
-          <DeleteSweepIcon />
+          {/*<DeleteSweepIcon />*/}
+          <CleaningServicesIcon size="small" />
+          <LiaBroomSolid />
         </IconButton>
         <IconButton onClick={onCancelClick} color="default" aria-label="CANCELAR" sx={{ minWidth: 44, minHeight: 44 }}>
           <CloseIcon />
