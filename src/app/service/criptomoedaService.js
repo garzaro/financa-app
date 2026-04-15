@@ -27,7 +27,7 @@ const ServiceCriptomoeda = () => {
 
     /** usando para atualização ou criação **/
     obterCriptoMoedaPorId: (id) => {
-      return criptomoedaApi.put(`/${id}`);
+      return criptomoedaApi.get(`/${id}`);
     },
 
     atualizarCriptoMoeda: (id, criptoMoeda) => {

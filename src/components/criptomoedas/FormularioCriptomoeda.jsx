@@ -49,8 +49,9 @@ export default function FormularioCriptomoeda({ onSucesso }) {
         corretora: '',
         ativo: '',
         alavancagem: '',
-        valorAtualAtivo: '',
+        moedaCorrente: '',
         valorInvestido: '', //fiat
+        valorAtualAtivo: '',
         fracaoAtivo: '',
         dataSaida: '',
         statusTransacao: '',
@@ -72,7 +73,7 @@ export default function FormularioCriptomoeda({ onSucesso }) {
   useEffect (() => {
     const mes = mesAPartirDaDataISO ( dataEntrada );
     if (mes !== '') {
-      setValue ('mes', mes, {shouldValidate: true});
+      setValue ('mes', mes, {shouldValidate: true });
     }
   }, [ dataEntrada, setValue ]);
   // values - quando tem controlled
@@ -112,18 +113,15 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       return;
     }
     /**payload**/
-    const criptoMoeda = { dataEntrada, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo,
+    const criptoMoeda = { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo,
       usuario: loggedUser.id, }
 
     console.log ('criando criptomoeda', criptoMoeda);
 
-    console.log ('criando criptomoeda', criptoMoeda);
-
-    console.log ('criando criptomoeda', criptoMoeda);
     await servicoCriptoMoeda.salvarCriptoMoeda( criptoMoeda )
       .then (response => {
         console.log ('resposta', response);
-        setTimeout (() => navigate ("consultar-criptomoeda"), 1500);
+        setTimeout (() => navigate ("/consultar-criptomoeda"), 1500);
         setLoading (false);
         messages.mensagemDeSucesso ('Criptomoeda registrada com sucesso.');
         reset ();
@@ -131,13 +129,13 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       })
       .catch (error => {
         console.log ('erro', error);
-        messages.mensagemDeErro( error.response.data?.message || error.response.data )
+        messages.mensagemDeErro( error.response?.data?.message || error.response?.data || error.message || 'Erro ao salvar criptomoeda.' )
       })
       .finally (() => setLoading (false));
   }
 
   const updateCriptoMoeda = async (data) => {
-    const { dataSaida, mes, valorAtualAtivo, valorInvestido, tipoTransacao, statusCriptoMoeda, id, usuario } = data;
+    const { dataEntrada, dataSaida, mes, corretora, ativo, valorAtualAtivo, valorInvestido, moedaCorrente, fracaoAtivo, id, usuario, statusTransacao, tipoTransacao, alavancagem } = data;
     setLoading (true);
     // prioriza id da rota; fallback para id do formulário
     const routeId = params?.id;
@@ -148,25 +146,26 @@ export default function FormularioCriptomoeda({ onSucesso }) {
       setLoading (false)
       return;
     }
-  // normalizar/garantir status sempre preenchido
-  const statusTrimmed = typeof statusCriptoMoeda === 'string' ? statusCriptoMoeda.trim () : statusCriptoMoeda;
-  const statusFinal = (statusTrimmed !== undefined && statusTrimmed !== null && statusTrimmed !== '')
-    ? statusTrimmed : (criptoMoedaAtual?.statusCriptoMoeda ?? 'PENDENTE');
+
   const payload = {
+    dataEntrada,
     dataSaida,
     mes,
+    corretora,
+    ativo,
     valorAtualAtivo,
     valorInvestido,
+    moedaCorrente,
+    fracaoAtivo,
+    statusTransacao,
     tipoTransacao,
-    // enviar status garantindo valor não-nulo
-    statusCriptoMoeda: statusFinal,
-    // se vier no form usa-o como fallback; prioridade para sessão
+    alavancagem,
     usuario: loggedUser?.id ?? usuario,
   };
   console.log ('atualizando Criptomoeda, payload', {id: mergedId, payload});
   servicoCriptoMoeda.atualizarCriptoMoeda (mergedId, payload)
     .then (() => {
-      setTimeout(() => navigate ('/consultar-moeda'), 1500);
+      setTimeout(() => navigate ('/consultar-criptomoeda'), 1500);
       messages.mensagemDeSucesso ('Criptomoeda atualizada com sucesso.');
       setLoading (false);
       onSucesso?. ();
@@ -234,7 +233,7 @@ export default function FormularioCriptomoeda({ onSucesso }) {
         <Box component="form" onSubmit={handleSubmit(( data ) => {
           console.log('Form submitted with data:', data);
           /** decide entre criar ou atualizar conforme contexto **/
-          if (data?.atualizando || params?.id) {
+          if (data?.atualizando || (params?.id && params.id !== 'undefined' && params.id !== 'null')) {
             updateCriptoMoeda( data );
           } else {
             createCriptoMoeda( data );
