@@ -14,6 +14,7 @@ import {
 
 export const FORM_FIELDS = [
   { id: 'dataEntradaID',  name: 'dataEntrada', type: 'date', label: 'Data Entrada',
+    min: new Date().toISOString().split('T')[0],
     onChange: (e, { setValue }) => {
       const date = new Date(e.target.value + 'T00:00:00');
       if (!isNaN(date)) {
@@ -53,7 +54,7 @@ export const FORM_FIELDS = [
     options: STATUS_TRANSACAO, readOnly: true,
   },
 
-  { id: 'posicaoID', name: 'posicao', label: 'Posição', type: 'select',
+  { id: 'tipoTransacaoID', name: 'tipoTransacao', label: 'Posição', type: 'select',
     options: POSICAO, readOnly: true,
   },
   { id: 'dataSaidaID',  name: 'dataSaida', type: 'date', label: 'Data Saida',
@@ -66,6 +67,6 @@ export const FORM_FIELDS = [
   },
 ];
 
-export const DISABLED_FIELDS = [ 'mes','fracaoAtivo', 'statusTransacao', 'posicao', 'dataSaida'] ;
+export const DISABLED_FIELDS = [ 'mes','fracaoAtivo', 'statusTransacao', 'tipoTransacao', 'dataSaida'] ;
 
 

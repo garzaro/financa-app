@@ -32,6 +32,7 @@ export default function CriptomoedaFormField(
       {FORM_FIELDS.map(( field ) => {
         // ** PARA NAO TER QUE COLOCAR mode MANUALMENTE NO array **
         const isControlled = field.type === 'select';
+
         const isDisabled = DISABLED_FIELDS.includes(field.name) || field.isReadOnly;
         const registerField = register(field.name);
         // const isReadOnly = field.readOnly || field.isReadOnly;
@@ -52,7 +53,12 @@ export default function CriptomoedaFormField(
               // Força o valor apenas se for ReadOnly, caso contrário deixa o RHF cuidar*/}
               value={field.name === 'fracaoAtivo' ? resultado : undefined}
               // value={field.value}
-              InputProps={{ readOnly: isDisabled }}
+              InputProps={{
+                readOnly: isDisabled,
+                inputProps: {
+                  min: field.min,
+                }
+              }}
               slotProps={{ inputLabel: { shrink: true } }}
               onChange={(e) => {
                 registerField.onChange(e);

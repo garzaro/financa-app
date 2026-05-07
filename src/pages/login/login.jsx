@@ -8,6 +8,14 @@ import Card from "@/components/template/card.jsx";
 import FormGroup from "@/components/template/formGroup.jsx";
 import SenhaVisibilityToggle from "@/components/utils/senhaVisibilityToggle.jsx";
 import PanoDeFundo from "@/components/feedback/loader.jsx";
+import {mensagemDeErro} from "@/components/utils/toastr.jsx";
+
+/**
+ * TOD0-list
+ * [] Apos logout o proximo formulario de login esta redirecionado para /
+ *
+ * **/
+
 
 function LoginForm () {
   const { login } = useAuth();
@@ -39,7 +47,7 @@ function LoginForm () {
       
       login(token, user);
       
-      setTimeout(() => navigate(destinationBack,{replace: true}), 2000);
+      setTimeout(() => navigate(destinationBack,{replace: true}), 700);
 
     }).catch(err => {
       setLoading(false);

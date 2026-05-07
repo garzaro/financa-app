@@ -10,7 +10,13 @@ function mesNaData(iso) {
 export const schemaCriptomoeda = z.object({
   dataEntrada: z
     .string()
-    .nonempty('Informe a data de entrada'),
+    .nonempty('Informe a data de entrada')
+    .refine((data) => {
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+      const dataEntrada = new Date(data + 'T00:00:00');
+      return dataEntrada >= hoje;
+    }, { message: 'A data deve ser igual ou superior a hoje' }),
 
   mes: z
     .any()
@@ -49,9 +55,9 @@ export const schemaCriptomoeda = z.object({
   //     message: 'Selecione o status',
   //   }),
 
-  tipoTransacao: z.coerce
-      .string()
-      .nonempty('Selecione a posição'),
+  //tipoTransacao: z.coerce
+    //  .string()
+      //.nonempty('Selecione a posição'),
   })
   .refine((data) => mesNaData(data.dataEntrada) === data.mes, {
     message: 'O mês deve ser a mesma data de entrada',

@@ -109,7 +109,7 @@ function Home () {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-sm text-zinc-300">
-                &copy; {new Date().getFullYear()} -  Finanças Pessoais. Todos os direitos reservados.
+                &copy; {new Date().getFullYear()} -  Finanças Pessoais. Todos os direitos tortos.
                 Desenvolvido por
                 <Link to="https://github.com/garzaro" className="hover:text-zinc-800 text-decoration-none
                  transition-colors" target="_blank"

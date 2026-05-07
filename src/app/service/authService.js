@@ -13,7 +13,7 @@ const storageLocal = LocalStorageService();
  * TOKEN_KEY chave usada para salvar o JWT no localStorage
  * **/
 export const TOKEN_KEY = import.meta.env.VITE_API_AUTH_TOKEN_KEY;
-const LOGGED_USER_KEY = '_usuario_logado';
+export const LOGGED_USER_KEY = '_usuario_logado';
 
 /**
  * servico de autenticao
