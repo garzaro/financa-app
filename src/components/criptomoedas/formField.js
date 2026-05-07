@@ -56,8 +56,16 @@ export const FORM_FIELDS = [
   { id: 'posicaoID', name: 'posicao', label: 'Posição', type: 'select',
     options: POSICAO, readOnly: true,
   },
+  { id: 'dataSaidaID',  name: 'dataSaida', type: 'date', label: 'Data Saida',
+    onChange: (e, { setValue }) => {
+      const date = new Date(e.target.value + 'T00:00:00');
+      if (!isNaN(date)) {
+        setValue('mes', date.getMonth() + 1);
+      }
+    },
+  },
 ];
 
-export const DISABLED_FIELDS = [ 'mes','fracaoAtivo', 'statusTransacao', 'posicao'] ;
+export const DISABLED_FIELDS = [ 'mes','fracaoAtivo', 'statusTransacao', 'posicao', 'dataSaida'] ;
 
 

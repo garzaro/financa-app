@@ -50,7 +50,7 @@ export default function CriptomoedaFormField(
               disabled={isDisabled} //field.isReadOnly
               variant={ isDisabled ? "filled" : "outlined" } //isReadOnly
               // Força o valor apenas se for ReadOnly, caso contrário deixa o RHF cuidar*/}
-              value={field.name === isDisabled ? resultado : undefined && field.value }
+              value={field.name === 'fracaoAtivo' ? resultado : undefined}
               // value={field.value}
               InputProps={{ readOnly: isDisabled }}
               slotProps={{ inputLabel: { shrink: true } }}
