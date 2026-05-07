@@ -19,7 +19,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
-    "@mui/system": "^9.0.0",
+    "@mui/system": "^6.0.0",
     "@mui/x-data-grid": "^8.20.0",
     "@mui/x-data-grid-pro": "^8.20.0",
     "@popperjs/core": "^2.11.8",
