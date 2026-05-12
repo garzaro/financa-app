@@ -137,10 +137,10 @@ const CadastrarUsuario = () => {
                           <input
                             type="text"
                             {...register("nome", {required: "Nome completo é obrigatório"})}
-                            className="form-control form-control-sm text-white inputPlaceholder"
+                            className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                             placeholder="Digite seu nome completo"
                             id="nome"/>
-                          {errors.nome && <span className="error" style={{ fontSize: '10px'}}>{errors.nome.message}</span>}
+                          {errors.nome && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.nome.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -156,9 +156,9 @@ const CadastrarUsuario = () => {
                               type="text"
                               {...register("cpf", {required: "O CPF é obrigatório",
                               onChange: handleCpfMask})}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Digite seu CPF"/>
-                            {errors.cpf && <span className="error" style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
+                            {errors.cpf && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -172,10 +172,10 @@ const CadastrarUsuario = () => {
                             <input
                               type="text"
                               {...register("usuario", {required: "Nome de usuário é obrigatório"})}
-                              className="form-control form-control-sm inputPlaceholder"
+                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
                               placeholder="Digite o nome de usuário"/>
                             {errors.usuario &&
-                              <span className="error" style={{ fontSize: '10px'}}>
+                              <span className="error text-zinc-300" style={{ fontSize: '10px'}}>
                                 {errors.usuario.message}
                               </span>}
                           </FormGroup>
@@ -193,9 +193,9 @@ const CadastrarUsuario = () => {
                             <input
                               type="email"
                               {...register("email", {required: "Email é obrigatório"})}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Digite seu email"/>
-                            {errors.email && <span className="error" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
+                            {errors.email && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -210,10 +210,10 @@ const CadastrarUsuario = () => {
                               type="email"
                               {...register("confirmarEmail",{required: "Confirme o email"},
                               {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
-                              className="form-control form-control-sm inputPlaceholder"
+                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
                               placeholder="Confirme o email"/>
                             {errors.confirmarEmail &&
-                              <span className="error" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
+                              <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
                           </FormGroup>
                         </div>
 
@@ -236,7 +236,7 @@ const CadastrarUsuario = () => {
                                 },
                                 validate: validateSenhaTrim,
                               })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Digite sua senha"
                             />
                             {/**
@@ -254,7 +254,7 @@ const CadastrarUsuario = () => {
                             <PasswordStrengthMeter senha={ forcaSenha } />
                           </span>
                           {errors.senha &&
-                            <span className="error" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
+                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -272,7 +272,7 @@ const CadastrarUsuario = () => {
                                 {validate: (value) =>
                                     value === watch("senha") || "As senhas não são iguais",
                                 })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Confirme a senha"
                             />
                             <SenhaVisibilityToggle
@@ -282,7 +282,7 @@ const CadastrarUsuario = () => {
                             />
                           </div>
                           {errors.confirmarSenha &&
-                            <span className="error" style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
+                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
                         </FormGroup>
 
                         {/**
