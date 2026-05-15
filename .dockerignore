@@ -1,0 +1,11 @@
+# frontend/.dockerignore
+node_modules
+dist/
+**/target/
+**/node_modules/
+**/.git/
+**/dist/
+.env
+.junie
+.specify
+
