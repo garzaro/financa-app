@@ -36,7 +36,7 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 
-# deixei aqui comentado caso queira usar o Docker Antigo
+# Deixei aqui comentado caso queira usar o Docker Antigo
 # Apenas serve os arquivos já buildados localmente
 #FROM nginx:stable-alpine
 
