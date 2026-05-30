@@ -38,7 +38,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # Deixei aqui comentado caso queira usar o Docker Antigo
 # Apenas serve os arquivos já buildados localmente
-#FROM nginx:stable-alpine
+# FROM nginx:stable-alpine
 
 # Remover config padrão do nginx
 #RUN rm /etc/nginx/conf.d/default.conf
