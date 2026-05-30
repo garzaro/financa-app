@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
 import ReactPasswordChecklist from "react-password-checklist";
 import Card from "../../components/template/card";
 import FormGroup from "../../components/template/formGroup.jsx";
 import Astered from "../../components/utils/astered";
 import ServiceUsuario from "../../app/service/usuarioService.js";
-import { mensagemDeAlerta, mensagemDeSucesso } from "../../components/utils/toastr";
-import { handleCpfChange, validateSenhaTrim } from "../../components/utils/utils";
+import {mensagemDeAlerta, mensagemDeSucesso} from "../../components/utils/toastr";
+import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
-import { CircularProgress } from "@mui/material";
-import { PasswordStrengthMeter } from "../../lib/forcaSenha.jsx";
+import {CircularProgress} from "@mui/material";
+import {PasswordStrengthMeter} from "../../lib/forcaSenha.jsx";
 
 const CadastrarUsuario = () => {
-  const { register, handleSubmit, setValue, watch, formState: { errors }, } = useForm({
+  const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
     defaultValues: {
-      nome: '', cpf: '', usuario: '', email: '', senha: '',
+      nome: '', cpf: '', usuario: '', email: '',senha: '',
       confirmarEmail: '', confirmarSenha: '',
     }
   });
@@ -37,15 +37,17 @@ const CadastrarUsuario = () => {
     }
     usuarioService.salvar(dadosDoUsuario)
       .then(response => {
-        console.log("Dados do usuário: ", data);
-        mensagemDeSucesso("Usuário cadastrado com sucesso! Faça o login para continuar")
-        setTimeout(() => navigate('/login'), 2000);
+        mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
+        /**if (mensagemDeSucesso){
+         return <CircularProgress />
+         }*/
+        setTimeout(navigate('/login'), 2000);
       }).catch(err => {
-        mensagemDeAlerta(
-          err.response?.data?.message ||
-          err.response?.data ||
-          "Erro inesperado ao cadastrar. Tente novamente mais tarde.")
-      });
+      mensagemDeAlerta(
+        err.response.data?.message ||
+        err.response.data ||
+        "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
+    });
   }
   /**
    *  mascara cpf
@@ -100,7 +102,7 @@ const CadastrarUsuario = () => {
           <nav>
             <span className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-all ">
               Já possui uma conta?
-            </span>
+           </span>
             <Link
               to="/login"
               className="text-sm min-h-screen font-semibold hover:text-emerald-700 transition-all"
@@ -134,11 +136,11 @@ const CadastrarUsuario = () => {
                         }>
                           <input
                             type="text"
-                            {...register("nome", { required: "Nome completo é obrigatório" })}
-                            className="form-control form-control-sm text-white inputPlaceholder"
+                            {...register("nome", {required: "Nome completo é obrigatório"})}
+                            className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                             placeholder="Digite seu nome completo"
-                            id="nome" />
-                          {errors.nome && <span className="error" style={{ fontSize: '10px' }}>{errors.nome.message}</span>}
+                            id="nome"/>
+                          {errors.nome && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.nome.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -152,13 +154,11 @@ const CadastrarUsuario = () => {
                           }>
                             <input
                               type="text"
-                              {...register("cpf", {
-                                required: "O CPF é obrigatório",
-                                onChange: handleCpfMask
-                              })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Digite seu CPF" />
-                            {errors.cpf && <span className="error" style={{ fontSize: '10px' }}>{errors.cpf.message}</span>}
+                              {...register("cpf", {required: "O CPF é obrigatório",
+                              onChange: handleCpfMask})}
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              placeholder="Digite seu CPF"/>
+                            {errors.cpf && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -171,11 +171,11 @@ const CadastrarUsuario = () => {
                           }>
                             <input
                               type="text"
-                              {...register("usuario", { required: "Nome de usuário é obrigatório" })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Digite o nome de usuário" />
+                              {...register("usuario", {required: "Nome de usuário é obrigatório"})}
+                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
+                              placeholder="Digite o nome de usuário"/>
                             {errors.usuario &&
-                              <span className="error" style={{ fontSize: '10px' }}>
+                              <span className="error text-zinc-300" style={{ fontSize: '10px'}}>
                                 {errors.usuario.message}
                               </span>}
                           </FormGroup>
@@ -192,10 +192,10 @@ const CadastrarUsuario = () => {
                           }>
                             <input
                               type="email"
-                              {...register("email", { required: "Email é obrigatório" })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Digite seu email" />
-                            {errors.email && <span className="error" style={{ fontSize: '10px' }}>{errors.email.message}</span>}
+                              {...register("email", {required: "Email é obrigatório"})}
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              placeholder="Digite seu email"/>
+                            {errors.email && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -208,14 +208,12 @@ const CadastrarUsuario = () => {
                           }>
                             <input
                               type="email"
-                              {...register("confirmarEmail", {
-                                required: "Confirme o email",
-                                validate: (value) => value === watch("email") || "Os emails não são iguais"
-                              })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Confirme o email" />
+                              {...register("confirmarEmail",{required: "Confirme o email"},
+                              {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
+                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
+                              placeholder="Confirme o email"/>
                             {errors.confirmarEmail &&
-                              <span className="error" style={{ fontSize: '10px' }}>{errors.confirmarEmail.message}</span>}
+                              <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
                           </FormGroup>
                         </div>
 
@@ -229,7 +227,7 @@ const CadastrarUsuario = () => {
                         }>
                           <div className="position-relative">
                             <input
-                              type={showSenha ? "text" : "password"}
+                              type={ showSenha ? "text" : "password" }
                               {...register("senha", {
                                 required: "A senha é obrigatória",
                                 minLength: {
@@ -238,7 +236,7 @@ const CadastrarUsuario = () => {
                                 },
                                 validate: validateSenhaTrim,
                               })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Digite sua senha"
                             />
                             {/**
@@ -253,10 +251,10 @@ const CadastrarUsuario = () => {
                            Passa o valor atual da senha para o componente de força
                            */}
                           <span className="text-sm">
-                            <PasswordStrengthMeter senha={forcaSenha} />
+                            <PasswordStrengthMeter senha={ forcaSenha } />
                           </span>
                           {errors.senha &&
-                            <span className="error" style={{ fontSize: '10px' }}>{errors.senha.message}</span>}
+                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -270,11 +268,11 @@ const CadastrarUsuario = () => {
                           <div className="position-relative">
                             <input
                               type={showSenhaConfirmada ? "text" : "password"}
-                              {...register("confirmarSenha", {
-                                required: "Confirme a senha",
-                                validate: (value) => value === watch("senha") || "As senhas não são iguais"
-                              })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              {...register("confirmarSenha", {required: "Confirme a senha"},
+                                {validate: (value) =>
+                                    value === watch("senha") || "As senhas não são iguais",
+                                })}
+                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
                               placeholder="Confirme a senha"
                             />
                             <SenhaVisibilityToggle
@@ -284,7 +282,7 @@ const CadastrarUsuario = () => {
                             />
                           </div>
                           {errors.confirmarSenha &&
-                            <span className="error" style={{ fontSize: '10px' }}>{errors.confirmarSenha.message}</span>}
+                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -327,7 +325,7 @@ const CadastrarUsuario = () => {
                           <button
                             type="submit"
                             className="w-full p-2 rounded btn btn-success btn-sm mt-2 "
-                          // disabled={!isValid}
+                            // disabled={!isValid}
                           >
                             <i className="bi bi-floppy"></i> Cadastrar
                           </button>

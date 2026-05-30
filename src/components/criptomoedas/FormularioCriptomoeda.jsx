@@ -34,7 +34,7 @@ function mesAPartirDaDataISO(iso) {
 
 /**
  * @param {Object} props
- * @param {() => void} props.onSucesso — chamado após gravar (ex.: atualizar lista)
+ * @param {() => void} props.onSucesso — chamado após gravar (ex. atualizar lista)
  */
 export default function FormularioCriptomoeda({ onSucesso }) {
   const {loggedUser} = useAuth ();

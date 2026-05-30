@@ -35,7 +35,7 @@ export default function CriptomoedaFormField(
 
         const isDisabled = DISABLED_FIELDS.includes(field.name) || field.isReadOnly;
         const registerField = register(field.name);
-        // const isReadOnly = field.readOnly || field.isReadOnly;
+        //const isReadOnly = field.readOnly || field.isReadOnly;
         // 🔹 REGISTER
         if ( !isControlled ) {
           return(
