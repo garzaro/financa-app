@@ -7,14 +7,14 @@ WORKDIR /app
 # Copia os arquivos de dependência (package.json e package-lock.json)
 COPY package*.json ./
 
-# Instala as dependências (utilize 'yarn install' se preferir focar no yarn.lock)
+# Instala as dependências 
 RUN npm ci
 
 # Copia o restante do código da aplicação
 COPY . .
 
 # Executa o build de produção
-# (No seu vite.config.js o diretório de saída está configurado como 'build')
+# (No vite.config.js o diretório de saída está configurado como 'build')
 RUN npm run build
 
 # Estágio 2: Servidor Web de alta performance (Nginx)
@@ -37,6 +37,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 
 # Deixei aqui comentado caso queira usar o Docker Antigo
+#
 # Apenas serve os arquivos já buildados localmente
 # FROM nginx:stable-alpine
 
