@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # Executa o build de produção
-# (No vite.config.js o diretório de saída está configurado como 'build')
+# (O comando npm run build cria o diretório 'dist')
 RUN npm run build
 
 # Estágio 2: Servidor Web de alta performance (Nginx)
@@ -26,8 +26,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Copia a configuração customizada (suporte ao React Router / SPA fallback)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copia os arquivos estáticos gerados no estágio de build
-COPY --from=build /app/build /usr/share/nginx/html
+# Copia os arquivos estáticos gerados no estágio de build --from= ../app/dist
+COPY dist/ /usr/share/nginx/html
 
 # Expõe a porta 80
 EXPOSE 80
@@ -48,7 +48,7 @@ CMD ["nginx", "-g", "daemon off;"]
 #COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar o build gerado localmente
-#COPY build/ /usr/share/nginx/html
+#COPY dist/ /usr/share/nginx/html
 
 #EXPOSE 80
 

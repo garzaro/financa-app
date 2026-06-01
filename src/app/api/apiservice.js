@@ -1,7 +1,7 @@
 import axios from "axios";
 // import {getToken} from "../service/authService.js";
 
-console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
+// console.log("Mostre API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
 /**httpClient**/
 export const api = axios.create({
