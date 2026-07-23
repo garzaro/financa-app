@@ -11,9 +11,14 @@ function RedefinirSenha() {
       <form>
         <input type="password" placeholder="Nova senha" required />
         <input type="password-confirm" placeholder="Confirme a senha" required />
-        <button type="submit" className="btn btn-primary">
-          Finalizar
-        </button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button type="submit" className="btn btn-primary">
+            Finalizar
+          </button>
+          <button type="button" className="btn btn-secondary" onClick={() => window.history.back()}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );

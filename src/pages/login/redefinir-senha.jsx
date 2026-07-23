@@ -196,7 +196,7 @@ export default function RedefinirSenha() {
                   <button
                     type="button"
                     variant="outline"
-                    className="w-full border-zinc-700 rounded py-2 hover:bg-zinc-900 text-zinc-300 text-sm"
+                    className="w-full border-zinc-700 rounded py-2 bg-zinc-900 hover:bg-zinc-600 text-zinc-300 text-sm"
                     onClick={ handleReturnLogin }
                   >
                     Voltar ao login

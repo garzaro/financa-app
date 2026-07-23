@@ -19,7 +19,7 @@ function Navbar () {
 
   const handleLogin = () => {
     setMobileMenuOpen(false);
-    navigate("/login");
+    navigate("/sign-in");
   }
 
   const handleLogout = () => {
@@ -222,7 +222,7 @@ function Navbar () {
                   style={{ fontFamily: "Poppins" }}
                   onClick={() => {
                     // window.location.toString.href = getLoginUrl();
-                    navigate('/login');
+                    navigate('/sign-in');
                     setMobileMenuOpen( false );
                 }}
                 >

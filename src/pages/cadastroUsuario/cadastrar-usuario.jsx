@@ -15,11 +15,14 @@ import {PasswordStrengthMeter} from "../../lib/forcaSenha.jsx";
 const CadastrarUsuario = () => {
   const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
     defaultValues: {
-      nome: '', cpf: '', usuario: '', email: '',senha: '',
-      confirmarEmail: '', confirmarSenha: '',
+      nomeCompleto: '',
+      cpf: '',
+      nomeUsuario: '',
+      email: '',
+      senha: '',
     }
   });
-
+  
   const [senha, setSenha] = useState('');
   const [showSenha, setShowSenha] = useState(false);
   const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
@@ -31,22 +34,26 @@ const CadastrarUsuario = () => {
    * contexto do cadastro
    * */
   const cadastrarUsuario = (data) => {
-    const dadosDoUsuario = {
-      nome: data.nome, cpf: data.cpf, usuario: data.usuario,
-      email: data.email, senha: data.senha,
+    const payload = {
+      nomeCompleto: data.nomeCompleto,
+      cpf: data.cpf.replace(/\D/g, ''),
+      nomeUsuario: data.nomeUsuario,
+      email: data.email,
+      senha: data.senha,
     }
-    usuarioService.salvar(dadosDoUsuario)
+    console.log("Mostrando os dados do usuario: ", payload)
+    usuarioService.salvar(payload)
       .then(response => {
         mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
         /**if (mensagemDeSucesso){
          return <CircularProgress />
          }*/
-        setTimeout(navigate('/login'), 2000);
+        setTimeout(navigate('/sign-in'), 2000);
       }).catch(err => {
       mensagemDeAlerta(
-        err.response.data?.message ||
-        err.response.data ||
-        "Erro inesperdo ao cadastrar. Tente novamente mais tarde.")
+        err.response?.data?.erros?.[0]?.mensagem ||
+        err.response?.data?.mensagem ||
+        "Erro inesperado ao cadastrar. Tente novamente mais tarde.")
     });
   }
   /**
@@ -60,8 +67,8 @@ const CadastrarUsuario = () => {
    * verificacao de senhas
    * */
   const forcaSenha = watch('senha', '');
-  const senhaDigitada = watch("senha");
-  const confirmarSenha = watch('confirmarSenha');
+  const senhaDigitada = watch("senha", "");
+  const confirmarSenha = watch('confirmarSenha', '');
   const mostrarChecklist = !(isValid && senhaDigitada === confirmarSenha);
   /**
    * visibilidade de senha
@@ -104,7 +111,7 @@ const CadastrarUsuario = () => {
               Já possui uma conta?
            </span>
             <Link
-              to="/login"
+              to="/sign-in"
               className="text-sm min-h-screen font-semibold hover:text-emerald-700 transition-all"
             >
               <span className="underline">
@@ -136,11 +143,12 @@ const CadastrarUsuario = () => {
                         }>
                           <input
                             type="text"
-                            {...register("nome", {required: "Nome completo é obrigatório"})}
-                            className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                            {...register("nomeCompleto", {required: "Nome completo é obrigatório"})}
+                            className="form-control form-control-sm text-white inputPlaceholder"
                             placeholder="Digite seu nome completo"
-                            id="nome"/>
-                          {errors.nome && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.nome.message}</span>}
+                            id="nome-completo"/>
+                          {errors.nomeCompleto && <span className="error text-zinc-300"
+                                                        style={{ fontSize: '10px'}}>{errors.nomeCompleto.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -156,9 +164,10 @@ const CadastrarUsuario = () => {
                               type="text"
                               {...register("cpf", {required: "O CPF é obrigatório",
                               onChange: handleCpfMask})}
-                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              className="form-control form-control-sm text-white inputPlaceholder"
                               placeholder="Digite seu CPF"/>
-                            {errors.cpf && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
+                            {errors.cpf && <span className="error text-zinc-300"
+                                                 style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -171,12 +180,12 @@ const CadastrarUsuario = () => {
                           }>
                             <input
                               type="text"
-                              {...register("usuario", {required: "Nome de usuário é obrigatório"})}
-                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
+                              {...register("nomeUsuario", {required: "Nome de usuário é obrigatório"})}
+                              className="form-control text-white form-control-sm inputPlaceholder"
                               placeholder="Digite o nome de usuário"/>
-                            {errors.usuario &&
+                            {errors.nomeUsuario &&
                               <span className="error text-zinc-300" style={{ fontSize: '10px'}}>
-                                {errors.usuario.message}
+                                {errors.nomeUsuario.message}
                               </span>}
                           </FormGroup>
                         </div>
@@ -193,9 +202,10 @@ const CadastrarUsuario = () => {
                             <input
                               type="email"
                               {...register("email", {required: "Email é obrigatório"})}
-                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              className="form-control form-control-sm text-white inputPlaceholder"
                               placeholder="Digite seu email"/>
-                            {errors.email && <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.email.message}</span>}
+                            {errors.email && <span className="error text-zinc-300"
+                                                   style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                           </FormGroup>
 
                           {/**
@@ -210,7 +220,7 @@ const CadastrarUsuario = () => {
                               type="email"
                               {...register("confirmarEmail",{required: "Confirme o email"},
                               {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
-                              className="form-control text-zinc-300 form-control-sm inputPlaceholder"
+                              className="form-control text-white form-control-sm inputPlaceholder"
                               placeholder="Confirme o email"/>
                             {errors.confirmarEmail &&
                               <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
@@ -236,7 +246,7 @@ const CadastrarUsuario = () => {
                                 },
                                 validate: validateSenhaTrim,
                               })}
-                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              className="form-control form-control-sm text-white inputPlaceholder"
                               placeholder="Digite sua senha"
                             />
                             {/**
@@ -254,7 +264,8 @@ const CadastrarUsuario = () => {
                             <PasswordStrengthMeter senha={ forcaSenha } />
                           </span>
                           {errors.senha &&
-                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
+                            <span className="error text-zinc-300"
+                                  style={{ fontSize: '10px'}}>{errors.senha.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -268,11 +279,12 @@ const CadastrarUsuario = () => {
                           <div className="position-relative">
                             <input
                               type={showSenhaConfirmada ? "text" : "password"}
-                              {...register("confirmarSenha", {required: "Confirme a senha"},
-                                {validate: (value) =>
-                                    value === watch("senha") || "As senhas não são iguais",
-                                })}
-                              className="form-control form-control-sm text-zinc-300 inputPlaceholder"
+                              {...register("confirmarSenha", {
+                                required: "Confirme a senha",
+                                validate: (value) =>
+                                  value === watch("senha") || "As senhas não são iguais",
+                              })}
+                              className="form-control form-control-sm text-white inputPlaceholder"
                               placeholder="Confirme a senha"
                             />
                             <SenhaVisibilityToggle
@@ -282,20 +294,20 @@ const CadastrarUsuario = () => {
                             />
                           </div>
                           {errors.confirmarSenha &&
-                            <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
+                            <span className="error text-zinc-300"
+                                  style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
                         </FormGroup>
-
+VERIFICAÇÃO DE EMAIL NAO ESTA FUNCIONANDO DEPOIS DISSO SEGUI R COM O LOGIN
                         {/**
                          checklist de senha
                          **/}
                         <div className="text-sm px-4 py-2 justify-center items-center ">
-                          {(senhaDigitada.length > 0 || confirmarSenha.length > 0) && mostrarChecklist && (
+                          {(senhaDigitada?.length > 0 || confirmarSenha?.length > 6) && mostrarChecklist && ( 
                             <ReactPasswordChecklist
                               rules={[
                                 "minLength",
                                 "specialChar",
                                 "number",
-                                "capital",
                                 "lowercase",
                                 "noSpaces",
                                 "match",

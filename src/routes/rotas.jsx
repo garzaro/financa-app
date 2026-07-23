@@ -47,8 +47,8 @@ const Rotas = () => {
               </PublicLayout>
           } />
 
-          <Route path="/login" element={ <Login /> } />
-          <Route path="/register" element={ <CadastrarUsuario /> } />
+          <Route path="/sign-in" element={ <Login /> } />
+          <Route path="/join/sign-up" element={ <CadastrarUsuario /> } />
           <Route path="/redefinir-senha" element={ <RedefinirSenha /> } />
 
           {/* rotas privadas */}

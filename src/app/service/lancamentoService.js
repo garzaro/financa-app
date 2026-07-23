@@ -5,7 +5,7 @@ import Apiservice from '../api/apiservice.js';
 
 
 /**Base path para lancamentos API**/
-const lancamentoApi = Apiservice('/api/lancamento');
+const lancamentoApi = Apiservice('api/Fp/lancamento');
 
 const ServiceLancamento = () => {
 

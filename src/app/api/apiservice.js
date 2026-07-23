@@ -37,9 +37,7 @@ export const api = axios.create({
 const Apiservice = (apiurl) => {
   return {
     //apiurl: apiurl,
-    /**
-     * metodos
-     */
+    /**metodos**/
     post: (url, objeto) => {
       const requestUrl = `${apiurl}${url}`;
       return api.post(requestUrl, objeto);

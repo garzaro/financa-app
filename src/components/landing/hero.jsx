@@ -16,7 +16,7 @@ export default function Hero () {
   const navigate = useNavigate();
 
   const handleCreateAccount = () => {
-    navigate("/register");
+    navigate("/join/sign-up");
   }
 
   return (

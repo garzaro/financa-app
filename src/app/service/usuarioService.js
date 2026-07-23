@@ -8,19 +8,21 @@ import Apiservice from "../api/apiservice.js";
  * @returns credencials - recebe como objeto as credenciais do usuario
  * */
 
-const usuarioApi = Apiservice('/api/usuarios');
+const usuarioApi = Apiservice('/api/auth');
 
 const ServiceUsuario = (credentials) =>{
   return{
     autenticar: (credentials) => {
-      return usuarioApi.post('/autenticar', credentials);
+      return usuarioApi.post('/sign-in', credentials);
     },
+
+    salvar: (usuario) => {
+      return usuarioApi.post('/join/sign-up', usuario);
+    },
+
     buscarSaldoPorUsuario: (id) => {
       return usuarioApi.get(`/${id}/saldo`); {/**template string ``*/}
     },
-    salvar: (usuarios) => {
-      return usuarioApi.post('', usuarios);
-    }
   };
 };
 export default ServiceUsuario;

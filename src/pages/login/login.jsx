@@ -94,7 +94,7 @@ function LoginForm() {
               </Tooltip>
             </span>
             <Link
-              to="/register"
+              to="/join/sign-up"
               className="text-sm min-h-screen font-semibold hover:text-emerald-700 transition-all"
             >
               <span className="underline"> Cadastre-se </span>

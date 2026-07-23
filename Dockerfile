@@ -26,8 +26,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Copia a configuração customizada (suporte ao React Router / SPA fallback)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copia os arquivos estáticos gerados no estágio de build --from= ../app/dist
-COPY dist/ /usr/share/nginx/html
+# Copia os arquivos estáticos gerados no estágio de build
+COPY --from=dist /app/dist /usr/share/nginx/html
 
 # Expõe a porta 80
 EXPOSE 80
@@ -53,3 +53,4 @@ CMD ["nginx", "-g", "daemon off;"]
 #EXPOSE 80
 
 #CMD ["nginx", "-g", "daemon off;"]
+
