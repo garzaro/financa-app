@@ -108,7 +108,7 @@ function Navbar () {
                     { loggedUser?.nome && (
                       <div>
                         <span>
-                          { loggedUser.email }
+                          { loggedUser.nome }
                         </span>
                       </div>
                     )}

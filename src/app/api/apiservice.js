@@ -6,6 +6,7 @@ import axios from "axios";
 /**httpClient**/
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,7 +14,6 @@ export const api = axios.create({
    timeout: parseInt(process.env.REACT_APP_API_TIMEOUT || 10000, 10),
    * anotar
    * */
-  withCredentials: true
 });
 
 // /**Interceptor de requisições: adiciona o toke JWT ao header Authorization, se existir mano**/
