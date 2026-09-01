@@ -28,6 +28,16 @@ function LoginForm() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const destinationBack = location.state?.from?.pathname || '/home'; //home
+
+  const limparCampo = (fieldName) => {
+    setValue(fieldName, "", {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+    focus(fieldName);
+  };
+
   /**
    * logar
    * */
@@ -38,14 +48,12 @@ function LoginForm() {
       email: data.email,
       senha: data.senha,
     }).then(response => {
-      // O backend deve retornar o token e os dados do usuário
-      // Se o backend só retorna os dados do usuário e não usa JWT ainda,
-      // o "token" pode ser o próprio objeto ou algo simbólico por enquanto.
-      // Assumindo que response.data tem o que precisamos.
+      // O axios encapsula a resposta, os dados do backend estão em response.data
+      // const token = response.data.token;
+      // console.log("Traz o Token no corpo da resposta: ", token);
       const user = response.data;
-      const token = response.data.token || 'Este_token_deve_vir_do_backend'; //'dummy-token'; // Ajustar conforme a API real
-
-      login(token, user);
+      console.log("Traz o usuario no corpo da resposta: ", user);
+      login(null, user);
 
       setTimeout(() => navigate(destinationBack, { replace: true }), 700);
 
@@ -55,12 +63,15 @@ function LoginForm() {
         err.response?.data || "Erro ao autenticar",
         err.response?.data?.message,
         err.response?.data?.code,
-        err.response?.status)
+        err.response?.status
+      );
     });
   };
+
   function handleCancelarLogin() {
     navigate('/');
   }
+
   function toggleSenhaLogin() {
     setMostrarSenhaLogin(!mostrarSenhaLogin);
   }

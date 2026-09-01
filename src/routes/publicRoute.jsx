@@ -1,6 +1,7 @@
 import {useContext} from "react";
 import {Navigate} from "react-router-dom";
 
+/**cara deixa pra la nem fala**/
 
 export default function PublicRoute({ children }) {
 

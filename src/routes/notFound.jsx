@@ -51,7 +51,7 @@ export const PageNotFound = () => {
         style={styles.image}
       />
       <p style={styles.subText}>
-        Parece que a <Link to="/">página</Link> que você procura foi perdida na história.
+        Parece que a <Link to="/">página</Link> que você procura se desfez com o tempo.
       </p>
     </div>
   )

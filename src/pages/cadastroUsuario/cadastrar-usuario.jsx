@@ -11,9 +11,42 @@ import {handleCpfChange, validateSenhaTrim} from "../../components/utils/utils";
 import SenhaVisibilityToggle from "../../components/utils/senhaVisibilityToggle";
 import {CircularProgress} from "@mui/material";
 import {PasswordStrengthMeter} from "../../lib/forcaSenha.jsx";
+import LimparCamposButton from "../../components/ui/limpar-campo.jsx";
+
+/**
+ * TODO-list
+ 
+VALIDAÇÕES
+
+[] Validar se o email digitado está dentro do padrão aceito pelo backend.
+[] Validar se o email digitado ja estiver cadastrado.
+[] Validar se a senha digitada atende aos critérios definidos pelo backend.
+[] Validar se o usuário digitado está dentro do padrão aceito pelo backend.
+[] Validar se o CPF digitado é válido e está dentro do padrão aceito pelo backend.
+[] Validar se o nome completo digitado está dentro do padrão aceito pelo backend.
+[] Validar se a senha e a confirmação de senha são iguais.
+[] Validar se a senha nao for a mesma da base, retornar a mensagem no toaster de forma genérica, sem expor a existência da senha.
+[] Validar se o email e a confirmação de email são iguais.
+[] Validar se o CPF digitado já está cadastrado no sistema.
+[] Validar se o email digitado já está cadastrado no sistema.
+[] Alterar a mensagem de erro exibida no toaster para não refletir a real restrição de email e cpf, ocultando a existência na mensagem.
+[] Validar email fora do range de dominio
+[] Colocar um X para limpar os campos do cadastro  
+
+REGRAS DE NEGÓCIO
+
+[ ] Verificar se o usuário já está cadastrado.
+[ ] Verificar se o email já está cadastrado.
+[ ] Verificar se o CPF já está cadastrado.
+ * **/
 
 const CadastrarUsuario = () => {
-  const {register, handleSubmit, setValue, watch, formState:{errors},} = useForm({
+  const {
+    register,
+    handleSubmit, 
+    setValue, 
+    watch, 
+    formState:{errors},} = useForm({
     defaultValues: {
       nomeCompleto: '',
       cpf: '',
@@ -22,8 +55,25 @@ const CadastrarUsuario = () => {
       senha: '',
     }
   });
+
+  // function focus(fieldName) {
+  //   const input = document.querySelector(`input[name="${fieldName}"]`);
+  //   if (input) {
+  //     input.focus();
+  //   }
+  // }
+  const valorCampo = watch(); 
+
+  const limparCampo = (fieldName) => {
+    setValue(fieldName, "", {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+    focus(fieldName);
+  };
   
-  const [senha, setSenha] = useState('');
+  // const [senha, setSenha] = useState('');
   const [showSenha, setShowSenha] = useState(false);
   const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -83,6 +133,7 @@ const CadastrarUsuario = () => {
    * verificação de email
    * */
   const confirmarEmail = watch('email');
+  
   /**
    * cancelar cadastro de usuario
    * */
@@ -141,14 +192,28 @@ const CadastrarUsuario = () => {
                             Nome completo: <Astered>*</Astered>
                           </span>
                         }>
-                          <input
-                            type="text"
-                            {...register("nomeCompleto", {required: "Nome completo é obrigatório"})}
-                            className="form-control form-control-sm text-white inputPlaceholder"
-                            placeholder="Digite seu nome completo"
-                            id="nome-completo"/>
-                          {errors.nomeCompleto && <span className="error text-zinc-300"
-                                                        style={{ fontSize: '10px'}}>{errors.nomeCompleto.message}</span>}
+                          <div className="position-relative">
+                            <input
+                              type="text"
+                              {...register("nomeCompleto", {required: "Nome completo é obrigatório"})}
+                              className="form-control h-10 form-control-sm text-white inputPlaceholder pe-5"
+                              placeholder="Digite seu nome completo"
+                              id="nome-completo"
+                              />
+                            {/*w-10 h-10 bg-gradient-to-br from-pink-900 to-pink-500 rounded-lg flex*/}
+                            {/*items-center justify-center*/}
+
+                            {valorCampo.nomeCompleto && (
+                              <button type="button" onClick={() => limparCampo("nomeCompleto")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              >
+                                <i className="pi pi-times small "></i>
+                              </button>
+                            )}
+                          </div>
+                          {errors.nomeCompleto &&
+                            <span className="error text-zinc-300"
+                                  style={{ fontSize: '10px'}}>{errors.nomeCompleto.message}</span>}
                         </FormGroup>
 
                         {/**
@@ -160,12 +225,23 @@ const CadastrarUsuario = () => {
                               CPF: <Astered>*</Astered>
                             </span>
                           }>
+                          <div className="position-relative">
                             <input
                               type="text"
                               {...register("cpf", {required: "O CPF é obrigatório",
                               onChange: handleCpfMask})}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Digite seu CPF"/>
+                              className="form-control h-10 form-control-sm text-white inputPlaceholder pe-5"
+                              placeholder="Digite seu CPF"
+                              id="cpf"
+                            />
+                            {valorCampo.cpf && (
+                              <button type="button" onClick={() => limparCampo("cpf")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
+                          </div>
                             {errors.cpf && <span className="error text-zinc-300"
                                                  style={{ fontSize: '10px'}}>{errors.cpf.message}</span>}
                           </FormGroup>
@@ -178,11 +254,22 @@ const CadastrarUsuario = () => {
                               Nome de Usuário: <Astered>*</Astered>
                             </span>
                           }>
+                          <div className="position-relative">
                             <input
                               type="text"
                               {...register("nomeUsuario", {required: "Nome de usuário é obrigatório"})}
-                              className="form-control text-white form-control-sm inputPlaceholder"
-                              placeholder="Digite o nome de usuário"/>
+                              className="form-control h-10 text-white form-control-sm inputPlaceholder pe-5"
+                              placeholder="Digite o nome de usuário"
+                              id="nome-usuario"
+                            />
+                            {valorCampo.nomeUsuario && (
+                              <button type="button" onClick={() => limparCampo("nomeUsuario")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
+                          </div>
                             {errors.nomeUsuario &&
                               <span className="error text-zinc-300" style={{ fontSize: '10px'}}>
                                 {errors.nomeUsuario.message}
@@ -199,11 +286,23 @@ const CadastrarUsuario = () => {
                               Email: <Astered>*</Astered>
                             </span>
                           }>
+                          <div className="position-relative">
                             <input
                               type="email"
                               {...register("email", {required: "Email é obrigatório"})}
-                              className="form-control form-control-sm text-white inputPlaceholder"
-                              placeholder="Digite seu email"/>
+                              className="form-control h-10 form-control-sm text-white inputPlaceholder pe-5"
+                              placeholder="Digite seu email"
+                              id="email"
+                            />
+
+                            {valorCampo.email && (
+                              <button type="button" onClick={() => limparCampo("email")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
+                          </div>
                             {errors.email && <span className="error text-zinc-300"
                                                    style={{ fontSize: '10px'}}>{errors.email.message}</span>}
                           </FormGroup>
@@ -216,12 +315,25 @@ const CadastrarUsuario = () => {
                               Confirmar e-mail: <Astered>*</Astered>
                             </span>
                           }>
+                          <div className="position-relative">
                             <input
                               type="email"
-                              {...register("confirmarEmail",{required: "Confirme o email"},
-                              {validate:(value) => value === confirmarEmail || "Os emails não são iguais"})}
-                              className="form-control text-white form-control-sm inputPlaceholder"
-                              placeholder="Confirme o email"/>
+                              {...register("confirmarEmail",{
+                                required: "Confirme o email",
+                                validate:(value) => value === confirmarEmail || "Os emails não são iguais"
+                              })}
+                              className="form-control h-10 text-white form-control-sm inputPlaceholder pe-5"
+                              placeholder="Confirme o email"
+                              id="confirmar-email"
+                            />
+                            {valorCampo.confirmarEmail && (
+                              <button type="button" onClick={() => limparCampo("confirmarEmail")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
+                          </div>
                             {errors.confirmarEmail &&
                               <span className="error text-zinc-300" style={{ fontSize: '10px'}}>{errors.confirmarEmail.message}</span>}
                           </FormGroup>
@@ -246,9 +358,18 @@ const CadastrarUsuario = () => {
                                 },
                                 validate: validateSenhaTrim,
                               })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control h-10 form-control-sm text-white inputPlaceholder pe-5"
                               placeholder="Digite sua senha"
+                              id="senha"
+                              style={{ paddingRight: '4.5rem' }}
                             />
+                            { valorCampo.senha && (
+                              <button type="button" onClick={() => limparCampo("senha")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-5"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
                             {/**
                              visibilidade de senha
                              */}
@@ -284,9 +405,18 @@ const CadastrarUsuario = () => {
                                 validate: (value) =>
                                   value === watch("senha") || "As senhas não são iguais",
                               })}
-                              className="form-control form-control-sm text-white inputPlaceholder"
+                              className="form-control h-10 form-control-sm text-white inputPlaceholder pe-5"
                               placeholder="Confirme a senha"
+                              id="confirmar-senha"
+                              style={{ paddingRight: '4.5rem' }}
                             />
+                            {valorCampo.confirmarSenha && (
+                              <button type="button" onClick={() => limparCampo("confirmarSenha")}
+                                      className="position-absolute top-50 end-0 translate-middle-y me-5"
+                              >
+                                <i className="pi pi-times small"></i>
+                              </button>
+                            )}
                             <SenhaVisibilityToggle
                               mostrarSenhaConfirmacao={showSenhaConfirmada}
                               onClick={toggleSenhaConfirmadaVisibility}
@@ -297,7 +427,7 @@ const CadastrarUsuario = () => {
                             <span className="error text-zinc-300"
                                   style={{ fontSize: '10px'}}>{errors.confirmarSenha.message}</span>}
                         </FormGroup>
-VERIFICAÇÃO DE EMAIL NAO ESTA FUNCIONANDO DEPOIS DISSO SEGUI R COM O LOGIN
+
                         {/**
                          checklist de senha
                          **/}

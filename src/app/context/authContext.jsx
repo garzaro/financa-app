@@ -1,3 +1,8 @@
+/**
+ * @deprecated Este arquivo é legado e NÃO deve ser usado em produção.
+ * A fonte de verdade de autenticação é src/auth/authProvider.jsx.
+ * Mantido apenas como referência histórica.
+ */
 import {createContext, useState, useContext, useEffect} from "react";
 import {LocalStorageService} from "../service/localStorageService.js";
 import {authService, TOKEN_KEY, validateToken} from "../service/authService.js";
