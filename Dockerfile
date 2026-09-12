@@ -1,5 +1,5 @@
 # Estágio 1: Build da aplicação
-FROM node:20-alpine AS build
+FROM node:20-alpine AS dist
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app

@@ -18,6 +18,12 @@ import LimparCamposButton from "../../components/ui/limpar-campo.jsx";
  
 VALIDAÇÕES
 
+
+// as configurações no cloudflare estao ok o build esta automatico, 
+// preciso agora fazer o cadastro funcionar
+
+
+
 [] Validar se o email digitado está dentro do padrão aceito pelo backend.
 [] Validar se o email digitado ja estiver cadastrado.
 [] Validar se a senha digitada atende aos critérios definidos pelo backend.
@@ -73,10 +79,10 @@ const CadastrarUsuario = () => {
     focus(fieldName);
   };
   
-  // const [senha, setSenha] = useState('');
   const [showSenha, setShowSenha] = useState(false);
   const [showSenhaConfirmada, setShowSenhaConfirmada] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const usuarioService = ServiceUsuario();
 
