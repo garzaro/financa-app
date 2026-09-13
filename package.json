@@ -1,6 +1,7 @@
 {
   "name": "financa-app",
   "private": true,
+  "packageManager": "yarn@4.5.0",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -74,5 +75,4 @@
     "vite": "^7.2.4",
     "wrangler": "^4.88.0"
   },
-  "packageManager": "yarn@4.5.0"
 }
