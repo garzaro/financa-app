@@ -4,7 +4,9 @@ import Apiservice from '../api/apiservice.js';
 // import {zodResolver} from "@hookform/resolvers/zod";
 
 
-/**Base path para lancamentos API**/
+/**
+ * Base path para lancamentos API
+ * **/
 const lancamentoApi = Apiservice('api/Fp/lancamento');
 
 const ServiceLancamento = () => {

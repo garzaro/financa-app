@@ -97,7 +97,7 @@ const CadastrarUsuario = () => {
       email: data.email,
       senha: data.senha,
     }
-    console.log("Mostrando os dados do usuario: ", payload)
+    // console.log("Mostrando os dados do usuario: ", payload)
     usuarioService.salvar(payload)
       .then(response => {
         mensagemDeSucesso("Usuario cadastrado com sucesso! Faça o login para continuar")
