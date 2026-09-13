@@ -6,6 +6,7 @@ import Apiservice from "../api/apiservice.js";
  * @param ApiService - importada, (composiçao, pensar em extends) - React 16+
  *
  * @returns credencials - recebe como objeto as credenciais do usuario
+ *
  * */
 
 const usuarioApi = Apiservice('/api/auth');

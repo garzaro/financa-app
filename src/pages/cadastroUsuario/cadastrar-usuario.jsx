@@ -62,12 +62,6 @@ const CadastrarUsuario = () => {
     }
   });
 
-  // function focus(fieldName) {
-  //   const input = document.querySelector(`input[name="${fieldName}"]`);
-  //   if (input) {
-  //     input.focus();
-  //   }
-  // }
   const valorCampo = watch(); 
 
   const limparCampo = (fieldName) => {
