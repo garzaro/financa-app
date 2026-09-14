@@ -18,11 +18,8 @@ import LimparCamposButton from "../../components/ui/limpar-campo.jsx";
  
 VALIDAÇÕES
 
-
 // as configurações no cloudflare estao ok o build esta automatico, 
 // preciso agora fazer o cadastro funcionar
-
-
 
 [] Validar se o email digitado está dentro do padrão aceito pelo backend.
 [] Validar se o email digitado ja estiver cadastrado.
@@ -147,7 +144,7 @@ const CadastrarUsuario = () => {
     navigate('/');
   };
   return (
-    // container-fluid left-0 right-0 bg-zinc-900 border-b border-gray-500 z-50 justify-content-center align-items-center
+    /**container-fluid left-0 right-0 bg-zinc-900 border-b border-gray-500 z-50 justify-content-center align-items-center**/
     <div className="container-fluid mb-12 justify-content-center align-items-center">
       <div className="row justify-content-center w-full ">
 
@@ -211,7 +208,7 @@ const CadastrarUsuario = () => {
 
                             {valorCampo.nomeCompleto && (
                               <button type="button" onClick={() => limparCampo("nomeCompleto")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-2"
                               >
                                 <i className="pi pi-times small "></i>
                               </button>
@@ -242,7 +239,7 @@ const CadastrarUsuario = () => {
                             />
                             {valorCampo.cpf && (
                               <button type="button" onClick={() => limparCampo("cpf")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-2"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
@@ -270,7 +267,7 @@ const CadastrarUsuario = () => {
                             />
                             {valorCampo.nomeUsuario && (
                               <button type="button" onClick={() => limparCampo("nomeUsuario")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-2"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
@@ -303,7 +300,7 @@ const CadastrarUsuario = () => {
 
                             {valorCampo.email && (
                               <button type="button" onClick={() => limparCampo("email")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-2"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
@@ -334,7 +331,7 @@ const CadastrarUsuario = () => {
                             />
                             {valorCampo.confirmarEmail && (
                               <button type="button" onClick={() => limparCampo("confirmarEmail")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-2"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-2"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
@@ -371,7 +368,7 @@ const CadastrarUsuario = () => {
                             />
                             { valorCampo.senha && (
                               <button type="button" onClick={() => limparCampo("senha")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-5"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-5"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
@@ -418,7 +415,7 @@ const CadastrarUsuario = () => {
                             />
                             {valorCampo.confirmarSenha && (
                               <button type="button" onClick={() => limparCampo("confirmarSenha")}
-                                      className="position-absolute top-50 end-0 translate-middle-y me-5"
+                                      className="position-absolute top-50 end-e-0 translate-middle-y me-5"
                               >
                                 <i className="pi pi-times small"></i>
                               </button>
