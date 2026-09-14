@@ -9,6 +9,7 @@ import {LocalStorageService} from "./localStorageService.js";
  * continua sendo limpo no logout e o authService.js preserva métodos 
  * antigos de token por compatibilidade, mas o novo fluxo não deve chamar
  *  auth.login(token) nem usar getToken() para autenticar requisições.
+ *
  * **/
 
 /**serviçoo**/
