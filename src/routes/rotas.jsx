@@ -1,6 +1,6 @@
 import React from 'react';
 // context manager
-import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import PublicLayout from "@/layout/publicLayout.jsx";
 import LandingPage from "@/pages/home/landing-page.jsx";
 import Login from "@/pages/login/login.jsx";
@@ -34,7 +34,7 @@ import RedefinirSenha from "@/pages/login/redefinir-senha.jsx";
 const Rotas = () => {
   return (
     <AuthProvider>
-      <Router>
+      <BrowserRouter>
         {/*<Navbar />*/}
         <Routes>
 
@@ -121,7 +121,7 @@ const Rotas = () => {
           <Route path="*" element={<PageNotFound />} />
 
         </Routes>
-      </Router>
+      </BrowserRouter>
     </AuthProvider>
   );
 };
