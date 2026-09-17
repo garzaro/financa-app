@@ -4,9 +4,7 @@ import {useContext} from "react";
 import {AuthContext} from "@/auth/authContext.jsx";
 import {Navigate, Outlet} from "react-router-dom";
 
-/**
- * Rota Privada
- * **/
+/** Rota Privada **/
 
 export default function PrivateLayout({ children }) {
   return (
